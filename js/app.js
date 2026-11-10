@@ -254,7 +254,7 @@
     function useView(c) { c.setTransform(dpr * view.s, 0, 0, dpr * view.s, dpr * view.x, dpr * view.y); }
 
     function styleStroke(c, st) {
-      c.lineCap = "round"; c.lineJoin = "round"; c.lineWidth = st.w;
+      c.lineCap = "round"; c.lineJoin = "round"; c.lineWidth = st.w / view.s;
       if (st.tool === "eraser") { c.globalCompositeOperation = "destination-out"; c.strokeStyle = "#000"; }
       else { c.globalCompositeOperation = "source-over"; c.strokeStyle = ink(); }
     }
@@ -350,7 +350,7 @@
       var n = Object.keys(pointers).length;
       if (n === 1) {
         p.role = "draw";
-        current = { tool: tool, w: (tool === "eraser" ? 28 : 3) / view.s, pts: [toWorld(p)] };
+        current = { tool: tool, w: tool === "eraser" ? 28 : 3, pts: [toWorld(p)] };
         strokes.push(current);
         useView(lctx); drawStroke(lctx, current); present();
       } else if (n === 2) {
