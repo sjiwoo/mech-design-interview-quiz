@@ -176,8 +176,8 @@
   function startQuiz(set, questions) {
     state = {
       set: set,
-      items: shuffle(questions).map(function (q) {
-        var order = shuffle(q.options.map(function (_, i) { return i; }));
+      items: questions.map(function (q) {
+        var order = q.options.map(function (_, i) { return i; });
         return { q: q, order: order, picked: null };
       }),
       index: 0
