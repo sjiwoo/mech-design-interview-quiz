@@ -232,7 +232,7 @@
   /* ---------- scratchpad ---------- */
 
   function makePad() {
-    var canvas = el("canvas", { class: "pad-canvas", width: "920", height: "420", "aria-label": "Scratchpad: draw with finger, stylus or mouse" });
+    var canvas = el("canvas", { class: "pad-canvas", width: "920", height: "900", "aria-label": "Scratchpad: draw with finger, stylus or mouse" });
     var ctx = null;
     try { ctx = canvas.getContext("2d"); } catch (e) { ctx = null; }
     var tool = "pen", drawing = false, last = null;

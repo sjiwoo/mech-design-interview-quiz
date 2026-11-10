@@ -252,7 +252,7 @@ p { margin: 0 0 12px; }
 .pad-canvas {
   display: block;
   width: 100%;
-  aspect-ratio: 920 / 420;
+  aspect-ratio: 920 / 900;
   color: var(--ink);
   touch-action: none;
   cursor: crosshair;
