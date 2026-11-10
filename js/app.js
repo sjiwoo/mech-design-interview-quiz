@@ -228,6 +228,73 @@
     return names[spec.support] + (loads.length ? " with " + loads.join(" and ") : "");
   }
 
+
+  /* ---------- scratchpad ---------- */
+
+  function makePad() {
+    var canvas = el("canvas", { class: "pad-canvas", width: "920", height: "420", "aria-label": "Scratchpad: draw with finger, stylus or mouse" });
+    var ctx = null;
+    try { ctx = canvas.getContext("2d"); } catch (e) { ctx = null; }
+    var tool = "pen", drawing = false, last = null;
+
+    function pos(e) {
+      var r = canvas.getBoundingClientRect();
+      return { x: (e.clientX - r.left) * (canvas.width / r.width), y: (e.clientY - r.top) * (canvas.height / r.height) };
+    }
+    function style() {
+      if (!ctx) return;
+      ctx.lineCap = "round"; ctx.lineJoin = "round";
+      if (tool === "eraser") {
+        ctx.globalCompositeOperation = "destination-out";
+        ctx.lineWidth = 28;
+      } else {
+        ctx.globalCompositeOperation = "source-over";
+        ctx.strokeStyle = getComputedStyle(canvas).color;
+        ctx.lineWidth = 3;
+      }
+    }
+    canvas.addEventListener("pointerdown", function (e) {
+      if (!ctx) return;
+      e.preventDefault();
+      drawing = true; last = pos(e);
+      try { canvas.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+      style();
+      ctx.beginPath(); ctx.moveTo(last.x, last.y); ctx.lineTo(last.x + 0.01, last.y); ctx.stroke();
+    });
+    canvas.addEventListener("pointermove", function (e) {
+      if (!drawing || !ctx) return;
+      e.preventDefault();
+      var p = pos(e);
+      ctx.beginPath(); ctx.moveTo(last.x, last.y); ctx.lineTo(p.x, p.y); ctx.stroke();
+      last = p;
+    });
+    function stop() { drawing = false; }
+    canvas.addEventListener("pointerup", stop);
+    canvas.addEventListener("pointercancel", stop);
+
+    var penBtn, eraserBtn;
+    function setTool(t) {
+      tool = t;
+      penBtn.setAttribute("aria-pressed", String(t === "pen"));
+      eraserBtn.setAttribute("aria-pressed", String(t === "eraser"));
+    }
+    penBtn = el("button", { class: "btn btn-small", type: "button", text: "Pen", onclick: function () { setTool("pen"); } });
+    eraserBtn = el("button", { class: "btn btn-small", type: "button", text: "Eraser", onclick: function () { setTool("eraser"); } });
+    var clearBtn = el("button", {
+      class: "btn btn-small", type: "button", text: "Clear",
+      onclick: function () { if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height); }
+    });
+    setTool("pen");
+
+    return el("section", { class: "card pad" }, [
+      el("div", { class: "pad-head" }, [
+        el("h2", { text: "Scratchpad" }),
+        el("div", { class: "pad-tools" }, [penBtn, eraserBtn, clearBtn])
+      ]),
+      canvas
+    ]);
+  }
+
   /* ---------- views ---------- */
 
   function showHome() {
@@ -258,7 +325,7 @@
       set: set,
       items: questions.map(function (q) {
         var order = q.options.map(function (_, i) { return i; });
-        return { q: q, order: order, picked: null };
+        return { q: q, order: order, picked: null, pad: null };
       }),
       index: 0
     };
@@ -317,7 +384,8 @@
         options,
         feedback,
         next
-      ])
+      ]),
+      (item.pad = item.pad || makePad())
     ]);
 
     if (answered) {

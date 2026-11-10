@@ -233,3 +233,31 @@ p { margin: 0 0 12px; }
   max-width: 720px;
   margin: 0 auto;
 }
+
+/* Scratchpad */
+.pad-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.pad-head h2 { margin: 0; }
+.pad-tools { display: flex; gap: 8px; }
+
+.btn-small { padding: 8px 14px; min-height: 40px; font-size: 0.9rem; }
+.btn[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+
+.pad-canvas {
+  display: block;
+  width: 100%;
+  aspect-ratio: 920 / 420;
+  color: var(--ink);
+  touch-action: none;
+  cursor: crosshair;
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  background-image: radial-gradient(var(--line) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
