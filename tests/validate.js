@@ -23,7 +23,7 @@ window.QUESTION_SETS.forEach((set) => {
     if (!Number.isInteger(q.answer) || q.answer < 0 || q.answer > 3) errors.push(`${tag}: bad answer index`);
     if (!Array.isArray(q.proof) || q.proof.length < 2 || q.proof.some((x) => typeof x !== "string" || !x.trim())) errors.push(`${tag}: needs a step-by-step proof`);
     if (!levels.includes(q.level)) errors.push(`${tag}: bad level`);
-    if (q.diagram && !supports.includes(q.diagram.support)) errors.push(`${tag}: bad diagram support`);
+    if (q.diagram && !q.diagram.section && !supports.includes(q.diagram.support)) errors.push(`${tag}: bad diagram support`);
   });
   console.log(`${set.title}: ${set.questions.length} questions`);
 });

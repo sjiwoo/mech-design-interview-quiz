@@ -253,6 +253,62 @@
     return root;
   }
 
+
+  /* ---------- cross-section diagram ---------- */
+
+  function drawSection(sec) {
+    var W = 460, H = 230, pad = 46;
+    // model bounds (y up)
+    var xs = [], ys = [];
+    function addBox(x0, y0, x1, y1) { xs.push(x0, x1); ys.push(y0, y1); }
+    (sec.parts || []).concat(sec.alt || []).forEach(function (r) { addBox(r[0], r[1], r[0] + r[2], r[1] + r[3]); });
+    (sec.circles || []).forEach(function (c) { addBox(c[0] - c[2], c[1] - c[2], c[0] + c[2], c[1] + c[2]); });
+    var mx0 = Math.min.apply(null, xs), mx1 = Math.max.apply(null, xs);
+    var my0 = Math.min.apply(null, ys), my1 = Math.max.apply(null, ys);
+    var k = Math.min((W - 2 * pad - 60) / (mx1 - mx0), (H - 2 * pad) / (my1 - my0));
+    var ox = (W - 60 - (mx1 - mx0) * k) / 2 - mx0 * k;
+    var oy = (H + (my1 - my0) * k) / 2 + my0 * k;
+    function X(x) { return ox + x * k; }
+    function Y(y) { return oy - y * k; }
+
+    var root = svg("svg", { viewBox: "0 0 " + W + " " + H, class: "diagram", role: "img" });
+    var t = svg("title", {}); t.textContent = "Cross-section"; root.appendChild(t);
+    function add(tag, attrs) { var n = svg(tag, attrs); root.appendChild(n); return n; }
+    var solid = { fill: "currentColor", "fill-opacity": 0.16, stroke: "currentColor", "stroke-width": 2 };
+    function merge(a, b) { var o = {}; [a, b].forEach(function (m) { Object.keys(m).forEach(function (q) { o[q] = m[q]; }); }); return o; }
+
+    (sec.parts || []).forEach(function (r) {
+      add("rect", merge(solid, { x: X(r[0]), y: Y(r[1] + r[3]), width: r[2] * k, height: r[3] * k }));
+    });
+    (sec.alt || []).forEach(function (r) {
+      add("rect", merge(solid, { x: X(r[0]), y: Y(r[1] + r[3]), width: r[2] * k, height: r[3] * k, "fill-opacity": 0.55 }));
+    });
+    (sec.circles || []).forEach(function (c) {
+      add("circle", merge(solid, { cx: X(c[0]), cy: Y(c[1]), r: c[2] * k }));
+    });
+    var hole = { fill: "var(--surface)", stroke: "currentColor", "stroke-width": 2 };
+    (sec.cuts || []).forEach(function (r) {
+      add("rect", merge(hole, { x: X(r[0]), y: Y(r[1] + r[3]), width: r[2] * k, height: r[3] * k }));
+    });
+    (sec.holes || []).forEach(function (c) {
+      add("circle", merge(hole, { cx: X(c[0]), cy: Y(c[1]), r: c[2] * k }));
+    });
+    if (sec.axis) {
+      var ay = Y(sec.axis.y);
+      add("line", { x1: X(mx0) - 22, y1: ay, x2: X(mx1) + 6, y2: ay, stroke: "var(--accent, #c8102e)", "stroke-width": 1.8, "stroke-dasharray": "7 5" });
+      var at = add("text", { x: X(mx0) - 26, y: ay + 5, fill: "var(--accent, #c8102e)", "font-size": 14, "font-weight": 700, "text-anchor": "end", "font-family": "inherit" });
+      at.textContent = sec.axis.label || "";
+    }
+    (sec.labels || []).forEach(function (l) {
+      var ly = Y(l.y) + 5;
+      if (sec.axis && l.anchor === "start" && Math.abs(Y(l.y) - Y(sec.axis.y)) < 12) ly = Y(sec.axis.y) - 10;
+      var lx = X(l.x) + (l.anchor === "start" ? 4 : 0);
+      var n = add("text", { x: lx, y: ly, fill: "currentColor", "font-size": 14, "font-weight": 600, "text-anchor": l.anchor || "middle", "font-family": "inherit" });
+      n.textContent = l.text;
+    });
+    return root;
+  }
+
   function describe(spec) {
     var names = {
       simple: "Simply supported beam",
@@ -540,14 +596,27 @@
 
   /* ---------- views ---------- */
 
-  function showHome() {
+  var selector = document.getElementById("section-select");
+  sets.forEach(function (set) {
+    selector.appendChild(el("option", { value: set.id, text: set.title }));
+  });
+  selector.addEventListener("change", function () {
+    var id = selector.value;
+    try { history.replaceState(null, "", id ? "#" + id : location.pathname + location.search); } catch (e) { location.hash = id; }
+    showHome(id || null);
+  });
+  function syncSelector(id) { selector.value = id || ""; }
+
+  function showHome(onlyId) {
     state = null;
-    var nodes = [
+    syncSelector(onlyId);
+    var shown = onlyId ? sets.filter(function (x) { return x.id === onlyId; }) : sets;
+    var nodes = onlyId ? [] : [
       el("h1", { text: "Mechanical design interview practice" }),
-      el("p", { class: "muted", text: "Multiple choice problems on the fundamentals that come up in Tesla-style mechanical design interviews. Pick a topic to start." })
+      el("p", { class: "muted", text: "Multiple choice problems on the fundamentals that come up in Tesla-style mechanical design interviews. Pick a section to start, or use the section menu at the top." })
     ];
 
-    sets.forEach(function (set) {
+    shown.forEach(function (set) {
       var best = loadBest(set.id);
       var prog = loadProgress(set);
       var done = prog ? prog.answers.filter(function (a) { return a !== null; }).length : 0;
@@ -585,6 +654,7 @@
   }
 
   function startQuiz(set, questions, resume) {
+    syncSelector(set.id);
     var full = questions.length === set.questions.length;
     state = {
       set: set,
@@ -675,7 +745,7 @@
       el("section", { class: "card" }, [
         el("span", { class: "level", text: q.level }),
         el("p", { class: "question", text: q.q }),
-        q.diagram ? drawDiagram(q.diagram) : null,
+        q.diagram ? (q.diagram.section ? drawSection(q.diagram.section) : drawDiagram(q.diagram)) : null,
         options,
         feedback,
         next
@@ -725,7 +795,7 @@
         }
       }));
     }
-    buttons.push(el("button", { class: "btn", text: "All topics", onclick: showHome }));
+    buttons.push(el("button", { class: "btn", text: "All sections", onclick: function () { showHome(null); } }));
 
     var review = el("ul", { class: "review" }, items.map(function (it) {
       var right = it.picked === it.q.answer;
@@ -755,5 +825,11 @@
     showHome();
   });
 
-  showHome();
+  window.addEventListener("hashchange", function () {
+    var id = (location.hash || "").slice(1);
+    showHome(sets.some(function (x) { return x.id === id; }) ? id : null);
+  });
+
+  var startId = (location.hash || "").slice(1);
+  showHome(sets.some(function (x) { return x.id === startId; }) ? startId : null);
 })();
