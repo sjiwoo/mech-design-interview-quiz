@@ -229,48 +229,164 @@
   }
 
 
-  /* ---------- scratchpad ---------- */
+  /* ---------- scratchpad (infinite canvas) ----------
+   * One pointer draws. Two pointers pan and zoom (pinch). Mouse wheel pans,
+   * ctrl+wheel (or trackpad pinch) zooms. Strokes are stored as vectors in
+   * world coordinates, so the page is unbounded and stays sharp when zoomed.
+   */
 
   function makePad() {
-    var canvas = el("canvas", { class: "pad-canvas", width: "920", height: "900", "aria-label": "Scratchpad: draw with finger, stylus or mouse" });
-    var ctx = null;
-    try { ctx = canvas.getContext("2d"); } catch (e) { ctx = null; }
-    var tool = "pen", drawing = false, last = null;
+    var canvas = el("canvas", { class: "pad-canvas", "aria-label": "Scratchpad: one finger draws, two fingers pan and zoom" });
+    var layer = document.createElement("canvas");
+    var ctx = null, lctx = null;
+    try { ctx = canvas.getContext("2d"); lctx = layer.getContext("2d"); } catch (e) { ctx = lctx = null; }
 
-    function pos(e) {
-      var r = canvas.getBoundingClientRect();
-      return { x: (e.clientX - r.left) * (canvas.width / r.width), y: (e.clientY - r.top) * (canvas.height / r.height) };
+    var strokes = [], current = null;
+    var view = { x: 0, y: 0, s: 1 };
+    var dpr = 1, cw = 0, ch = 0;
+    var tool = "pen";
+    var pointers = {}, pinch = null;
+    var MIN_S = 0.1, MAX_S = 10;
+
+    function clamp(v) { return Math.min(MAX_S, Math.max(MIN_S, v)); }
+    function ink() { return getComputedStyle(canvas).color; }
+    function dotColor() { return getComputedStyle(canvas).getPropertyValue("--muted").trim() || "#888"; }
+    function useView(c) { c.setTransform(dpr * view.s, 0, 0, dpr * view.s, dpr * view.x, dpr * view.y); }
+
+    function styleStroke(c, st) {
+      c.lineCap = "round"; c.lineJoin = "round"; c.lineWidth = st.w;
+      if (st.tool === "eraser") { c.globalCompositeOperation = "destination-out"; c.strokeStyle = "#000"; }
+      else { c.globalCompositeOperation = "source-over"; c.strokeStyle = ink(); }
     }
-    function style() {
+
+    function drawStroke(c, st) {
+      styleStroke(c, st);
+      c.beginPath();
+      c.moveTo(st.pts[0].x, st.pts[0].y);
+      if (st.pts.length === 1) c.lineTo(st.pts[0].x + 0.01, st.pts[0].y);
+      for (var i = 1; i < st.pts.length; i++) c.lineTo(st.pts[i].x, st.pts[i].y);
+      c.stroke();
+    }
+
+    function present() {
       if (!ctx) return;
-      ctx.lineCap = "round"; ctx.lineJoin = "round";
-      if (tool === "eraser") {
-        ctx.globalCompositeOperation = "destination-out";
-        ctx.lineWidth = 28;
-      } else {
-        ctx.globalCompositeOperation = "source-over";
-        ctx.strokeStyle = getComputedStyle(canvas).color;
-        ctx.lineWidth = 3;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // dot grid in world space, thinned out when zoomed far out
+      var step = 32 * view.s;
+      while (step < 14) step *= 2;
+      var ox = ((view.x % step) + step) % step, oy = ((view.y % step) + step) % step;
+      ctx.globalAlpha = 0.45;
+      ctx.fillStyle = dotColor();
+      var r = Math.max(1, dpr);
+      for (var x = ox; x < cw; x += step) {
+        for (var y = oy; y < ch; y += step) ctx.fillRect(Math.round(x * dpr), Math.round(y * dpr), r, r);
       }
+      ctx.globalAlpha = 1;
+      ctx.drawImage(layer, 0, 0);
     }
+
+    function rebuild() {
+      if (!lctx) return;
+      lctx.setTransform(1, 0, 0, 1, 0, 0);
+      lctx.clearRect(0, 0, layer.width, layer.height);
+      useView(lctx);
+      strokes.forEach(function (st) { drawStroke(lctx, st); });
+      present();
+    }
+
+    function resize() {
+      var r = canvas.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      dpr = window.devicePixelRatio || 1;
+      cw = r.width; ch = r.height;
+      canvas.width = layer.width = Math.round(cw * dpr);
+      canvas.height = layer.height = Math.round(ch * dpr);
+      rebuild();
+    }
+    if (window.ResizeObserver) new ResizeObserver(resize).observe(canvas);
+    window.addEventListener("resize", resize);
+
+    function local(e) {
+      var r = canvas.getBoundingClientRect();
+      return { x: e.clientX - r.left, y: e.clientY - r.top };
+    }
+    function toWorld(p) { return { x: (p.x - view.x) / view.s, y: (p.y - view.y) / view.s }; }
+    function measure() {
+      var ids = Object.keys(pointers), a = pointers[ids[0]], b = pointers[ids[1]];
+      return { mx: (a.x + b.x) / 2, my: (a.y + b.y) / 2, d: Math.hypot(a.x - b.x, a.y - b.y) };
+    }
+
     canvas.addEventListener("pointerdown", function (e) {
       if (!ctx) return;
+      if (e.pointerType === "mouse" && e.button !== 0) return;
       e.preventDefault();
-      drawing = true; last = pos(e);
       try { canvas.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
-      style();
-      ctx.beginPath(); ctx.moveTo(last.x, last.y); ctx.lineTo(last.x + 0.01, last.y); ctx.stroke();
+      var p = local(e);
+      p.role = "none";
+      pointers[e.pointerId] = p;
+      var n = Object.keys(pointers).length;
+      if (n === 1) {
+        p.role = "draw";
+        current = { tool: tool, w: (tool === "eraser" ? 28 : 3) / view.s, pts: [toWorld(p)] };
+        strokes.push(current);
+        useView(lctx); drawStroke(lctx, current); present();
+      } else if (n === 2) {
+        // a second finger means pan/zoom: drop the stroke the first finger began
+        if (current) {
+          var i = strokes.indexOf(current);
+          if (i >= 0) strokes.splice(i, 1);
+          current = null;
+          rebuild();
+        }
+        pinch = measure();
+      }
     });
+
     canvas.addEventListener("pointermove", function (e) {
-      if (!drawing || !ctx) return;
+      var p = pointers[e.pointerId];
+      if (!p || !ctx) return;
       e.preventDefault();
-      var p = pos(e);
-      ctx.beginPath(); ctx.moveTo(last.x, last.y); ctx.lineTo(p.x, p.y); ctx.stroke();
-      last = p;
+      var q = local(e);
+      p.x = q.x; p.y = q.y;
+      if (pinch && Object.keys(pointers).length === 2) {
+        var m = measure();
+        var wx = (pinch.mx - view.x) / view.s, wy = (pinch.my - view.y) / view.s;
+        var ns = pinch.d > 1 ? clamp(view.s * (m.d / pinch.d)) : view.s;
+        view.x = m.mx - wx * ns; view.y = m.my - wy * ns; view.s = ns;
+        pinch = m;
+        rebuild();
+      } else if (p.role === "draw" && current) {
+        var w = toWorld(p), prev = current.pts[current.pts.length - 1];
+        current.pts.push(w);
+        useView(lctx); styleStroke(lctx, current);
+        lctx.beginPath(); lctx.moveTo(prev.x, prev.y); lctx.lineTo(w.x, w.y); lctx.stroke();
+        present();
+      }
     });
-    function stop() { drawing = false; }
-    canvas.addEventListener("pointerup", stop);
-    canvas.addEventListener("pointercancel", stop);
+
+    function release(e) {
+      var p = pointers[e.pointerId];
+      if (!p) return;
+      if (p.role === "draw") current = null;
+      delete pointers[e.pointerId];
+      if (Object.keys(pointers).length < 2) pinch = null;
+    }
+    canvas.addEventListener("pointerup", release);
+    canvas.addEventListener("pointercancel", release);
+
+    canvas.addEventListener("wheel", function (e) {
+      if (!ctx) return;
+      e.preventDefault();
+      if (e.ctrlKey) {
+        var c = local(e), w = toWorld(c);
+        var ns = clamp(view.s * Math.exp(-e.deltaY * 0.01));
+        view.x = c.x - w.x * ns; view.y = c.y - w.y * ns; view.s = ns;
+      } else {
+        view.x -= e.deltaX; view.y -= e.deltaY;
+      }
+      rebuild();
+    }, { passive: false });
 
     var penBtn, eraserBtn;
     function setTool(t) {
@@ -280,18 +396,18 @@
     }
     penBtn = el("button", { class: "btn btn-small", type: "button", text: "Pen", onclick: function () { setTool("pen"); } });
     eraserBtn = el("button", { class: "btn btn-small", type: "button", text: "Eraser", onclick: function () { setTool("eraser"); } });
-    var clearBtn = el("button", {
-      class: "btn btn-small", type: "button", text: "Clear",
-      onclick: function () { if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height); }
-    });
+    var undoBtn = el("button", { class: "btn btn-small", type: "button", text: "Undo", onclick: function () { strokes.pop(); rebuild(); } });
+    var clearBtn = el("button", { class: "btn btn-small", type: "button", text: "Clear", onclick: function () { strokes = []; current = null; rebuild(); } });
+    var homeBtn = el("button", { class: "btn btn-small", type: "button", text: "Reset view", onclick: function () { view = { x: 0, y: 0, s: 1 }; rebuild(); } });
     setTool("pen");
 
     return el("section", { class: "card pad" }, [
       el("div", { class: "pad-head" }, [
         el("h2", { text: "Scratchpad" }),
-        el("div", { class: "pad-tools" }, [penBtn, eraserBtn, clearBtn])
+        el("div", { class: "pad-tools" }, [penBtn, eraserBtn, undoBtn, clearBtn, homeBtn])
       ]),
-      canvas
+      canvas,
+      el("p", { class: "muted pad-hint", text: "One finger draws. Two fingers pan and zoom. Mouse: wheel pans, Ctrl + wheel zooms." })
     ]);
   }
 
