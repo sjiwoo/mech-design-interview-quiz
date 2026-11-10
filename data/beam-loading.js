@@ -25,8 +25,12 @@ window.QUESTION_SETS.push({
       q: "A simply supported beam of length L carries a point load P at midspan. What is the maximum bending moment?",
       options: ["PL/2", "PL/4", "PL/8", "PL"],
       answer: 1,
-      why: "Each support reacts P/2. The moment peaks under the load: (P/2)(L/2) = PL/4.",
-      diagram: { support: "simple", loads: [{ kind: "point", x: 0.5, label: "P" }] }
+      why: "Each support reacts P/2. The moment peaks under the load: (P/2)(L/2) = PL/4. Shear is +P/2 until the load, then drops by P to −P/2, and the moment peaks where shear crosses zero.",
+      diagram: { support: "simple", loads: [{ kind: "point", x: 0.5, label: "P" }] },
+      plots: {
+        shear: [{ x: 0.25, text: "+P/2" }, { x: 0.75, text: "−P/2" }],
+        moment: [{ x: 0.5, text: "PL/4" }]
+      }
     },
     {
       level: "Fundamental",

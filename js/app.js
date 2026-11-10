@@ -135,6 +135,86 @@
     return root;
   }
 
+
+  /* ---------- shear and moment plots (simply supported beams) ---------- */
+
+  function beamCurves(spec) {
+    // Unit loads on a unit span: shape only. Labels come from the question data.
+    var pts = [], udls = [];
+    (spec.loads || []).forEach(function (ld) {
+      if (ld.kind === "point") pts.push(ld.x); else udls.push(ld);
+    });
+    var R1 = 0;
+    pts.forEach(function (a) { R1 += 1 - a; });
+    udls.forEach(function (u) { var len = u.to - u.from; R1 += len * (1 - (u.from + u.to) / 2); });
+    function at(x) {
+      var V = R1, M = R1 * x;
+      pts.forEach(function (a) { if (a < x) { V -= 1; M -= x - a; } });
+      udls.forEach(function (u) {
+        var c = Math.min(Math.max(x, u.from), u.to), len = c - u.from;
+        if (len > 0) { V -= len; M -= len * (x - (u.from + c) / 2); }
+      });
+      return { V: V, M: M };
+    }
+    var xs = [];
+    for (var i = 0; i <= 200; i++) xs.push(i / 200);
+    pts.forEach(function (a) { xs.push(Math.max(0, a - 1e-6), Math.min(1, a + 1e-6)); });
+    xs.sort(function (a, b) { return a - b; });
+    return xs.map(function (x) { var r = at(x); return { x: x, V: r.V, M: r.M }; });
+  }
+
+  function drawPlots(spec, notes) {
+    var W = 460, x0 = 60, x1 = 400, H = 370;
+    var root = svg("svg", { viewBox: "0 0 " + W + " " + H, class: "diagram plots", role: "img" });
+    var t = svg("title", {});
+    t.textContent = "Shear force and bending moment diagrams for " + describe(spec).toLowerCase();
+    root.appendChild(t);
+
+    var data = beamCurves(spec);
+    var maxV = 0, maxM = 0;
+    data.forEach(function (d) { maxV = Math.max(maxV, Math.abs(d.V)); maxM = Math.max(maxM, Math.abs(d.M)); });
+    function X(x) { return x0 + x * (x1 - x0); }
+
+    function add(tag, attrs) {
+      var base = { stroke: "currentColor", "stroke-width": 1.5, fill: "none", "stroke-linejoin": "round" };
+      Object.keys(attrs).forEach(function (k) { base[k] = attrs[k]; });
+      var n = svg(tag, base); root.appendChild(n); return n;
+    }
+    function text(x, y, str, opts) {
+      var o = { x: x, y: y, fill: "currentColor", "font-size": 14, "font-family": "inherit", "text-anchor": "middle" };
+      Object.keys(opts || {}).forEach(function (k) { o[k] = opts[k]; });
+      var n = svg("text", o); n.textContent = str; root.appendChild(n);
+    }
+
+    function panel(title, top, key, max, notesList, flip) {
+      var base = top + 88, amp = 42;
+      text(x0 - 4, top + 12, title, { "text-anchor": "start", "font-weight": 700 });
+      add("line", { x1: x0, y1: base, x2: x1, y2: base, "stroke-width": 1, opacity: 0.6 });
+      var pathPts = data.map(function (d) { return X(d.x).toFixed(1) + "," + (base - (d[key] / max) * amp).toFixed(1); });
+      var poly = pathPts.join(" ");
+      add("polygon", {
+        points: X(0) + "," + base + " " + poly + " " + X(1) + "," + base,
+        fill: "currentColor", "fill-opacity": 0.12, stroke: "none"
+      });
+      add("polyline", { points: poly, style: "stroke: var(--accent, #c8102e)", "stroke-width": 2.5 });
+      add("line", { x1: x0, y1: base - amp - 6, x2: x0, y2: base + amp + 6, "stroke-width": 1, opacity: 0.4 });
+      add("line", { x1: x1, y1: base - amp - 6, x2: x1, y2: base + amp + 6, "stroke-width": 1, opacity: 0.4 });
+      (notesList || []).forEach(function (n) {
+        var v = 0, best = 1e9;
+        data.forEach(function (d) { var dd = Math.abs(d.x - n.x); if (dd < best) { best = dd; v = d[key]; } });
+        var y = base - (v / max) * amp;
+        var up = v >= 0;
+        text(X(n.x), up ? y - 8 : y + 18, n.text, { "font-weight": 600 });
+      });
+      text(x0, base + amp + 20, "0", { "font-size": 12, opacity: 0.7 });
+      text(x1, base + amp + 20, "L", { "font-size": 12, opacity: 0.7 });
+    }
+
+    panel("Shear force V", 0, "V", maxV, notes.shear);
+    panel("Bending moment M (sagging +)", 185, "M", maxM, notes.moment);
+    return root;
+  }
+
   function describe(spec) {
     var names = {
       simple: "Simply supported beam",
@@ -208,7 +288,8 @@
       var right = item.picked === q.answer;
       feedback = el("div", { class: "feedback" + (right ? "" : " miss") }, [
         el("strong", { text: right ? "Correct" : "Not quite. Answer: " + q.options[q.answer] }),
-        el("p", { text: q.why })
+        el("p", { text: q.why }),
+        q.plots ? drawPlots(q.diagram, q.plots) : null
       ]);
       var last = state.index === total - 1;
       next = el("div", { class: "btn-row" }, [
