@@ -530,18 +530,29 @@
           ])
         ]);
       }
-      var last = state.index === total - 1;
-      next = el("div", { class: "btn-row" }, [
-        el("button", {
-          class: "btn btn-primary",
-          text: last ? "See results" : "Next question",
-          onclick: function () {
-            if (last) showResults();
-            else { state.index++; showQuestion(); }
-          }
-        })
-      ]);
     }
+
+    // Previous is always available after question 1. Next appears once the
+    // current question is answered. Answers and sketches are kept per question.
+    var last = state.index === total - 1;
+    var nav = [];
+    if (state.index > 0) {
+      nav.push(el("button", {
+        class: "btn", type: "button", text: "Previous",
+        onclick: function () { state.index--; showQuestion(); }
+      }));
+    }
+    if (answered) {
+      nav.push(el("button", {
+        class: "btn btn-primary", type: "button",
+        text: last ? "See results" : "Next question",
+        onclick: function () {
+          if (last) showResults();
+          else { state.index++; showQuestion(); }
+        }
+      }));
+    }
+    next = nav.length ? el("div", { class: "btn-row" }, nav) : null;
 
     render([
       el("div", { class: "progress" }, [
