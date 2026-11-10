@@ -246,15 +246,33 @@
     var dpr = 1, cw = 0, ch = 0;
     var tool = "pen";
     var pointers = {}, pinch = null;
-    var MIN_S = 0.1, MAX_S = 10;
+    // Zoom range: a billion times in either direction. Beyond about 10^10
+    // 64-bit numbers can no longer place a stroke to sub-pixel accuracy.
+    var MIN_S = 1e-9, MAX_S = 1e9;
 
-    function clamp(v) { return Math.min(MAX_S, Math.max(MIN_S, v)); }
+    function clamp(v) { return isFinite(v) && v > 0 ? Math.min(MAX_S, Math.max(MIN_S, v)) : view.s; }
     function ink() { return getComputedStyle(canvas).color; }
     function dotColor() { return getComputedStyle(canvas).getPropertyValue("--muted").trim() || "#888"; }
-    function useView(c) { c.setTransform(dpr * view.s, 0, 0, dpr * view.s, dpr * view.x, dpr * view.y); }
+    // World -> device pixels, done in 64-bit JS maths (the canvas itself is
+    // only 32-bit), so strokes stay exact at any zoom depth.
+    function SX(x) { return (x * view.s + view.x) * dpr; }
+    function SY(y) { return (y * view.s + view.y) * dpr; }
+    function useView(c) { c.setTransform(1, 0, 0, 1, 0, 0); }
+    function grow(st, p) {
+      if (!st.box) st.box = { x0: p.x, y0: p.y, x1: p.x, y1: p.y };
+      else {
+        if (p.x < st.box.x0) st.box.x0 = p.x; if (p.x > st.box.x1) st.box.x1 = p.x;
+        if (p.y < st.box.y0) st.box.y0 = p.y; if (p.y > st.box.y1) st.box.y1 = p.y;
+      }
+    }
+    function visible(st) {
+      var b = st.box, pad = st.w * dpr;
+      var x0 = SX(b.x0) - pad, x1 = SX(b.x1) + pad, y0 = SY(b.y0) - pad, y1 = SY(b.y1) + pad;
+      return x1 >= 0 && y1 >= 0 && x0 <= canvas.width && y0 <= canvas.height;
+    }
 
     function styleStroke(c, st) {
-      c.lineCap = "round"; c.lineJoin = "round"; c.lineWidth = st.w / view.s;
+      c.lineCap = "round"; c.lineJoin = "round"; c.lineWidth = st.w * dpr;
       if (st.tool === "eraser") { c.globalCompositeOperation = "destination-out"; c.strokeStyle = "#000"; }
       else { c.globalCompositeOperation = "source-over"; c.strokeStyle = ink(); }
     }
@@ -262,9 +280,10 @@
     function drawStroke(c, st) {
       styleStroke(c, st);
       c.beginPath();
-      c.moveTo(st.pts[0].x, st.pts[0].y);
-      if (st.pts.length === 1) c.lineTo(st.pts[0].x + 0.01, st.pts[0].y);
-      for (var i = 1; i < st.pts.length; i++) c.lineTo(st.pts[i].x, st.pts[i].y);
+      var x = SX(st.pts[0].x), y = SY(st.pts[0].y);
+      c.moveTo(x, y);
+      if (st.pts.length === 1) c.lineTo(x + 0.01, y);
+      for (var i = 1; i < st.pts.length; i++) c.lineTo(SX(st.pts[i].x), SY(st.pts[i].y));
       c.stroke();
     }
 
@@ -273,9 +292,12 @@
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       // dot grid in world space, thinned out when zoomed far out
-      var step = 32 * view.s;
-      while (step < 14) step *= 2;
+      var k = Math.floor(Math.log2(32 * view.s / 16));
+      var step = 32 * view.s / Math.pow(2, k);
+      if (!isFinite(step) || step <= 0) step = 24;
       var ox = ((view.x % step) + step) % step, oy = ((view.y % step) + step) % step;
+      if (!isFinite(ox)) ox = 0;
+      if (!isFinite(oy)) oy = 0;
       ctx.globalAlpha = 0.45;
       ctx.fillStyle = dotColor();
       var r = Math.max(1, dpr);
@@ -291,7 +313,7 @@
       lctx.setTransform(1, 0, 0, 1, 0, 0);
       lctx.clearRect(0, 0, layer.width, layer.height);
       useView(lctx);
-      strokes.forEach(function (st) { drawStroke(lctx, st); });
+      strokes.forEach(function (st) { if (visible(st)) drawStroke(lctx, st); });
       present();
     }
 
@@ -351,6 +373,7 @@
       if (n === 1) {
         p.role = "draw";
         current = { tool: tool, w: tool === "eraser" ? 28 : 3, pts: [toWorld(p)] };
+        grow(current, current.pts[0]);
         strokes.push(current);
         useView(lctx); drawStroke(lctx, current); present();
       } else if (n === 2) {
@@ -380,9 +403,9 @@
         rebuild();
       } else if (p.role === "draw" && current) {
         var w = toWorld(p), prev = current.pts[current.pts.length - 1];
-        current.pts.push(w);
+        current.pts.push(w); grow(current, w);
         useView(lctx); styleStroke(lctx, current);
-        lctx.beginPath(); lctx.moveTo(prev.x, prev.y); lctx.lineTo(w.x, w.y); lctx.stroke();
+        lctx.beginPath(); lctx.moveTo(SX(prev.x), SY(prev.y)); lctx.lineTo(SX(w.x), SY(w.y)); lctx.stroke();
         present();
       }
     });
