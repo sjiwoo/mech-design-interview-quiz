@@ -22,6 +22,13 @@ window.QUESTION_SETS.forEach((set) => {
     else if (new Set(q.options).size !== 4) errors.push(`${tag}: duplicate options`);
     if (!Number.isInteger(q.answer) || q.answer < 0 || q.answer > 3) errors.push(`${tag}: bad answer index`);
     if (!Array.isArray(q.proof) || q.proof.length < 2 || q.proof.some((x) => typeof x !== "string" || !x.trim())) errors.push(`${tag}: needs a step-by-step proof`);
+    if (q.methods !== undefined) {
+      if (!Array.isArray(q.methods) || !q.methods.length) errors.push(`${tag}: methods must be a non-empty array`);
+      else q.methods.forEach((m, j) => {
+        if (!m.title || !Array.isArray(m.steps) || m.steps.length < 2) errors.push(`${tag}: method ${j + 2} needs a title and steps`);
+      });
+      if (!q.proofTitle) errors.push(`${tag}: proofTitle required when methods are given`);
+    }
     if (!levels.includes(q.level)) errors.push(`${tag}: bad level`);
     if (q.diagram && !q.diagram.section && !supports.includes(q.diagram.support)) errors.push(`${tag}: bad diagram support`);
   });

@@ -704,13 +704,7 @@
         q.plots ? drawPlots(q.diagram, q.plots) : null
       ]);
       if (q.proof && q.proof.length) {
-        feedback = el("div", {}, [
-          feedback,
-          el("div", { class: "proof" }, [
-            el("h3", { text: "Full solution" }),
-            el("ol", {}, q.proof.map(function (step) { return el("li", { text: step }); }))
-          ])
-        ]);
+        feedback = el("div", {}, [feedback, buildSolution(q, item)]);
       }
     }
 
@@ -760,6 +754,33 @@
       var go = app.querySelector(".btn-primary");
       if (go) go.scrollIntoView({ block: "nearest", behavior: "smooth" });
     }
+  }
+
+  // Full solution panel. Questions can carry alternative methods (for example the
+  // same derivation from a different origin), shown as tabs.
+  function buildSolution(q, item) {
+    var methods = [{ title: q.proofTitle || "Solution", steps: q.proof }].concat(q.methods || []);
+    var chosen = Math.min(item.method || 0, methods.length - 1);
+    var list = el("ol", {});
+    var tabs = [];
+    function show(i) {
+      chosen = i; item.method = i;
+      list.replaceChildren.apply(list, methods[i].steps.map(function (st) { return el("li", { text: st }); }));
+      tabs.forEach(function (t, j) { t.setAttribute("aria-selected", String(j === i)); t.tabIndex = j === i ? 0 : -1; });
+    }
+    var head = [el("h3", { text: methods.length > 1 ? "Full solution · " + methods.length + " methods" : "Full solution" })];
+    if (methods.length > 1) {
+      tabs = methods.map(function (m, i) {
+        return el("button", {
+          class: "method-tab", type: "button", role: "tab",
+          text: (i + 1) + ". " + m.title,
+          onclick: function () { show(i); }
+        });
+      });
+      head.push(el("div", { class: "method-tabs", role: "tablist", "aria-label": "Solution methods" }, tabs));
+    }
+    show(chosen);
+    return el("div", { class: "proof" }, head.concat([list]));
   }
 
   function pick(optIndex) {

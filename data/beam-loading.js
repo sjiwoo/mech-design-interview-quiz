@@ -35,6 +35,24 @@ window.QUESTION_SETS.push({
         "Cut at L/2 < x ≤ L:  M(x) = R_A·x − P(x − L/2) = P(L − x)/2.",
         "M rises linearly to x = L/2 and falls linearly after, so the maximum is at the load:  M_max = (P/2)(L/2) = PL/4."
       ],
+      proofTitle: "Origin at left support A",
+      methods: [
+        { title: "Origin at right support B", steps: [
+          "Measure ξ leftward from B, so ξ = L − x.",
+          "ΣM_B = 0:  R_A·L − P·(L/2) = 0  ⇒  R_A = P/2, and so R_B = P/2.",
+          "Cut at 0 ≤ ξ < L/2 and keep the right-hand piece. Only R_B acts on it:  M(ξ) = R_B·ξ = Pξ/2.",
+          "M grows linearly from B to the load at ξ = L/2:  M = (P/2)(L/2) = PL/4.",
+          "Past the load (ξ > L/2) the load's lever arm cancels the growth:  M = Pξ/2 − P(ξ − L/2) = P(L − ξ)/2, which falls back to 0 at A.",
+          "Same PL/4. Working from the other end is a good independent check."
+        ] },
+        { title: "Origin at midspan (under the load)", steps: [
+          "Put x = 0 at the load, so x runs from −L/2 to +L/2. Reactions are still P/2 each (by symmetry).",
+          "Cut at x > 0 and keep the right piece. R_B = P/2 is at distance (L/2 − x) from the cut:  M(x) = (P/2)(L/2 − x).",
+          "By symmetry, for x < 0:  M(x) = (P/2)(L/2 + x). Together:  M(x) = (P/2)(L/2 − |x|).",
+          "This is a tent shape with its peak at x = 0:  M_max = (P/2)(L/2) = PL/4.",
+          "Putting the origin at the symmetry point gives a single formula that is easy to read off."
+        ] }
+      ],
       diagram: { support: "simple", loads: [{ kind: "point", x: 0.5, label: "P" }] },
       plots: {
         shear: [{ x: 0.25, text: "+P/2" }, { x: 0.75, text: "−P/2" }],
@@ -56,6 +74,25 @@ window.QUESTION_SETS.push({
         "At x = L:  EI·v = −P(L³/2 − L³/6) = −PL³/3.",
         "So the tip deflects δ = PL³/3EI downward."
       ],
+      proofTitle: "Origin at the wall",
+      methods: [
+        { title: "Origin at the free end", steps: [
+          "Measure ξ from the tip toward the wall (ξ = L − x). Keep the tip piece, so no wall reactions are needed.",
+          "M(ξ) = −Pξ (hogging).",
+          "Flipping the direction of the coordinate doesn't change the second derivative:  d²v/dξ² = d²v/dx².  So EI·v″ = −Pξ.",
+          "EI·v′ = −Pξ²/2 + C₁. Wall slope zero at ξ = L:  −PL²/2 + C₁ = 0  ⇒  C₁ = PL²/2.",
+          "EI·v = −Pξ³/6 + PL²ξ/2 + C₂. Wall deflection zero at ξ = L:  −PL³/6 + PL³/2 + C₂ = 0  ⇒  C₂ = −PL³/3.",
+          "At the tip, ξ = 0:  EI·v = C₂ = −PL³/3  ⇒  δ = PL³/3EI.",
+          "Here the moment expression is simpler (−Pξ), but both boundary conditions are at the far end."
+        ] },
+        { title: "Moment-area about the free end", steps: [
+          "Moment-area theorem 2: the tip deflection relative to the wall tangent equals the first moment, about the tip, of the M/EI diagram between them.",
+          "The wall tangent is horizontal (fixed end), so that relative deflection is the actual tip deflection.",
+          "The M/EI diagram is a triangle: 0 at the tip, PL/EI at the wall. Area = ½·L·PL/EI = PL²/2EI.",
+          "Its centroid is 2L/3 from the tip, toward the tall end.",
+          "δ = (PL²/2EI)(2L/3) = PL³/3EI."
+        ] }
+      ],
       diagram: { support: "cantilever", loads: [{ kind: "point", x: 1, label: "P" }] }
     },
     {
@@ -70,6 +107,23 @@ window.QUESTION_SETS.push({
         "M(x) = R_A·x − wx·(x/2) = (wL/2)x − wx²/2.",
         "Maximum where dM/dx = 0:  wL/2 − wx = 0  ⇒  x = L/2. (dM/dx is the shear, so this is where V = 0.)",
         "M(L/2) = (wL/2)(L/2) − w(L/2)²/2 = wL²/4 − wL²/8 = wL²/8."
+      ],
+      proofTitle: "Origin at left support A",
+      methods: [
+        { title: "Origin at midspan", steps: [
+          "Put x = 0 at midspan, x from −L/2 to L/2. R_B = wL/2.",
+          "Cut at x and keep the right piece. Its length is u = L/2 − x, carrying load wu with centroid at u/2. R_B is at distance u.",
+          "M = R_B·u − wu·(u/2) = (wL/2)u − wu²/2 = (w/2)·u(L − u).",
+          "With u = L/2 − x:  u(L − u) = (L/2 − x)(L/2 + x) = L²/4 − x².  So M(x) = (w/2)(L²/4 − x²).",
+          "This is an even parabola, with its maximum at x = 0:  M_max = (w/2)(L²/4) = wL²/8.",
+          "No calculus is needed: the symmetric origin puts the vertex at x = 0."
+        ] },
+        { title: "Origin at right support B", steps: [
+          "Measure ξ leftward from B. ΣM_B = 0:  R_A·L − wL·(L/2) = 0  ⇒  R_A = wL/2, and so R_B = wL/2.",
+          "Keep the right piece:  M(ξ) = R_B·ξ − wξ·(ξ/2) = (wL/2)ξ − wξ²/2.",
+          "dM/dξ = wL/2 − wξ = 0  ⇒  ξ = L/2.",
+          "M(L/2) = wL²/4 − wL²/8 = wL²/8. This is the same expression as from A, as symmetry says it should be."
+        ] }
       ],
       diagram: { support: "simple", loads: [{ kind: "udl", from: 0, to: 1, label: "w" }] }
     },
@@ -86,6 +140,15 @@ window.QUESTION_SETS.push({
         "Check with a cut at x: the load beyond the cut is w(L − x) acting (L − x)/2 away, so |M(x)| = w(L − x)²/2.",
         "That is largest at x = 0, giving wL²/2 at the wall, and zero at the free end."
       ],
+      proofTitle: "Origin at the wall (load resultant)",
+      methods: [
+        { title: "Origin at the free end", steps: [
+          "Measure ξ from the tip. Keep the tip piece, so no wall reactions are needed.",
+          "The load on the tip piece is wξ, acting at ξ/2 from the cut:  M(ξ) = −wξ·(ξ/2) = −wξ²/2.",
+          "|M| increases with ξ, so it is largest at the wall, ξ = L:  |M| = wL²/2.",
+          "This is often the fastest route for any cantilever: start the cut from the free end."
+        ] }
+      ],
       diagram: { support: "cantilever", loads: [{ kind: "udl", from: 0, to: 1, label: "w" }] }
     },
     {
@@ -101,6 +164,23 @@ window.QUESTION_SETS.push({
         "EI·v = Px³/12 − PL²x/16 + C₂. Pin at A, v(0) = 0  ⇒  C₂ = 0.",
         "At x = L/2:  EI·v = P(L³/8)/12 − PL²(L/2)/16 = PL³/96 − PL³/32 = PL³/96 − 3PL³/96 = −PL³/48.",
         "So δ_max = PL³/48EI, at midspan."
+      ],
+      proofTitle: "Origin at left support A",
+      methods: [
+        { title: "Origin at midspan", steps: [
+          "Put x = 0 under the load and work on the right half, 0 ≤ x ≤ L/2. Keep the right piece:  M(x) = (P/2)(L/2 − x) = PL/4 − Px/2.",
+          "EI·v″ = PL/4 − Px/2.",
+          "EI·v′ = PLx/4 − Px²/4 + C₁. Symmetry, v′(0) = 0  ⇒  C₁ = 0.",
+          "EI·v = PLx²/8 − Px³/12 + C₂.",
+          "Support at x = L/2, v = 0:  PL³/32 − PL³/96 + C₂ = 0  ⇒  C₂ = −(3 − 1)PL³/96 = −PL³/48.",
+          "Midspan deflection is v(0) = C₂/EI, so δ = PL³/48EI. With the origin at the point you want, the answer is just the constant."
+        ] },
+        { title: "Half beam as a cantilever from midspan", steps: [
+          "By symmetry the slope at midspan is zero, so each half acts like a cantilever built in at midspan.",
+          "Each half has length L/2, and its free end (the support) carries the reaction P/2.",
+          "Cantilever tip deflection (question 2):  (P/2)(L/2)³ / 3EI = (P/2)(L³/8)/3EI = PL³/48EI.",
+          "That is how far the support sits above midspan, which is the midspan deflection:  δ = PL³/48EI."
+        ] }
       ],
       diagram: { support: "simple", loads: [{ kind: "point", x: 0.5, label: "P" }] }
     },
@@ -120,6 +200,24 @@ window.QUESTION_SETS.push({
         "EI·v = wL⁴/96 − wL⁴/384 − wL⁴/48 = (4 − 1 − 8)wL⁴/384 = −5wL⁴/384.",
         "So δ_max = 5wL⁴/384EI, at midspan."
       ],
+      proofTitle: "Origin at left support A",
+      methods: [
+        { title: "Origin at midspan", steps: [
+          "Put x = 0 at midspan. From question 3:  M(x) = (w/2)(L²/4 − x²) = wL²/8 − wx²/2.",
+          "EI·v″ = wL²/8 − wx²/2.",
+          "EI·v′ = wL²x/8 − wx³/6 + C₁. Symmetry, v′(0) = 0  ⇒  C₁ = 0.",
+          "EI·v = wL²x²/16 − wx⁴/24 + C₂.",
+          "Support at x = L/2, v = 0:  wL⁴/64 − wL⁴/384 + C₂ = 0  ⇒  C₂ = −(6 − 1)wL⁴/384 = −5wL⁴/384.",
+          "Midspan:  v(0) = C₂/EI  ⇒  δ = 5wL⁴/384EI. That is one constant instead of two, because symmetry fixes C₁."
+        ] },
+        { title: "Half beam as a cantilever from midspan", steps: [
+          "Midspan slope is zero, so each half is a cantilever of length a = L/2 built in at midspan.",
+          "Load on that cantilever: the UDL w pushes down, and the reaction wL/2 pushes up at its tip (the support).",
+          "Tip rise from the reaction (question 2):  (wL/2)a³/3EI = (wL/2)(L³/8)/3EI = wL⁴/48EI.",
+          "Tip drop from the UDL (question 7):  w·a⁴/8EI = w(L⁴/16)/8EI = wL⁴/128EI.",
+          "Net, support above midspan:  wL⁴/48EI − wL⁴/128EI = (8 − 3)wL⁴/384EI = 5wL⁴/384EI."
+        ] }
+      ],
       diagram: { support: "simple", loads: [{ kind: "udl", from: 0, to: 1, label: "w" }] }
     },
     {
@@ -137,6 +235,22 @@ window.QUESTION_SETS.push({
         "Wall deflection zero, v(0) = 0  ⇒  −wL⁴/24 + C₂ = 0  ⇒  C₂ = wL⁴/24.",
         "At x = L:  EI·v = 0 − wL⁴/6 + wL⁴/24 = −4wL⁴/24 + wL⁴/24 = −3wL⁴/24 = −wL⁴/8.",
         "So δ_tip = wL⁴/8EI."
+      ],
+      proofTitle: "Origin at the wall",
+      methods: [
+        { title: "Origin at the free end", steps: [
+          "Measure ξ from the tip:  M(ξ) = −wξ²/2.",
+          "EI·v″ = −wξ²/2.",
+          "EI·v′ = −wξ³/6 + C₁. Wall slope zero at ξ = L  ⇒  C₁ = wL³/6.",
+          "EI·v = −wξ⁴/24 + wL³ξ/6 + C₂. Wall deflection zero at ξ = L:  −wL⁴/24 + wL⁴/6 + C₂ = 0  ⇒  C₂ = −(4 − 1)wL⁴/24 = −wL⁴/8.",
+          "Tip:  v(0) = C₂/EI  ⇒  δ = wL⁴/8EI."
+        ] },
+        { title: "Moment-area about the free end", steps: [
+          "Tip deflection = first moment, about the tip, of the M/EI diagram from tip to wall (the wall tangent is horizontal).",
+          "|M|/EI = wξ²/2EI, a parabolic spandrel. Area = ∫ from 0 to L of wξ²/2EI dξ = wL³/6EI.",
+          "Its centroid from the tip:  ∫ξ·ξ² dξ / ∫ξ² dξ = (L⁴/4)/(L³/3) = 3L/4.",
+          "δ = (wL³/6EI)(3L/4) = wL⁴/8EI."
+        ] }
       ],
       diagram: { support: "cantilever", loads: [{ kind: "udl", from: 0, to: 1, label: "w" }] }
     },
@@ -185,6 +299,25 @@ window.QUESTION_SETS.push({
         "Ratio:  δ_ff / δ_ss = (1/192) / (1/48) = 1/4.",
         "The midspan moment also halves: M(L/2) = PL/4 − PL/8 = PL/8, and the end moments are PL/8."
       ],
+      proofTitle: "Origin at the left fixed end",
+      methods: [
+        { title: "Origin at midspan", steps: [
+          "Put x = 0 at the load and work on the right half, 0 ≤ x ≤ L/2. The end at x = L/2 has reaction P/2 and hogging moment M₀.",
+          "Keep the right piece:  M(x) = (P/2)(L/2 − x) − M₀.",
+          "EI·v′ = (P/2)(Lx/2 − x²/2) − M₀x + C₁. Symmetry, v′(0) = 0  ⇒  C₁ = 0.",
+          "Fixed end, v′(L/2) = 0:  (P/2)(L²/4 − L²/8) − M₀L/2 = 0  ⇒  PL²/16 = M₀L/2  ⇒  M₀ = PL/8.",
+          "EI·v = (P/2)(Lx²/4 − x³/6) − M₀x²/2 + C₂. Fixed end, v(L/2) = 0:  PL³/48 − PL³/64 + C₂ = 0  ⇒  C₂ = −PL³/192.",
+          "Midspan:  v(0) = C₂/EI  ⇒  δ = PL³/192EI, which is 1/4 of PL³/48EI."
+        ] },
+        { title: "Superposition on a simply supported beam", steps: [
+          "Treat it as a simply supported beam carrying P, plus equal end moments M₀ that restore zero end slope.",
+          "End slope of a simply supported beam under centre load P:  PL²/16EI.",
+          "End slope from equal and opposite end moments M₀ (uniform moment along the span):  M₀L/2EI, in the opposite sense.",
+          "Fixed ends mean zero net slope:  PL²/16EI = M₀L/2EI  ⇒  M₀ = PL/8.",
+          "Midspan deflection: PL³/48EI down from P, and M₀L²/8EI up from the uniform moment.",
+          "δ = PL³/48EI − (PL/8)L²/8EI = PL³/48EI − PL³/64EI = PL³/192EI."
+        ] }
+      ],
       diagram: { support: "fixed", loads: [{ kind: "point", x: 0.5, label: "P" }] }
     },
     {
@@ -200,6 +333,15 @@ window.QUESTION_SETS.push({
         "σ = M·c / I = 100,000 × 5 / 1,666.7 = 300 N/mm² = 300 MPa.",
         "Check with σ = 6M/(bh²) = 600,000 / (20 × 100) = 300 MPa.",
         "6061-T6 yields at about 275 MPa, so this bracket would yield in aluminium."
+      ],
+      proofTitle: "Origin at the wall",
+      methods: [
+        { title: "Origin at the load (free end)", steps: [
+          "Measure ξ from the tip. Keep the tip piece:  M(ξ) = −F·ξ = −500ξ N·mm.",
+          "|M| grows linearly to the wall at ξ = 200 mm:  M = 500 × 200 = 100,000 N·mm. No wall reactions are needed.",
+          "σ = 6M/(bh²) = 600,000 / (20 × 10²) = 300 MPa, as before.",
+          "Stress at any section ξ:  σ(ξ) = 6·500ξ/(20 × 100) = 1.5ξ MPa. It is zero at the load and peaks at the root, which is why tapered brackets work."
+        ] }
       ],
       diagram: { support: "cantilever", loads: [{ kind: "point", x: 1, label: "500 N" }] }
     },
@@ -233,6 +375,23 @@ window.QUESTION_SETS.push({
         "So M peaks under the load:  M_max = R_A·a = (3P/4)(L/4) = 3PL/16.",
         "In general:  M_max = Pab/L. With a = b = L/2 this gives PL/4, matching question 1."
       ],
+      proofTitle: "Origin at left support A",
+      methods: [
+        { title: "Origin at right support B", steps: [
+          "Measure ξ leftward from B. The load is at ξ = 3L/4.",
+          "ΣM_B = 0:  R_A·L − P·(3L/4) = 0  ⇒  R_A = 3P/4, and so R_B = P/4.",
+          "For ξ < 3L/4, keep the right piece:  M(ξ) = R_B·ξ = Pξ/4, rising toward the load.",
+          "At the load:  M = (P/4)(3L/4) = 3PL/16. This matches the result from A, which is a good arithmetic check.",
+          "In general, from either end:  M_max = R_near·(distance to load) = Pab/L."
+        ] },
+        { title: "Origin at the load", steps: [
+          "Put s = 0 at the load. The left span is a = L/4 and the right span is b = 3L/4.",
+          "Reactions:  R_A = Pb/L = 3P/4 and R_B = Pa/L = P/4.",
+          "Left of the load (−a ≤ s ≤ 0):  M(s) = R_A(a + s), rising to R_A·a at s = 0.",
+          "Right of the load (0 ≤ s ≤ b):  M(s) = R_B(b − s), falling from R_B·b at s = 0.",
+          "Both sides agree at s = 0:  R_A·a = (3P/4)(L/4) = 3PL/16, and R_B·b = (P/4)(3L/4) = 3PL/16."
+        ] }
+      ],
       diagram: { support: "simple", loads: [{ kind: "point", x: 0.25, label: "P" }] }
     },
     {
@@ -252,6 +411,16 @@ window.QUESTION_SETS.push({
         "V is linear in x:  V(0) = +wL/2,  V(L/2) = 0,  V(L) = −wL/2.",
         "So |V| is largest at the supports, equal to wL/2.",
         "wL is the total load, which is split between the two supports and never acts as shear at a single section."
+      ],
+      proofTitle: "Origin at left support A",
+      methods: [
+        { title: "Origin at midspan", steps: [
+          "Put x = 0 at midspan, x from −L/2 to L/2. R_A = wL/2.",
+          "Cut at x and keep the left piece, of length (L/2 + x):  V(x) = R_A − w(L/2 + x) = −wx.",
+          "V is linear through zero at midspan and odd in x, as symmetry requires.",
+          "The largest magnitude is at x = ±L/2 (the supports):  |V| = wL/2.",
+          "Check with question 3's midspan origin:  M(x) = (w/2)(L²/4 − x²), so dM/dx = −wx = V."
+        ] }
       ],
       diagram: { support: "simple", loads: [{ kind: "udl", from: 0, to: 1, label: "w" }] }
     },
@@ -329,6 +498,28 @@ window.QUESTION_SETS.push({
         "ΣF_y = 0:  V_A = wL − 3wL/8 = 5wL/8.",
         "ΣM about the wall:  M_A = wL·(L/2) − R_B·L = wL²/2 − 3wL²/8 = wL²/8."
       ],
+      proofTitle: "Superposition at the roller",
+      methods: [
+        { title: "Integration with origin at the roller", steps: [
+          "Measure ξ from the roller (ξ = 0) to the wall (ξ = L). Keep the roller piece:  M(ξ) = Rξ − wξ²/2, with R unknown.",
+          "EI·v″ = Rξ − wξ²/2.",
+          "EI·v′ = Rξ²/2 − wξ³/6 + C₁.   EI·v = Rξ³/6 − wξ⁴/24 + C₁ξ + C₂.",
+          "Roller, v(0) = 0  ⇒  C₂ = 0.",
+          "Wall, v(L) = 0:  RL³/6 − wL⁴/24 + C₁L = 0  ⇒  C₁ = −RL²/6 + wL³/24.",
+          "Wall, v′(L) = 0:  RL²/2 − wL³/6 + C₁ = 0. Substitute C₁:  RL²/2 − RL²/6 − wL³/6 + wL³/24 = 0.",
+          "RL²/3 = wL³(4 − 1)/24 = wL³/8  ⇒  R = 3wL/8.",
+          "Putting the origin at the unknown reaction means it appears in M directly, and three boundary conditions solve for three unknowns."
+        ] },
+        { title: "Integration with origin at the wall", steps: [
+          "Measure x from the wall. Wall reactions V_A (up) and M_A (hogging) are unknown. Keep the left piece:  M(x) = −M_A + V_A·x − wx²/2.",
+          "Fixed end:  v(0) = 0 and v′(0) = 0, so both integration constants are zero.",
+          "EI·v = −M_A·x²/2 + V_A·x³/6 − wx⁴/24.",
+          "Roller, v(L) = 0:  −M_A·L²/2 + V_A·L³/6 − wL⁴/24 = 0.",
+          "Statics, ΣM about the roller:  M_A = V_A·L − wL²/2.",
+          "Substitute:  −(V_A·L − wL²/2)L²/2 + V_A·L³/6 − wL⁴/24 = 0  ⇒  −V_A·L³/3 + wL⁴/4 − wL⁴/24 = 0  ⇒  V_A = 5wL/8.",
+          "So R = wL − 5wL/8 = 3wL/8, and M_A = 5wL²/8 − wL²/2 = wL²/8."
+        ] }
+      ],
       diagram: { support: "propped", loads: [{ kind: "udl", from: 0, to: 1, label: "w" }] }
     },
     {
@@ -348,6 +539,16 @@ window.QUESTION_SETS.push({
         "M(x) = R_A·x − P(x − L/3) = Px − Px + PL/3 = PL/3, which does not depend on x.",
         "Outside the loads (x < L/3):  V = P and M = Px, rising to PL/3 at x = L/3.",
         "Between the loads the shear is zero and the moment is constant, which is pure bending. That is why this setup is used to measure flexural properties."
+      ],
+      proofTitle: "Origin at left support A",
+      methods: [
+        { title: "Origin at midspan", steps: [
+          "Put x = 0 at midspan. The loads are at x = ±L/6 and the middle region is −L/6 < x < L/6.",
+          "Reactions are P each, by symmetry.",
+          "Cut in the middle region and keep the left piece. R_A is at distance L/2 + x and the left load at distance L/6 + x:",
+          "M(x) = P(L/2 + x) − P(L/6 + x) = PL/2 − PL/6 = PL/3. The x terms cancel.",
+          "V = P − P = 0. Constant moment and zero shear: pure bending."
+        ] }
       ],
       diagram: {
         support: "simple",
