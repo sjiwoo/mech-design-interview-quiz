@@ -317,11 +317,33 @@
       return { mx: (a.x + b.x) / 2, my: (a.y + b.y) / 2, d: Math.hypot(a.x - b.x, a.y - b.y) };
     }
 
+    // Stop the browser from starting text selection, callouts or native
+    // scroll/zoom from touches on the pad, even on fast strokes (iOS Safari
+    // ignores preventDefault on pointer events for this).
+    function block(e) { if (e.cancelable) e.preventDefault(); }
+    ["touchstart", "touchmove", "touchend", "gesturestart", "gesturechange"].forEach(function (t) {
+      canvas.addEventListener(t, block, { passive: false });
+    });
+    canvas.addEventListener("contextmenu", block);
+    canvas.addEventListener("selectstart", block);
+    canvas.addEventListener("dragstart", block);
+
+    function lockPage(on) {
+      document.body.classList.toggle("pad-active", on);
+      if (on) {
+        document.addEventListener("selectstart", block, true);
+        try { var sel = window.getSelection(); if (sel) sel.removeAllRanges(); } catch (err) { /* ignore */ }
+      } else {
+        document.removeEventListener("selectstart", block, true);
+      }
+    }
+
     canvas.addEventListener("pointerdown", function (e) {
       if (!ctx) return;
       if (e.pointerType === "mouse" && e.button !== 0) return;
       e.preventDefault();
       try { canvas.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+      lockPage(true);
       var p = local(e);
       p.role = "none";
       pointers[e.pointerId] = p;
@@ -371,9 +393,11 @@
       if (p.role === "draw") current = null;
       delete pointers[e.pointerId];
       if (Object.keys(pointers).length < 2) pinch = null;
+      if (!Object.keys(pointers).length) lockPage(false);
     }
     canvas.addEventListener("pointerup", release);
     canvas.addEventListener("pointercancel", release);
+    canvas.addEventListener("lostpointercapture", release);
 
     canvas.addEventListener("wheel", function (e) {
       if (!ctx) return;

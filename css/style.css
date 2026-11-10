@@ -258,9 +258,18 @@ p { margin: 0 0 12px; }
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
   cursor: crosshair;
   border: 1px dashed var(--line);
   border-radius: 8px;
 }
 
 .pad-hint { margin: 10px 0 0; font-size: 0.82rem; }
+
+/* While a stroke is in progress, nothing on the page can be selected */
+body.pad-active, body.pad-active * {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-touch-callout: none !important;
+}
