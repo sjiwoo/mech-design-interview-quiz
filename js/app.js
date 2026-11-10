@@ -521,6 +521,15 @@
         el("p", { text: q.why }),
         q.plots ? drawPlots(q.diagram, q.plots) : null
       ]);
+      if (q.proof && q.proof.length) {
+        feedback = el("div", {}, [
+          feedback,
+          el("div", { class: "proof" }, [
+            el("h3", { text: "Full solution" }),
+            el("ol", {}, q.proof.map(function (step) { return el("li", { text: step }); }))
+          ])
+        ]);
+      }
       var last = state.index === total - 1;
       next = el("div", { class: "btn-row" }, [
         el("button", {

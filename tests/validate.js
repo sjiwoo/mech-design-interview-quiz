@@ -21,6 +21,7 @@ window.QUESTION_SETS.forEach((set) => {
     if (!Array.isArray(q.options) || q.options.length !== 4) errors.push(`${tag}: needs 4 options`);
     else if (new Set(q.options).size !== 4) errors.push(`${tag}: duplicate options`);
     if (!Number.isInteger(q.answer) || q.answer < 0 || q.answer > 3) errors.push(`${tag}: bad answer index`);
+    if (!Array.isArray(q.proof) || q.proof.length < 2 || q.proof.some((x) => typeof x !== "string" || !x.trim())) errors.push(`${tag}: needs a step-by-step proof`);
     if (!levels.includes(q.level)) errors.push(`${tag}: bad level`);
     if (q.diagram && !supports.includes(q.diagram.support)) errors.push(`${tag}: bad diagram support`);
   });

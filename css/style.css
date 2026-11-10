@@ -273,3 +273,15 @@ body.pad-active, body.pad-active * {
   -webkit-user-select: none !important;
   -webkit-touch-callout: none !important;
 }
+
+/* Step-by-step solution */
+.proof {
+  margin-top: 14px;
+  padding: 14px 16px 6px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.proof h3 { font-size: 0.95rem; margin: 0 0 8px; }
+.proof ol { margin: 0; padding-left: 22px; }
+.proof li { margin-bottom: 10px; font-variant-numeric: tabular-nums; }
+.proof li::marker { color: var(--muted); font-weight: 700; }
