@@ -42,6 +42,44 @@
     } catch (e) { /* storage unavailable: skip */ }
   }
 
+  /* ---------- saved progress ----------
+   * Stored in this browser only (localStorage), per topic:
+   *   progress:<set>        { index, answers[] }   full runs only
+   *   pad:<set>:<question>  { view, strokes[] }    every question
+   */
+
+  function readJSON(key) {
+    try { var v = localStorage.getItem(key); return v ? JSON.parse(v) : null; } catch (e) { return null; }
+  }
+  function writeJSON(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); return true; } catch (e) { return false; }
+  }
+  function removeKey(key) {
+    try { localStorage.removeItem(key); } catch (e) { /* ignore */ }
+  }
+  function progressKey(set) { return "progress:" + set.id; }
+  function padKey(set, qi) { return "pad:" + set.id + ":" + qi; }
+
+  function loadProgress(set) {
+    var p = readJSON(progressKey(set));
+    if (!p || !Array.isArray(p.answers) || p.answers.length !== set.questions.length) return null;
+    return p;
+  }
+  function saveProgress() {
+    if (!state || !state.full) return;
+    writeJSON(progressKey(state.set), {
+      index: state.index,
+      answers: state.items.map(function (it) { return it.picked; })
+    });
+  }
+  function clearPads(set, indexes) {
+    indexes.forEach(function (qi) { removeKey(padKey(set, qi)); });
+  }
+  function clearSet(set) {
+    removeKey(progressKey(set));
+    clearPads(set, set.questions.map(function (_, i) { return i; }));
+  }
+
   function render(children) {
     app.replaceChildren.apply(app, children);
     window.scrollTo(0, 0);
@@ -235,7 +273,7 @@
    * world coordinates, so the page is unbounded and stays sharp when zoomed.
    */
 
-  function makePad() {
+  function makePad(saved, onSave) {
     var canvas = el("canvas", { class: "pad-canvas", "aria-label": "Scratchpad: one finger draws, two fingers pan and zoom" });
     var layer = document.createElement("canvas");
     var ctx = null, lctx = null;
@@ -243,6 +281,49 @@
 
     var strokes = [], current = null;
     var view = { x: 0, y: 0, s: 1 };
+    var status = el("span", { class: "pad-status" });
+
+    // restore a saved sketch
+    if (saved && Array.isArray(saved.strokes)) {
+      saved.strokes.forEach(function (r) {
+        if (!r || !Array.isArray(r.p) || r.p.length < 2) return;
+        var st = { tool: r.t === "e" ? "eraser" : "pen", w: r.w || 3, pts: [] };
+        for (var i = 0; i + 1 < r.p.length; i += 2) { var pt = { x: r.p[i], y: r.p[i + 1] }; st.pts.push(pt); }
+        st.pts.forEach(function (pt) { growBox(st, pt); });
+        strokes.push(st);
+      });
+      if (saved.view && isFinite(saved.view.x) && isFinite(saved.view.y) && saved.view.s > 0) {
+        view = { x: saved.view.x, y: saved.view.y, s: saved.view.s };
+      }
+    }
+    function growBox(st, p) {
+      if (!st.box) st.box = { x0: p.x, y0: p.y, x1: p.x, y1: p.y };
+      else {
+        if (p.x < st.box.x0) st.box.x0 = p.x; if (p.x > st.box.x1) st.box.x1 = p.x;
+        if (p.y < st.box.y0) st.box.y0 = p.y; if (p.y > st.box.y1) st.box.y1 = p.y;
+      }
+    }
+
+    var saveTimer = null;
+    function num(v) { return parseFloat(v.toPrecision(12)); }
+    function persist() {
+      if (!onSave) return;
+      var data = {
+        view: { x: view.x, y: view.y, s: view.s },
+        strokes: strokes.map(function (st) {
+          var flat = [];
+          st.pts.forEach(function (pt) { flat.push(num(pt.x), num(pt.y)); });
+          return { t: st.tool === "eraser" ? "e" : "p", w: st.w, p: flat };
+        })
+      };
+      var ok = onSave(strokes.length ? data : null);
+      status.textContent = ok ? "Saved" : "Couldn't save (browser storage full or blocked)";
+      status.className = "pad-status" + (ok ? "" : " pad-status-bad");
+    }
+    function saveSoon() {
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(persist, 400);
+    }
     var dpr = 1, cw = 0, ch = 0;
     var tool = "pen";
     var pointers = {}, pinch = null;
@@ -258,13 +339,7 @@
     function SX(x) { return (x * view.s + view.x) * dpr; }
     function SY(y) { return (y * view.s + view.y) * dpr; }
     function useView(c) { c.setTransform(1, 0, 0, 1, 0, 0); }
-    function grow(st, p) {
-      if (!st.box) st.box = { x0: p.x, y0: p.y, x1: p.x, y1: p.y };
-      else {
-        if (p.x < st.box.x0) st.box.x0 = p.x; if (p.x > st.box.x1) st.box.x1 = p.x;
-        if (p.y < st.box.y0) st.box.y0 = p.y; if (p.y > st.box.y1) st.box.y1 = p.y;
-      }
-    }
+    function grow(st, p) { growBox(st, p); }
     function visible(st) {
       var b = st.box, pad = st.w * dpr;
       var x0 = SX(b.x0) - pad, x1 = SX(b.x1) + pad, y0 = SY(b.y0) - pad, y1 = SY(b.y1) + pad;
@@ -401,6 +476,7 @@
         view.x = m.mx - wx * ns; view.y = m.my - wy * ns; view.s = ns;
         pinch = m;
         rebuild();
+        saveSoon();
       } else if (p.role === "draw" && current) {
         var w = toWorld(p), prev = current.pts[current.pts.length - 1];
         current.pts.push(w); grow(current, w);
@@ -413,7 +489,7 @@
     function release(e) {
       var p = pointers[e.pointerId];
       if (!p) return;
-      if (p.role === "draw") current = null;
+      if (p.role === "draw" && current) { current = null; persist(); }
       delete pointers[e.pointerId];
       if (Object.keys(pointers).length < 2) pinch = null;
       if (!Object.keys(pointers).length) lockPage(false);
@@ -433,6 +509,7 @@
         view.x -= e.deltaX; view.y -= e.deltaY;
       }
       rebuild();
+      saveSoon();
     }, { passive: false });
 
     var penBtn, eraserBtn;
@@ -443,9 +520,9 @@
     }
     penBtn = el("button", { class: "btn btn-small", type: "button", text: "Pen", onclick: function () { setTool("pen"); } });
     eraserBtn = el("button", { class: "btn btn-small", type: "button", text: "Eraser", onclick: function () { setTool("eraser"); } });
-    var undoBtn = el("button", { class: "btn btn-small", type: "button", text: "Undo", onclick: function () { strokes.pop(); rebuild(); } });
-    var clearBtn = el("button", { class: "btn btn-small", type: "button", text: "Clear", onclick: function () { strokes = []; current = null; rebuild(); } });
-    var homeBtn = el("button", { class: "btn btn-small", type: "button", text: "Reset view", onclick: function () { view = { x: 0, y: 0, s: 1 }; rebuild(); } });
+    var undoBtn = el("button", { class: "btn btn-small", type: "button", text: "Undo", onclick: function () { strokes.pop(); rebuild(); persist(); } });
+    var clearBtn = el("button", { class: "btn btn-small", type: "button", text: "Clear", onclick: function () { strokes = []; current = null; rebuild(); persist(); } });
+    var homeBtn = el("button", { class: "btn btn-small", type: "button", text: "Reset view", onclick: function () { view = { x: 0, y: 0, s: 1 }; rebuild(); persist(); } });
     setTool("pen");
 
     return el("section", { class: "card pad" }, [
@@ -454,7 +531,10 @@
         el("div", { class: "pad-tools" }, [penBtn, eraserBtn, undoBtn, clearBtn, homeBtn])
       ]),
       canvas,
-      el("p", { class: "muted pad-hint", text: "One finger draws. Two fingers pan and zoom. Mouse: wheel pans, Ctrl + wheel zooms." })
+      el("p", { class: "muted pad-hint" }, [
+        el("span", { text: "One finger draws. Two fingers pan and zoom. Mouse: wheel pans, Ctrl + wheel zooms. " }),
+        status
+      ])
     ]);
   }
 
@@ -469,29 +549,61 @@
 
     sets.forEach(function (set) {
       var best = loadBest(set.id);
+      var prog = loadProgress(set);
+      var done = prog ? prog.answers.filter(function (a) { return a !== null; }).length : 0;
+      var buttons;
+      if (prog && (done > 0 || prog.index > 0)) {
+        var armed = false;
+        var over = el("button", { class: "btn", type: "button", text: "Start over" });
+        over.addEventListener("click", function () {
+          if (!armed) { armed = true; over.textContent = "Tap again to erase answers and sketches"; return; }
+          clearSet(set); startQuiz(set, set.questions);
+        });
+        buttons = el("div", { class: "btn-row" }, [
+          el("button", {
+            class: "btn btn-primary", type: "button", text: "Resume at question " + (prog.index + 1),
+            onclick: function () { startQuiz(set, set.questions, prog); }
+          }),
+          over
+        ]);
+      } else {
+        buttons = el("button", { class: "btn btn-primary", type: "button", text: "Start", onclick: function () { clearSet(set); startQuiz(set, set.questions); } });
+      }
       nodes.push(el("section", { class: "card" }, [
         el("h2", { text: set.title }),
         el("p", { class: "muted", text: set.blurb }),
         el("div", { class: "topic-meta" }, [
           el("span", { text: set.questions.length + " questions" }),
+          prog && done ? el("span", { text: done + " answered" }) : null,
           best ? el("span", { text: "Best: " + best.score + "/" + best.total }) : null
         ]),
-        el("button", { class: "btn btn-primary", text: "Start", onclick: function () { startQuiz(set, set.questions); } })
+        buttons
       ]));
     });
 
     render(nodes);
   }
 
-  function startQuiz(set, questions) {
+  function startQuiz(set, questions, resume) {
+    var full = questions.length === set.questions.length;
     state = {
       set: set,
+      full: full,
       items: questions.map(function (q) {
+        var qi = set.questions.indexOf(q);
         var order = q.options.map(function (_, i) { return i; });
-        return { q: q, order: order, picked: null, pad: null };
+        var picked = resume && Number.isInteger(resume.answers[qi]) ? resume.answers[qi] : null;
+        return { q: q, qi: qi, order: order, picked: picked, pad: null };
       }),
-      index: 0
+      index: resume ? Math.min(Math.max(0, resume.index | 0), questions.length - 1) : 0
     };
+    saveProgress();
+    showQuestion();
+  }
+
+  function goTo(i) {
+    state.index = i;
+    saveProgress();
     showQuestion();
   }
 
@@ -539,7 +651,7 @@
     if (state.index > 0) {
       nav.push(el("button", {
         class: "btn", type: "button", text: "Previous",
-        onclick: function () { state.index--; showQuestion(); }
+        onclick: function () { goTo(state.index - 1); }
       }));
     }
     if (answered) {
@@ -548,7 +660,7 @@
         text: last ? "See results" : "Next question",
         onclick: function () {
           if (last) showResults();
-          else { state.index++; showQuestion(); }
+          else goTo(state.index + 1);
         }
       }));
     }
@@ -568,7 +680,10 @@
         feedback,
         next
       ]),
-      (item.pad = item.pad || makePad())
+      (item.pad = item.pad || makePad(readJSON(padKey(state.set, item.qi)), function (data) {
+        if (!data) { removeKey(padKey(state.set, item.qi)); return true; }
+        return writeJSON(padKey(state.set, item.qi), data);
+      }))
     ]);
 
     if (answered) {
@@ -581,6 +696,7 @@
     var item = state.items[state.index];
     if (item.picked !== null) return;
     item.picked = optIndex;
+    saveProgress();
     showQuestion();
   }
 
@@ -598,12 +714,15 @@
       : "Worth another pass through the standard beam cases.";
 
     var buttons = [
-      el("button", { class: "btn btn-primary", text: "Retake all", onclick: function () { startQuiz(set, set.questions); } })
+      el("button", { class: "btn btn-primary", text: "Retake all", onclick: function () { clearSet(set); startQuiz(set, set.questions); } })
     ];
     if (missed.length) {
       buttons.push(el("button", {
         class: "btn", text: "Retry missed (" + missed.length + ")",
-        onclick: function () { startQuiz(set, missed.map(function (it) { return it.q; })); }
+        onclick: function () {
+          clearPads(set, missed.map(function (it) { return it.qi; }));
+          startQuiz(set, missed.map(function (it) { return it.q; }));
+        }
       }));
     }
     buttons.push(el("button", { class: "btn", text: "All topics", onclick: showHome }));
