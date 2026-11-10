@@ -7,7 +7,7 @@ const dataDir = path.join(__dirname, "..", "data");
 fs.readdirSync(dataDir).filter((f) => f.endsWith(".js")).forEach((f) => require(path.join(dataDir, f)));
 
 const errors = [];
-const levels = ["Fundamental", "Applied", "Design judgment"];
+const levels = ["Fundamental", "Applied", "Design judgment", "Brain teaser", "Trick question"];
 const supports = ["simple", "cantilever", "fixed", "propped"];
 
 window.QUESTION_SETS.forEach((set) => {

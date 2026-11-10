@@ -1,0 +1,213 @@
+/* Topic: GD&T. Format: see data/beam-loading.js */
+window.QUESTION_SETS = window.QUESTION_SETS || [];
+window.QUESTION_SETS.push({
+  "id": "gdt",
+  "title": "GD&T",
+  "blurb": "Position, datums, MMC and bonus tolerance, virtual condition, form controls, runout and fastener formulas.",
+  "questions": [
+    {
+      "level": "Fundamental",
+      "q": "A hole has a position tolerance of Ø0.2 relative to datums A, B and C. What does that mean?",
+      "options": [
+        "The hole diameter may vary by ±0.2",
+        "The hole centre may be up to 0.2 from true position in any direction",
+        "The hole's axis must lie inside a 0.2 diameter cylinder centred on the true position",
+        "The hole centre may be off by ±0.2 in X and ±0.2 in Y"
+      ],
+      "answer": 2,
+      "why": "The Ø symbol makes the zone a cylinder of diameter 0.2 around the theoretically exact location. The axis may be at most 0.1 from true position.",
+      "proof": [
+        "Basic dimensions from the datums locate the true position exactly.",
+        "The tolerance zone is a cylinder of diameter 0.2 centred there, through the depth of the hole.",
+        "The hole's axis must stay inside it, so the largest radial offset is 0.1.",
+        "Position says nothing about the hole's size. That has its own size tolerance."
+      ]
+    },
+    {
+      "level": "Applied",
+      "q": "A hole is dimensioned Ø10.0–10.2 with position Ø0.2 at MMC. One part's hole measures Ø10.15. What position tolerance does that hole get?",
+      "options": [
+        "Ø0.20",
+        "Ø0.25",
+        "Ø0.35",
+        "Ø0.40"
+      ],
+      "answer": 2,
+      "why": "Bonus = actual size − MMC size = 10.15 − 10.0 = 0.15. Total = 0.2 + 0.15 = Ø0.35.",
+      "proof": [
+        "MMC of a hole is its smallest size: Ø10.0. That is when the stated Ø0.2 applies.",
+        "As the hole gets bigger than MMC, it gains bonus tolerance equal to the departure:  10.15 − 10.0 = 0.15.",
+        "Allowed position = 0.2 + 0.15 = Ø0.35."
+      ],
+      "proofTitle": "Stated tolerance plus bonus",
+      "methods": [
+        {
+          "title": "Virtual condition",
+          "steps": [
+            "Virtual condition of the hole = MMC size − position tolerance = 10.0 − 0.2 = Ø9.8. A Ø9.8 gauge pin at true position must always fit.",
+            "For an actual hole of Ø10.15, the axis can move until the hole touches that pin:  10.15 − 9.8 = Ø0.35 diametral zone.",
+            "Same answer. MMC is used because it guarantees assembly while accepting more parts."
+          ]
+        }
+      ]
+    },
+    {
+      "level": "Applied",
+      "q": "A pin is Ø9.9–10.0 with position Ø0.1 at MMC. What is its virtual condition (the worst-case boundary a mating hole must clear)?",
+      "options": [
+        "Ø10.1",
+        "Ø9.9",
+        "Ø10.0",
+        "Ø9.8"
+      ],
+      "answer": 0,
+      "why": "For an external feature, virtual condition = MMC size + geometric tolerance = 10.0 + 0.1 = Ø10.1.",
+      "proof": [
+        "MMC of a pin is its largest size: Ø10.0.",
+        "At MMC its axis can be off by up to 0.05 radially (Ø0.1 zone), so the pin can sweep a boundary of 10.0 + 0.1 = Ø10.1.",
+        "A smaller pin gets bonus tolerance, but its boundary never exceeds Ø10.1.",
+        "For a hole the sign flips: virtual condition = MMC − tolerance."
+      ]
+    },
+    {
+      "level": "Applied",
+      "q": "A CMM report shows a hole centre off true position by 0.06 in X and 0.08 in Y. What is the measured position error, reported the way a feature control frame states it?",
+      "options": [
+        "0.10",
+        "0.20",
+        "0.14",
+        "0.28"
+      ],
+      "answer": 1,
+      "why": "Position is reported as a diameter: 2 × √(0.06² + 0.08²) = 2 × 0.10 = 0.20.",
+      "proof": [
+        "Radial offset:  r = √(0.06² + 0.08²) = √0.0100 = 0.10.",
+        "The tolerance zone is a diameter, so the reported deviation is 2r = 0.20.",
+        "This hole just passes a Ø0.2 position tolerance, and fails Ø0.15.",
+        "Forgetting the factor of 2 is the most common mistake here."
+      ]
+    },
+    {
+      "level": "Fundamental",
+      "q": "In a datum reference frame A | B | C built from three flat surfaces, how many degrees of freedom does the primary datum A remove?",
+      "options": [
+        "1",
+        "2",
+        "6",
+        "3"
+      ],
+      "answer": 3,
+      "why": "A plane contacts on at least 3 points and removes 3 degrees of freedom: one translation and two rotations. This is the 3-2-1 rule.",
+      "proof": [
+        "A free part has 6 degrees of freedom: 3 translations and 3 rotations.",
+        "Primary plane (3 contact points): stops translation normal to it and rotation about the two in-plane axes. That removes 3.",
+        "Secondary plane (2 points): stops one more translation and the last rotation. That removes 2.",
+        "Tertiary plane (1 point): stops the final translation. That removes 1.  3 + 2 + 1 = 6.",
+        "Datum order matters: choose the primary as the surface that seats the part in the real assembly."
+      ]
+    },
+    {
+      "level": "Fundamental",
+      "q": "Which of these tolerances never references a datum?",
+      "options": [
+        "Flatness",
+        "Perpendicularity",
+        "Position",
+        "Total runout"
+      ],
+      "answer": 0,
+      "why": "Flatness is a form tolerance. Form controls (flatness, straightness, circularity, cylindricity) compare a feature only to itself.",
+      "proof": [
+        "Form tolerances describe the shape of one feature: all points of the surface must lie between two parallel planes the tolerance apart.",
+        "Those planes are free to sit wherever best fits the surface, so no datum is needed or allowed.",
+        "Orientation (perpendicularity, parallelism, angularity), location (position) and runout all relate a feature to something else, so they need datums.",
+        "Profile is the exception that can be used with or without datums."
+      ]
+    },
+    {
+      "level": "Applied",
+      "q": "Under Rule #1 (the envelope principle, ASME Y14.5), a shaft is dimensioned Ø20.0–20.1 with no other tolerance. How much can it be bent (out of straight) if it measures Ø20.1 everywhere?",
+      "options": [
+        "0.05",
+        "0",
+        "0.1",
+        "No limit, straightness is uncontrolled"
+      ],
+      "answer": 1,
+      "why": "Rule #1: a feature of size must have perfect form at MMC. At Ø20.1 everywhere the shaft must fit inside a perfect Ø20.1 envelope, so no bend is allowed.",
+      "proof": [
+        "Rule #1 says the size limits also control form: the surface may not go outside a perfect-form envelope at MMC (Ø20.1 for this shaft).",
+        "A shaft at Ø20.1 along its whole length fills that envelope, so it has to be perfectly straight.",
+        "A shaft at Ø20.0 everywhere could be bent by up to 0.1 and still fit inside the envelope.",
+        "So size tolerance gives form control for free. ISO drawings do not assume this by default (independency principle)."
+      ]
+    },
+    {
+      "level": "Applied",
+      "q": "What does total runout control that circular runout does not?",
+      "options": [
+        "Nothing, they are the same",
+        "Only the surface finish",
+        "The size of the feature",
+        "The whole surface at once, including taper and straightness along the axis"
+      ],
+      "answer": 3,
+      "why": "Circular runout checks each cross-section on its own. Total runout sweeps the indicator along the whole surface while the part rotates, so taper and bow count too.",
+      "proof": [
+        "Both are measured by rotating the part about a datum axis under a dial indicator.",
+        "Circular runout: the indicator is reset at each cross-section. It catches eccentricity and out-of-roundness at that section.",
+        "Total runout: the indicator travels along the surface without resetting, and the full reading must be within tolerance.",
+        "So total runout also limits taper, straightness and coaxiality together. It is the tighter and more expensive control."
+      ]
+    },
+    {
+      "level": "Design judgment",
+      "q": "Two plates are joined by an M6 screw that passes through a clearance hole in the top plate and threads into the bottom plate (a fixed fastener). The clearance hole's smallest size is Ø6.6. What equal position tolerance can each plate have and still always assemble?",
+      "options": [
+        "Ø0.15",
+        "Ø0.3",
+        "Ø0.6",
+        "Ø1.2"
+      ],
+      "answer": 1,
+      "why": "Fixed fastener formula: H = F + T₁ + T₂. With equal tolerances, T = (6.6 − 6.0)/2 = Ø0.3 each.",
+      "proof": [
+        "Total diametral clearance:  H − F = 6.6 − 6.0 = 0.6.",
+        "In a fixed fastener joint the screw is located by the threaded hole, so the threaded hole's error moves the screw and the clearance hole's error moves the hole.",
+        "Both errors use up the same clearance:  T₁ + T₂ = H − F = 0.6.",
+        "Split equally:  T = Ø0.3 each."
+      ],
+      "proofTitle": "Fixed fastener formula",
+      "methods": [
+        {
+          "title": "Worst-case shift argument",
+          "steps": [
+            "Radial clearance between screw and hole when both are perfectly placed:  (6.6 − 6.0)/2 = 0.3.",
+            "Worst case: the threaded hole is off by its radial limit one way and the clearance hole by its radial limit the other way.",
+            "They touch when the two radial errors add up to 0.3. With equal zones, each radial error is 0.15, which is a Ø0.3 zone each.",
+            "Compare a floating fastener (bolt and nut, clearance holes in both plates): each hole gets T = H − F = Ø0.6, because the bolt can shift."
+          ]
+        }
+      ]
+    },
+    {
+      "level": "Design judgment",
+      "q": "A hole located with ±0.05 in X and Y has a square tolerance zone. Replacing it with a position tolerance whose circular zone passes through the square's corners gives how much more tolerance area?",
+      "options": [
+        "About 57% more",
+        "About 27% more",
+        "None",
+        "About 100% more"
+      ],
+      "answer": 0,
+      "why": "The square is 0.1 × 0.1 = 0.0100. The circle through its corners is Ø0.141, area 0.0157. That is 57% more for the same worst-case offset.",
+      "proof": [
+        "Square zone:  0.1 × 0.1 = 0.0100 mm².",
+        "The coordinate scheme already accepts a hole at the corner, 0.0707 from nominal (half the 0.141 diagonal).",
+        "A circular zone with that radius:  Ø0.141, area = π × 0.0707² = 0.0157 mm².",
+        "0.0157 / 0.0100 = 1.57, so 57% more good parts are accepted with no change in worst-case fit.",
+        "Position also allows MMC bonus and makes the datums explicit, which ± dimensions do not."
+      ]
+    }
+  ]
+});

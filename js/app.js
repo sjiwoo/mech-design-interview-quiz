@@ -802,7 +802,7 @@
     var verdict = pct === 100 ? "Clean sweep."
       : pct >= 80 ? "Solid. Tighten up the misses below."
       : pct >= 50 ? "Decent base. Review the misses and run it again."
-      : "Worth another pass through the standard beam cases.";
+      : "Worth another pass through this section.";
 
     var buttons = [
       el("button", { class: "btn btn-primary", text: "Retake all", onclick: function () { clearSet(set); startQuiz(set, set.questions); } })
