@@ -264,7 +264,7 @@
         points: X(0) + "," + base + " " + poly + " " + X(1) + "," + base,
         fill: "currentColor", "fill-opacity": 0.12, stroke: "none"
       });
-      add("polyline", { points: poly, style: "stroke: var(--accent, #4a5a82)", "stroke-width": 2.5 });
+      add("polyline", { points: poly, style: "stroke: var(--accent, #8a2c3b)", "stroke-width": 2.5 });
       add("line", { x1: x0, y1: base - amp - 6, x2: x0, y2: base + amp + 6, "stroke-width": 1, opacity: 0.4 });
       add("line", { x1: x1, y1: base - amp - 6, x2: x1, y2: base + amp + 6, "stroke-width": 1, opacity: 0.4 });
       (notesList || []).forEach(function (n) {
@@ -313,7 +313,7 @@
       add("line", { x1: x0, y1: base, x2: x1, y2: base, "stroke-width": 1, opacity: 0.6 });
       add("line", { x1: x0, y1: base - amp - 6, x2: x0, y2: base + amp + 6, "stroke-width": 1, opacity: 0.4 });
       add("line", { x1: x1, y1: base - amp - 6, x2: x1, y2: base + amp + 6, "stroke-width": 1, opacity: 0.4 });
-      add("polyline", { points: poly, style: "stroke: var(--accent, #4a5a82)", "stroke-width": 2.5 });
+      add("polyline", { points: poly, style: "stroke: var(--accent, #8a2c3b)", "stroke-width": 2.5 });
       (p.marks || []).forEach(function (m) {
         add("path", { d: "M" + X(m) + " " + base + " l-5 8 h10 z", fill: "currentColor", "fill-opacity": 0.5, "stroke-width": 1 });
       });
@@ -369,8 +369,8 @@
     });
     if (sec.axis) {
       var ay = Y(sec.axis.y);
-      add("line", { x1: X(mx0) - 22, y1: ay, x2: X(mx1) + 6, y2: ay, stroke: "var(--accent, #4a5a82)", "stroke-width": 1.8, "stroke-dasharray": "7 5" });
-      var at = add("text", { x: X(mx0) - 26, y: ay + 5, fill: "var(--accent, #4a5a82)", "font-size": 14, "font-weight": 700, "text-anchor": "end", "font-family": "inherit" });
+      add("line", { x1: X(mx0) - 22, y1: ay, x2: X(mx1) + 6, y2: ay, stroke: "var(--accent, #8a2c3b)", "stroke-width": 1.8, "stroke-dasharray": "7 5" });
+      var at = add("text", { x: X(mx0) - 26, y: ay + 5, fill: "var(--accent, #8a2c3b)", "font-size": 14, "font-weight": 700, "text-anchor": "end", "font-family": "inherit" });
       at.textContent = sec.axis.label || "";
     }
     (sec.labels || []).forEach(function (l) {
@@ -397,7 +397,7 @@
     var W = 460, H = spec.h || 180;
     var root = svg("svg", { viewBox: "0 0 " + W + " " + H, class: "diagram sketch", role: "img" });
     var t = svg("title", {}); t.textContent = spec.alt || "Diagram for this question"; root.appendChild(t);
-    function col(o) { return o.a ? "var(--accent, #4a5a82)" : "currentColor"; }
+    function col(o) { return o.a ? "var(--accent, #8a2c3b)" : "currentColor"; }
     function base(o) {
       var at = { stroke: col(o), "stroke-width": o.w || 2, fill: "none", "stroke-linecap": "round", "stroke-linejoin": "round" };
       if (o.d) at["stroke-dasharray"] = "6 5";

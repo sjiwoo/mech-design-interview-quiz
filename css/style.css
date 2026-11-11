@@ -7,21 +7,21 @@
 /* Neutral Axis. Palette taken from the drawing office: drafting film, graphite,
    machinist's layout-dye blue, and inspection red/green for marking parts. */
 :root {
-  --bg: #eef0f2;
-  --grid: rgba(74, 90, 130, 0.06);
+  --bg: #f0eff0;
+  --grid: rgba(90, 70, 75, 0.055);
   --surface: #ffffff;
   --ink: #20262e;
   --muted: #66707c;
   --line: #d5d9de;
-  --accent: #4a5a82;
-  --accent-soft: #e8ebf2;
+  --accent: #8a2c3b;
+  --accent-soft: #f4e9eb;
   --accent-ink: #ffffff;
   --comp: #4a5a82;
-  --tens: #a8574f;
+  --tens: #b0603a;
   --good: #3c7a5c;
   --good-bg: #e8f1ec;
-  --bad: #a4504a;
-  --bad-bg: #f6eae8;
+  --bad: #b0562a;
+  --bad-bg: #f8ede4;
   --radius: 18px;
   --radius-sm: 12px;
   --shadow: 0 1px 2px rgba(29, 37, 48, 0.05), 0 6px 20px rgba(29, 37, 48, 0.06);
@@ -32,21 +32,21 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #15181c;
-    --grid: rgba(154, 168, 204, 0.05);
-    --surface: #1d2126;
+    --bg: #171516;
+    --grid: rgba(220, 170, 178, 0.045);
+    --surface: #201d1f;
     --ink: #e4e7eb;
     --muted: #98a1ac;
-    --line: #30363d;
-    --accent: #9aa8cc;
-    --accent-soft: #272d3b;
-    --accent-ink: #14181f;
+    --line: #363134;
+    --accent: #dc8e9a;
+    --accent-soft: #33232a;
+    --accent-ink: #1c1215;
     --comp: #9aa8cc;
-    --tens: #d49a92;
+    --tens: #dba27c;
     --good: #7fc4a0;
     --good-bg: #1a2c24;
-    --bad: #e09a93;
-    --bad-bg: #33201e;
+    --bad: #e3a377;
+    --bad-bg: #33251a;
     --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 6px 20px rgba(0, 0, 0, 0.25);
   }
 }
