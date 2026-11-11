@@ -32,7 +32,14 @@ window.QUESTION_SETS.push({
             "Useful when you can measure or calculate how far something sags but don't know k and m separately."
           ]
         }
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "A candidate reported questions on vibration testing. This exact question was not reported.",
+        "sources": [
+          "vibtest"
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -51,7 +58,14 @@ window.QUESTION_SETS.push({
         "Put that into the spring-mass result:  ω_n = √(k/m) = √(3EI/(m·L³)).",
         "This ignores the beam's own mass. Adding about 24% of the beam mass to the tip mass corrects for it.",
         "A simply supported beam with a centre mass works the same way with k = 48EI/L³."
-      ]
+      ],
+      "reported": {
+        "kind": "question",
+        "note": "An intern candidate reported being asked to relate resonance in a spring-damper system to a cantilever beam.",
+        "sources": [
+          "reson"
+        ]
+      }
     },
     {
       "level": "Fundamental",
@@ -69,7 +83,14 @@ window.QUESTION_SETS.push({
         "With mass 2m:  f_new/f_old = √(m/2m) = 1/√2 = 0.707.",
         "That is a 29% reduction. To halve the frequency you need four times the mass.",
         "Likewise, doubling stiffness raises frequency by only 41%."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "A candidate reported questions on vibration testing. This exact question was not reported.",
+        "sources": [
+          "vibtest"
+        ]
+      }
     },
     {
       "level": "Fundamental",
@@ -88,7 +109,14 @@ window.QUESTION_SETS.push({
         "k_eq = F/(2F/k) = k/2. In general:  1/k_eq = 1/k₁ + 1/k₂.",
         "Parallel: both share the same deflection and their forces add:  k_eq = k₁ + k₂ = 2k.",
         "Springs combine the opposite way to electrical resistors."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "A candidate reported questions on vibration testing. This exact question was not reported.",
+        "sources": [
+          "vibtest"
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -106,7 +134,14 @@ window.QUESTION_SETS.push({
         "At r = 1 the first term is zero:  X/X_static = 1/(2ζ).",
         "ζ = 0.05  ⇒  Q = 10.",
         "Bare metal structures often have ζ of 0.01 to 0.02, giving amplification of 25 to 50. That is why a resonance inside the operating range breaks parts."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "A candidate reported questions on vibration testing. This exact question was not reported.",
+        "sources": [
+          "vibtest"
+        ]
+      }
     },
     {
       "level": "Design judgment",
@@ -125,7 +160,14 @@ window.QUESTION_SETS.push({
         "r near 1:  resonance, TR > 1, the mount makes things worse.",
         "All curves cross TR = 1 at r = √2. Above it, TR < 1 and keeps falling.",
         "Design rule: put the mount's natural frequency at a third or less of the lowest excitation frequency. More damping lowers the resonance peak but slightly worsens isolation at high frequency."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "A candidate reported questions on vibration testing. This exact question was not reported.",
+        "sources": [
+          "vibtest"
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -154,7 +196,14 @@ window.QUESTION_SETS.push({
             "Doubling t doubles f. Making the bracket wider does nothing for this mode."
           ]
         }
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "A candidate reported questions on vibration testing. This exact question was not reported.",
+        "sources": [
+          "vibtest"
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -172,7 +221,14 @@ window.QUESTION_SETS.push({
         "Halving L:  1/(L/2)² = 4/L².",
         "Check with a tip-mass view: stiffness 3EI/L³ goes up 8× and the beam's mass halves, so √(8/0.5) = √16 = 4.",
         "Shortening the unsupported span is usually the cheapest way to raise a mode."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "A candidate reported questions on vibration testing. This exact question was not reported.",
+        "sources": [
+          "vibtest"
+        ]
+      }
     },
     {
       "level": "Design judgment",
@@ -190,7 +246,14 @@ window.QUESTION_SETS.push({
         "Steel:  √(200/7.85) = 5.05.   Aluminium:  √(69/2.70) = 5.06.",
         "The two are within 1%.",
         "To move the mode, change geometry: thicker, shorter, add a rib or a support. The aluminium part is lighter, so you could afford to make it thicker, and that would raise the frequency."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "A candidate reported questions on vibration testing. This exact question was not reported.",
+        "sources": [
+          "vibtest"
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -209,7 +272,53 @@ window.QUESTION_SETS.push({
         "G_rms = √79.2 = 8.9 g.",
         "Peaks reach about 3× the RMS value (3σ), so around 27 g here.",
         "For a part with a resonance at f_n, Miles' equation estimates the response:  G_rms ≈ √((π/2)·f_n·Q·PSD)."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "A candidate reported questions on vibration testing. This exact question was not reported.",
+        "sources": [
+          "vibtest"
+        ]
+      }
+    },
+    {
+      "level": "Applied",
+      "q": "A solid cylinder and a thin-walled hollow cylinder of the same mass and radius roll without slipping down the same ramp from rest. Which reaches the bottom first?",
+      "options": [
+        "The hollow cylinder",
+        "The solid cylinder",
+        "They arrive together",
+        "It depends on their mass"
+      ],
+      "answer": 1,
+      "why": "The hollow cylinder has more rotational inertia (mr² against ½mr²), so more of its energy goes into spinning and less into moving forward. The solid one is faster. Mass and radius cancel out.",
+      "proof": [
+        "Energy:  m·g·h = ½·m·v² + ½·I·ω², with rolling ω = v/r.",
+        "Write I = k·m·r². Then m·g·h = ½·m·v²(1 + k), so v² = 2·g·h/(1 + k).",
+        "Solid cylinder, k = ½:  v² = (4/3)·g·h.   Hollow, k = 1:  v² = g·h.",
+        "The solid cylinder is faster by √(4/3), about 15%, at every point, so it arrives first.",
+        "m and r cancel: any solid cylinder beats any hollow one. A sliding frictionless block (k = 0) beats both."
+      ],
+      "proofTitle": "Energy",
+      "methods": [
+        {
+          "title": "Forces and torque",
+          "steps": [
+            "Along the ramp:  m·g·sin θ − f = m·a, where f is friction at the contact.",
+            "About the centre:  f·r = I·α = k·m·r²·(a/r)  ⇒  f = k·m·a.",
+            "Combine:  a = g·sin θ/(1 + k).",
+            "Solid:  a = (2/3)·g·sin θ.   Hollow:  a = (1/2)·g·sin θ.",
+            "Higher acceleration all the way down, so the solid cylinder wins."
+          ]
+        }
+      ],
+      "reported": {
+        "kind": "question",
+        "note": "A candidate reported being asked to compare a hollow and a solid cylinder rolling down a ramp.",
+        "sources": [
+          "roll"
+        ]
+      }
     }
   ]
 });

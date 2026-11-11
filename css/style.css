@@ -332,3 +332,22 @@ body.pad-active, body.pad-active * {
 }
 .method-tab[aria-selected="true"] { color: var(--accent-ink); background: var(--accent); border-color: var(--accent); }
 .method-tab:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+/* Reported-in-interview tags */
+.tag-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin-bottom: 8px; }
+.tag-row .level { margin-bottom: 0; }
+.report-badge {
+  font-size: 0.75rem; font-weight: 700; line-height: 1.3;
+  padding: 3px 9px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted);
+}
+.report-question { color: var(--good); border-color: var(--good); background: var(--good-bg); }
+.report-secondhand { color: #8a5a00; border-color: #c98a1a; background: #fdf1d8; }
+.report-topic { color: var(--ink); }
+.report-none { border-style: dashed; }
+@media (prefers-color-scheme: dark) { .report-secondhand { color: #f0c36a; border-color: #8a6a1e; background: #33270c; } }
+.report-details { margin: 0 0 14px; font-size: 0.9rem; }
+.report-details summary { cursor: pointer; color: var(--muted); font-weight: 600; padding: 4px 0; }
+.report-details p { margin: 6px 0; }
+.report-details ul { margin: 0; padding-left: 20px; }
+.report-details a { color: var(--accent); word-break: break-word; }
+.meta-reported { color: var(--good); font-weight: 600; }

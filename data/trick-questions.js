@@ -33,7 +33,15 @@ window.QUESTION_SETS.push({
             "A cubic metre of displacement vanished, so the level must drop. Pushing a variable to its limit is a good way to check a direction."
           ]
         }
-      ]
+      ],
+      "reported": {
+        "kind": "secondhand",
+        "note": "Listed by interview-prep sites as a Tesla and SpaceX question. I did not find a first-hand candidate report.",
+        "sources": [
+          "boat1",
+          "boat2"
+        ]
+      }
     },
     {
       "level": "Trick question",
@@ -100,7 +108,15 @@ window.QUESTION_SETS.push({
         "Example with D = 50 and d = 40:  the tube keeps 1 − (40/50)⁴ = 59% of the stiffness with only 36% of the mass.",
         "So the correct statement is: for the same mass a tube is stiffer, and for the same outside diameter the solid is stiffer.",
         "The trick is the unstated constraint. Always ask: same what?"
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Candidates reported questions on which cross-section is stiffest. This exact question was not reported.",
+        "sources": [
+          "intern5",
+          "xsec"
+        ]
+      }
     },
     {
       "level": "Trick question",

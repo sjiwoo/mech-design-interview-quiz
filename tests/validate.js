@@ -4,13 +4,13 @@ const path = require("path");
 
 global.window = {};
 const dataDir = path.join(__dirname, "..", "data");
-fs.readdirSync(dataDir).filter((f) => f.endsWith(".js")).forEach((f) => require(path.join(dataDir, f)));
+fs.readdirSync(dataDir).filter((f) => f.endsWith(".js")).sort((a) => (a === "sources.js" ? -1 : 0)).forEach((f) => require(path.join(dataDir, f)));
 
 const errors = [];
 const levels = ["Fundamental", "Applied", "Design judgment", "Brain teaser", "Trick question"];
 const supports = ["simple", "cantilever", "fixed", "propped"];
 
-window.QUESTION_SETS.forEach((set) => {
+(window.QUESTION_SETS || []).forEach((set) => {
   if (!set.id || !set.title || !set.blurb) errors.push(`${set.id}: missing id/title/blurb`);
   const seen = new Set();
   set.questions.forEach((q, i) => {
@@ -28,6 +28,12 @@ window.QUESTION_SETS.forEach((set) => {
         if (!m.title || !Array.isArray(m.steps) || m.steps.length < 2) errors.push(`${tag}: method ${j + 2} needs a title and steps`);
       });
       if (!q.proofTitle) errors.push(`${tag}: proofTitle required when methods are given`);
+    }
+    if (q.reported) {
+      if (!["question", "topic", "secondhand"].includes(q.reported.kind)) errors.push(`${tag}: bad reported.kind`);
+      if (!q.reported.note) errors.push(`${tag}: reported needs a note`);
+      (q.reported.sources || []).forEach((id) => { if (!(window.SOURCES || {})[id]) errors.push(`${tag}: unknown source ${id}`); });
+      if (!(q.reported.sources || []).length) errors.push(`${tag}: reported needs a source`);
     }
     if (!levels.includes(q.level)) errors.push(`${tag}: bad level`);
     if (q.diagram && !q.diagram.section && !supports.includes(q.diagram.support)) errors.push(`${tag}: bad diagram support`);

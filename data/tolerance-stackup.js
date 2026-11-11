@@ -21,7 +21,15 @@ window.QUESTION_SETS.push({
         "Maximum, all parts at their upper limit:  10.1 + 20.2 + 30.1 = 60.4.",
         "Minimum, all at their lower limit:  9.9 + 19.8 + 29.9 = 59.6.",
         "Total:  60 ± 0.4. Worst case guarantees 100% of assemblies, at the cost of tight part tolerances."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Candidates reported tolerance stack-up questions in technical rounds. This exact question was not reported.",
+        "sources": [
+          "stack",
+          "gdtstack"
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -39,7 +47,15 @@ window.QUESTION_SETS.push({
         "T = √(0.01 + 0.04 + 0.01) = √0.06 = 0.245.",
         "Total:  60 ± 0.245, against ±0.4 for worst case.",
         "It is smaller because it is unlikely that every part is at its limit in the same direction at once."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Candidates reported tolerance stack-up questions in technical rounds. This exact question was not reported.",
+        "sources": [
+          "stack",
+          "gdtstack"
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -68,7 +84,15 @@ window.QUESTION_SETS.push({
             "Gap = 0.4 ± 0.4, so it ranges from 0.0 to 0.8 mm."
           ]
         }
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Candidates reported tolerance stack-up questions in technical rounds. This exact question was not reported.",
+        "sources": [
+          "stack",
+          "gdtstack"
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -86,7 +110,15 @@ window.QUESTION_SETS.push({
         "RSS:  √(0.04 + 0.01 + 0.01) = √0.06 = 0.245.",
         "Gap = 0.4 ± 0.245, so the statistical minimum is 0.155 mm.",
         "If each tolerance is ±3σ, about 99.7% of assemblies fall in that range. A few in a thousand may be outside it."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Candidates reported tolerance stack-up questions in technical rounds. This exact question was not reported.",
+        "sources": [
+          "stack",
+          "gdtstack"
+        ]
+      }
     },
     {
       "level": "Design judgment",
@@ -104,7 +136,15 @@ window.QUESTION_SETS.push({
         "It assumes each process is centred on nominal and its tolerance is about ±3σ (Cpk near 1 or better).",
         "With only two or three contributors, or a process running off-centre, RSS is optimistic.",
         "Use worst case for safety-critical fits, few contributors, or low volume. Many teams use RSS with a correction factor (for example 1.5×) as a middle ground."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Candidates reported tolerance stack-up questions in technical rounds. This exact question was not reported.",
+        "sources": [
+          "stack",
+          "gdtstack"
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -122,7 +162,15 @@ window.QUESTION_SETS.push({
         "RSS:  √(N·t²) = √N·t = 3 × 0.1 = ±0.3.",
         "Ratio:  N/√N = √N = 3.",
         "The gap between the methods grows with the number of parts, which is why long stacks are usually done statistically."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Candidates reported tolerance stack-up questions in technical rounds. This exact question was not reported.",
+        "sources": [
+          "stack",
+          "gdtstack"
+        ]
+      }
     },
     {
       "level": "Fundamental",
@@ -140,7 +188,15 @@ window.QUESTION_SETS.push({
         "Midpoint:  (9.9 + 10.3)/2 = 10.1.",
         "Half range:  (10.3 − 9.9)/2 = 0.2.",
         "Convert every dimension to this form first. Otherwise the nominal of the stack is wrong."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Candidates reported tolerance stack-up questions in technical rounds. This exact question was not reported.",
+        "sources": [
+          "stack",
+          "gdtstack"
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -159,7 +215,15 @@ window.QUESTION_SETS.push({
         "Cpk = min(0.03, 0.07)/(3σ) = 0.03/0.03 = 1.0.",
         "Cp ignores centring:  (10.05 − 9.95)/(6 × 0.01) = 1.67. The process is capable but off-centre.",
         "Re-centring it would raise Cpk to 1.67 with no change to the process spread. Automotive targets are usually 1.33 or 1.67."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Candidates reported tolerance stack-up questions in technical rounds. This exact question was not reported.",
+        "sources": [
+          "stack",
+          "gdtstack"
+        ]
+      }
     },
     {
       "level": "Design judgment",
@@ -177,7 +241,15 @@ window.QUESTION_SETS.push({
         "Halve the 0.3 to 0.15:  √(0.0225 + 0.01 + 0.01) = √0.0425 = 0.206. That is a 38% reduction.",
         "Halve both 0.1s to 0.05:  √(0.09 + 0.0025 + 0.0025) = √0.095 = 0.308. That is a 7% reduction.",
         "Because terms are squared, the 0.3 contributes 82% of the variance. Always work on the biggest contributor first."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Candidates reported tolerance stack-up questions in technical rounds. This exact question was not reported.",
+        "sources": [
+          "stack",
+          "gdtstack"
+        ]
+      }
     },
     {
       "level": "Design judgment",
@@ -195,7 +267,42 @@ window.QUESTION_SETS.push({
         "Dimension the overall length directly: it is a single dimension at ±0.1.",
         "The accumulated variation moves to a step that does not matter for fit.",
         "Rule: dimension functional features directly from the functional datum, so the stack has as few contributors as possible. Fixing the scheme costs far less than tightening tolerances."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Candidates reported tolerance stack-up questions in technical rounds. This exact question was not reported.",
+        "sources": [
+          "stack",
+          "gdtstack"
+        ]
+      }
+    },
+    {
+      "level": "Fundamental",
+      "q": "What is tolerance stacking?",
+      "options": [
+        "Making every tolerance on a drawing the same",
+        "Measuring a part several times and averaging",
+        "Storing finished parts in stacks",
+        "The way individual part tolerances add up along a chain of dimensions to change an assembly gap or fit"
+      ],
+      "answer": 3,
+      "why": "Every dimension in the chain between two features can vary. Those variations accumulate, so the gap or fit that matters varies more than any single part does.",
+      "proof": [
+        "Pick the gap or fit you care about and trace the chain (loop) of dimensions that sets it.",
+        "Each dimension in the loop contributes its tolerance.",
+        "Worst case: add all the tolerances. Statistical (RSS): take the root sum of squares.",
+        "Use the result to check the assembly always fits and works, and to decide which tolerances to tighten.",
+        "Fewer dimensions in the loop means less stack, which is why functional features are dimensioned directly from the functional datum."
+      ],
+      "reported": {
+        "kind": "question",
+        "note": "A candidate reported being asked what GD&T is and what tolerance stacking is.",
+        "sources": [
+          "gdtstack",
+          "stack"
+        ]
+      }
     }
   ]
 });

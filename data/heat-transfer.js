@@ -31,7 +31,14 @@ window.QUESTION_SETS.push({
             "The resistance form is the one to use when layers are stacked, because resistances in series just add."
           ]
         }
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "A candidate reported questions on heat and conduction. This exact question was not reported.",
+        "sources": [
+          "som"
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -50,7 +57,15 @@ window.QUESTION_SETS.push({
         "Convection:  R = 1/(hA) = 1/(500 × 0.01) = 0.2 K/W.",
         "Total:  0.255 K/W. For 50 W the temperature rise is 50 × 0.255 = 12.75 K.",
         "Convection is 0.2/0.255 = 78% of it. Making the plate out of copper would change almost nothing. Always work on the largest resistance."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Candidates reported battery cooling questions. This exact question was not reported.",
+        "sources": [
+          "cell",
+          "boltheat"
+        ]
+      }
     },
     {
       "level": "Fundamental",
@@ -69,7 +84,15 @@ window.QUESTION_SETS.push({
         "Volumetric heat capacity (ρ·c_p) of water-glycol is over 3,000 times that of air, so much less flow is needed to carry the heat away.",
         "That allows small ΔT between cells, which matters for battery life and charging rate.",
         "Trade-offs: mass, pumps, leak risk and sealing."
-      ]
+      ],
+      "reported": {
+        "kind": "question",
+        "note": "Candidates reported being asked how to dissipate heat from a battery cell.",
+        "sources": [
+          "cell",
+          "m5"
+        ]
+      }
     },
     {
       "level": "Fundamental",
@@ -88,7 +111,14 @@ window.QUESTION_SETS.push({
         "Bi < 0.1 means internal temperature differences are under about 5% of the body-to-fluid difference, so one temperature describes the body.",
         "Small metal parts in air usually qualify. Thick plastic parts or strong liquid cooling usually do not.",
         "Do not confuse it with the Nusselt number, hL/k_fluid, which uses the fluid's conductivity."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "A thermal-role candidate reported a transient heat transfer question. This exact question was not reported.",
+        "sources": [
+          "transient"
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -107,7 +137,14 @@ window.QUESTION_SETS.push({
         "τ = 0.07 × 1,000 / (50 × 0.005) = 70 / 0.25 = 280 s.",
         "After one time constant 63% of the temperature change is complete, and after about three it is 95% done.",
         "It is the thermal version of an RC circuit: τ = R·C with R = 1/(hA) and C = m·c."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "A thermal-role candidate reported a transient heat transfer question. This exact question was not reported.",
+        "sources": [
+          "transient"
+        ]
+      }
     },
     {
       "level": "Fundamental",
@@ -144,7 +181,14 @@ window.QUESTION_SETS.push({
         "Density ρ = p/(R·T) rises in proportion to pressure, so Re = ρVL/μ rises in proportion too.",
         "Turbulent flow has m of about 0.8, so doubling pressure raises h by about 2^0.8 = 1.74×. Laminar (m = 0.5) gives 1.41×.",
         "The reverse matters at altitude or in partial vacuum: thin air cools poorly."
-      ]
+      ],
+      "reported": {
+        "kind": "question",
+        "note": "A thermal-role candidate reported being asked how pressure affects the convection heat transfer coefficient.",
+        "sources": [
+          "pressure"
+        ]
+      }
     },
     {
       "level": "Design judgment",
@@ -209,7 +253,118 @@ window.QUESTION_SETS.push({
         "ṁ = Q/(c_p·ΔT) = 5,000 / (3,500 × 5) = 5,000 / 17,500 = 0.286 kg/s.",
         "With density about 1,050 kg/m³ that is roughly 16 litres per minute.",
         "Halving the allowed temperature rise doubles the flow needed. A small ΔT keeps cells at even temperatures but costs pump power."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Candidates reported battery cooling questions. This exact question was not reported.",
+        "sources": [
+          "cell"
+        ]
+      }
+    },
+    {
+      "level": "Fundamental",
+      "q": "What is a boundary layer?",
+      "options": [
+        "The layer of paint or coating on a surface",
+        "The thin region of fluid next to a surface where velocity or temperature changes from the wall value to the free-stream value",
+        "The outer wall of a pipe",
+        "The interface between two solids in contact"
+      ],
+      "answer": 1,
+      "why": "Fluid sticks to the wall (no slip), so velocity rises from zero at the surface to the free-stream value across a thin layer. The thermal boundary layer is the same idea for temperature, and it sets the convection coefficient.",
+      "proof": [
+        "No-slip condition: fluid touching the wall has the wall's velocity.",
+        "Viscosity spreads that slowing effect outward, creating a thin layer with a steep velocity gradient. Outside it the flow is unaffected.",
+        "A thermal boundary layer forms the same way between wall temperature and fluid temperature.",
+        "Heat crosses it mainly by conduction, so roughly h ≈ k_fluid/δ_thermal. A thinner layer means a higher h.",
+        "Higher velocity and turbulence thin the layer, which is why forced and turbulent flow cool better. It also causes skin-friction drag."
+      ],
+      "reported": {
+        "kind": "question",
+        "note": "A thermal-systems candidate reported being asked what a boundary layer is.",
+        "sources": [
+          "blayer"
+        ]
+      }
+    },
+    {
+      "level": "Applied",
+      "q": "Water flows at 1 m/s through a 10 mm pipe (ν = 10⁻⁶ m²/s, Pr = 7, k = 0.6 W/m·K). Using Nu = 0.023·Re^0.8·Pr^0.4, what is the convection coefficient?",
+      "options": [
+        "About 48 W/m²·K",
+        "About 480 W/m²·K",
+        "About 4,800 W/m²·K",
+        "About 48,000 W/m²·K"
+      ],
+      "answer": 2,
+      "why": "Re = VD/ν = 10,000. Nu = 0.023 × 10,000^0.8 × 7^0.4 ≈ 79. h = Nu·k/D = 79 × 0.6/0.01 ≈ 4,800 W/m²·K.",
+      "proof": [
+        "Reynolds number:  Re = V·D/ν = 1 × 0.01/10⁻⁶ = 10,000, so the flow is turbulent.",
+        "Dittus–Boelter:  Nu = 0.023 × Re^0.8 × Pr^0.4.",
+        "10,000^0.8 = 1,585.   7^0.4 = 2.18.",
+        "Nu = 0.023 × 1,585 × 2.18 = 79.4.",
+        "h = Nu·k/D = 79.4 × 0.6/0.01 = 4,760 W/m²·K."
+      ],
+      "proofTitle": "Dittus–Boelter",
+      "methods": [
+        {
+          "title": "Gnielinski correlation",
+          "steps": [
+            "Friction factor for a smooth pipe:  f = (0.79·ln Re − 1.64)⁻² = (7.28 − 1.64)⁻² = 0.0315.",
+            "Nu = (f/8)(Re − 1,000)·Pr / [1 + 12.7·√(f/8)·(Pr^(2/3) − 1)].",
+            "Numerator:  0.00393 × 9,000 × 7 = 247.9.   Denominator:  1 + 12.7 × 0.0627 × 2.66 = 3.12.",
+            "Nu = 79.5, so h = 79.5 × 0.6/0.01 = 4,770 W/m²·K.",
+            "Both agree. The steps are always the same: Re, then Nu from a correlation, then h = Nu·k/L."
+          ]
+        }
+      ],
+      "reported": {
+        "kind": "question",
+        "note": "A candidate on Blind reported being asked to calculate a convective heat transfer coefficient using Reynolds and Nusselt numbers.",
+        "sources": [
+          "blind"
+        ]
+      }
+    },
+    {
+      "level": "Design judgment",
+      "q": "A 500 kg battery pack (c ≈ 1,000 J/kg·K) has 0.1 Ω internal resistance and runs at a steady 200 A. Its 5 m² surface loses heat by natural convection (h ≈ 10 W/m²·K) with a 20 K allowed rise over ambient. Does it need active cooling?",
+      "options": [
+        "No, passive cooling removes all the heat",
+        "Yes: it generates about 4 kW and can only shed about 1 kW passively",
+        "No, batteries do not generate heat",
+        "Yes, but only because of sunlight"
+      ],
+      "answer": 1,
+      "why": "Heat generated = I²R = 200² × 0.1 = 4 kW. Passive loss = hAΔT = 10 × 5 × 20 = 1 kW. The other 3 kW would keep heating the pack, so it needs active cooling.",
+      "proof": [
+        "Heat generated:  Q = I²·R = 40,000 × 0.1 = 4,000 W.",
+        "Heat it can lose passively at the allowed temperature:  h·A·ΔT = 10 × 5 × 20 = 1,000 W.",
+        "Generation is 4× the passive capacity, so the temperature keeps climbing past the limit.",
+        "Active cooling must remove at least the 3 kW difference at this load.",
+        "The decision is always a heat balance: generation against removal at the allowed temperature, for the worst duty cycle such as fast charging or sustained high power."
+      ],
+      "proofTitle": "Steady-state heat balance",
+      "methods": [
+        {
+          "title": "How long before it overheats",
+          "steps": [
+            "Thermal mass:  m·c = 500 × 1,000 = 500,000 J/K.",
+            "With no cooling at all:  dT/dt = 4,000/500,000 = 0.008 K/s.",
+            "Time to rise 20 K:  20/0.008 = 2,500 s, about 42 minutes.",
+            "So a short burst is fine on thermal mass alone, but sustained 200 A is not. Duty cycle decides the answer as much as peak power."
+          ]
+        }
+      ],
+      "reported": {
+        "kind": "question",
+        "note": "A candidate reported being asked how to decide whether a battery pack needs cooling.",
+        "sources": [
+          "m5",
+          "cell"
+        ]
+      }
     }
   ]
 });

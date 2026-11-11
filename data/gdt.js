@@ -21,7 +21,14 @@ window.QUESTION_SETS.push({
         "The tolerance zone is a cylinder of diameter 0.2 centred there, through the depth of the hole.",
         "The hole's axis must stay inside it, so the largest radial offset is 0.1.",
         "Position says nothing about the hole's size. That has its own size tolerance."
-      ]
+      ],
+      "reported": {
+        "kind": "question",
+        "note": "A candidate reported GD&T position tolerance coming up in a hiring-manager round.",
+        "sources": [
+          "srme"
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -49,7 +56,16 @@ window.QUESTION_SETS.push({
             "Same answer. MMC is used because it guarantees assembly while accepting more parts."
           ]
         }
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "GD&T is reported in many Tesla mechanical design interviews. This exact question was not reported.",
+        "sources": [
+          "srme",
+          "mde2",
+          "gtol"
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -67,7 +83,16 @@ window.QUESTION_SETS.push({
         "At MMC its axis can be off by up to 0.05 radially (Ø0.1 zone), so the pin can sweep a boundary of 10.0 + 0.1 = Ø10.1.",
         "A smaller pin gets bonus tolerance, but its boundary never exceeds Ø10.1.",
         "For a hole the sign flips: virtual condition = MMC − tolerance."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "GD&T is reported in many Tesla mechanical design interviews. This exact question was not reported.",
+        "sources": [
+          "srme",
+          "mde2",
+          "gtol"
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -85,7 +110,16 @@ window.QUESTION_SETS.push({
         "The tolerance zone is a diameter, so the reported deviation is 2r = 0.20.",
         "This hole just passes a Ø0.2 position tolerance, and fails Ø0.15.",
         "Forgetting the factor of 2 is the most common mistake here."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "GD&T is reported in many Tesla mechanical design interviews. This exact question was not reported.",
+        "sources": [
+          "srme",
+          "mde2",
+          "gtol"
+        ]
+      }
     },
     {
       "level": "Fundamental",
@@ -104,7 +138,14 @@ window.QUESTION_SETS.push({
         "Secondary plane (2 points): stops one more translation and the last rotation. That removes 2.",
         "Tertiary plane (1 point): stops the final translation. That removes 1.  3 + 2 + 1 = 6.",
         "Datum order matters: choose the primary as the surface that seats the part in the real assembly."
-      ]
+      ],
+      "reported": {
+        "kind": "question",
+        "note": "A candidate reported degree-of-freedom questions covering x, y, z and the three rotations.",
+        "sources": [
+          "dof"
+        ]
+      }
     },
     {
       "level": "Fundamental",
@@ -122,7 +163,16 @@ window.QUESTION_SETS.push({
         "Those planes are free to sit wherever best fits the surface, so no datum is needed or allowed.",
         "Orientation (perpendicularity, parallelism, angularity), location (position) and runout all relate a feature to something else, so they need datums.",
         "Profile is the exception that can be used with or without datums."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "GD&T is reported in many Tesla mechanical design interviews. This exact question was not reported.",
+        "sources": [
+          "srme",
+          "mde2",
+          "gtol"
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -140,7 +190,16 @@ window.QUESTION_SETS.push({
         "A shaft at Ø20.1 along its whole length fills that envelope, so it has to be perfectly straight.",
         "A shaft at Ø20.0 everywhere could be bent by up to 0.1 and still fit inside the envelope.",
         "So size tolerance gives form control for free. ISO drawings do not assume this by default (independency principle)."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "GD&T is reported in many Tesla mechanical design interviews. This exact question was not reported.",
+        "sources": [
+          "srme",
+          "mde2",
+          "gtol"
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -158,7 +217,16 @@ window.QUESTION_SETS.push({
         "Circular runout: the indicator is reset at each cross-section. It catches eccentricity and out-of-roundness at that section.",
         "Total runout: the indicator travels along the surface without resetting, and the full reading must be within tolerance.",
         "So total runout also limits taper, straightness and coaxiality together. It is the tighter and more expensive control."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "GD&T is reported in many Tesla mechanical design interviews. This exact question was not reported.",
+        "sources": [
+          "srme",
+          "mde2",
+          "gtol"
+        ]
+      }
     },
     {
       "level": "Design judgment",
@@ -188,7 +256,16 @@ window.QUESTION_SETS.push({
             "Compare a floating fastener (bolt and nut, clearance holes in both plates): each hole gets T = H − F = Ø0.6, because the bolt can shift."
           ]
         }
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "GD&T is reported in many Tesla mechanical design interviews. This exact question was not reported.",
+        "sources": [
+          "srme",
+          "mde2",
+          "gtol"
+        ]
+      }
     },
     {
       "level": "Design judgment",
@@ -207,7 +284,68 @@ window.QUESTION_SETS.push({
         "A circular zone with that radius:  Ø0.141, area = π × 0.0707² = 0.0157 mm².",
         "0.0157 / 0.0100 = 1.57, so 57% more good parts are accepted with no change in worst-case fit.",
         "Position also allows MMC bonus and makes the datums explicit, which ± dimensions do not."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "GD&T is reported in many Tesla mechanical design interviews. This exact question was not reported.",
+        "sources": [
+          "srme",
+          "mde2",
+          "gtol"
+        ]
+      }
+    },
+    {
+      "level": "Fundamental",
+      "q": "What is GD&T, and what is its main advantage over plain ± dimensions?",
+      "options": [
+        "A CAD file format that replaces drawings",
+        "A way to make every tolerance tighter",
+        "A symbolic language that controls form, orientation and location of features relative to datums that reflect how the part functions",
+        "A method for measuring surface roughness"
+      ],
+      "answer": 2,
+      "why": "Geometric dimensioning and tolerancing states how much a feature's shape, angle and position may vary, measured from datums chosen to match how the part is located in use. It removes ambiguity and usually allows more tolerance.",
+      "proof": [
+        "± dimensions control size and distance but leave the reference and the shape of the zone unclear.",
+        "GD&T adds datums (the measurement setup), feature control frames (the type and size of zone) and modifiers such as MMC.",
+        "Benefits: one unambiguous interpretation, round zones that are 57% larger than the square equivalent, bonus tolerance, and inspection that mirrors assembly.",
+        "The 14 characteristics fall into form, orientation, location, profile and runout.",
+        "Standards: ASME Y14.5 in the US, ISO 1101 internationally."
+      ],
+      "reported": {
+        "kind": "question",
+        "note": "Candidates reported being asked what GD&T (geometric tolerance) is and why it is important.",
+        "sources": [
+          "gdtstack",
+          "gtol"
+        ]
+      }
+    },
+    {
+      "level": "Fundamental",
+      "q": "In a feature control frame, what does the symbol ⊥ specify?",
+      "options": [
+        "Position",
+        "Flatness",
+        "Perpendicularity",
+        "Parallelism"
+      ],
+      "answer": 2,
+      "why": "⊥ is perpendicularity, an orientation control. It limits how far a surface or axis may deviate from exactly 90° to a datum.",
+      "proof": [
+        "⊥ perpendicularity: the feature must lie within a zone that is exactly 90° to the referenced datum.",
+        "For a surface the zone is two parallel planes. For an axis, with a Ø symbol, it is a cylinder.",
+        "It is an orientation control, so it always needs a datum. It controls angle but not location.",
+        "Related symbols: ∥ parallelism, ∠ angularity, a crosshair circle for position, a parallelogram for flatness."
+      ],
+      "reported": {
+        "kind": "question",
+        "note": "An intern candidate reported being shown a GD&T symbol and asked what it means.",
+        "sources": [
+          "gtol"
+        ]
+      }
     }
   ]
 });

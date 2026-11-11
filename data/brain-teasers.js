@@ -34,7 +34,15 @@ window.QUESTION_SETS.push({
             "You cannot start at the South Pole itself, because you cannot walk south from there."
           ]
         }
-      ]
+      ],
+      "reported": {
+        "kind": "secondhand",
+        "note": "Reported as Elon Musk's interview riddle for SpaceX engineers, and listed by prep sites for Tesla. I did not find a first-hand Tesla mechanical candidate report.",
+        "sources": [
+          "musk1",
+          "musk2"
+        ]
+      }
     },
     {
       "level": "Brain teaser",
@@ -263,6 +271,44 @@ window.QUESTION_SETS.push({
           ]
         }
       ]
+    },
+    {
+      "level": "Brain teaser",
+      "q": "Looking at the ends of cylindrical battery cells packed into a large rectangular tray, what is the highest fraction of the area the cells can cover?",
+      "options": [
+        "About 50%",
+        "About 79%",
+        "About 91%",
+        "100%"
+      ],
+      "answer": 2,
+      "why": "Hexagonal (honeycomb) packing covers π/(2√3) ≈ 90.7%. A square grid covers only π/4 ≈ 78.5%.",
+      "proof": [
+        "Hexagonal packing: each row is offset by half a cell so cells nest in the gaps of the row below.",
+        "Unit cell: a rhombus joining four neighbouring centres, with side d and area d²·sin 60° = 0.866·d².",
+        "It contains exactly one full circle of area π·d²/4 = 0.785·d².",
+        "Fraction:  0.785/0.866 = π/(2√3) = 0.907.",
+        "In a finite tray, the edges waste some space, so real packs are a little lower. Gaps are also needed for cooling, structure and fire protection."
+      ],
+      "proofTitle": "Hexagonal packing",
+      "methods": [
+        {
+          "title": "Compare with a square grid",
+          "steps": [
+            "Square grid: each cell sits in a d × d square.",
+            "Fraction:  (π·d²/4)/d² = π/4 = 0.785.",
+            "Offsetting alternate rows reduces the row spacing from d to 0.866·d, so about 15% more rows fit.",
+            "0.785/0.866 = 0.907. Hexagonal is proven to be the densest packing of equal circles in a plane."
+          ]
+        }
+      ],
+      "reported": {
+        "kind": "question",
+        "note": "A candidate reported being asked to determine the optimal packing efficiency of cylindrical battery cells in a rectangular battery pack.",
+        "sources": [
+          "pack"
+        ]
+      }
     }
   ]
 });

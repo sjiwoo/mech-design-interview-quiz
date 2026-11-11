@@ -21,7 +21,14 @@ window.QUESTION_SETS.push({
         "Plotting amplitude S against log N gives a curve that falls as N increases.",
         "For steels it flattens at about 10⁶ cycles. That level is the endurance limit, roughly half the ultimate strength for a polished specimen (up to a cap).",
         "Real parts get lower values after correcting for surface finish, size, loading type and reliability."
-      ]
+      ],
+      "reported": {
+        "kind": "question",
+        "note": "A candidate reported being asked to explain the S-N curve.",
+        "sources": [
+          "sn"
+        ]
+      }
     },
     {
       "level": "Fundamental",
@@ -39,7 +46,14 @@ window.QUESTION_SETS.push({
         "Aluminium and most non-ferrous alloys have no knee. Life keeps shortening as cycles accumulate.",
         "So aluminium is given a fatigue strength at a stated life, for example at 5 × 10⁸ cycles.",
         "Design consequence: aluminium parts under cyclic load are designed for a finite life, with inspection or replacement."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "The S-N curve was reported. This follow-up was not.",
+        "sources": [
+          "sn"
+        ]
+      }
     },
     {
       "level": "Fundamental",
@@ -75,7 +89,14 @@ window.QUESTION_SETS.push({
         "σ_a/S_e = 100/250 = 0.40.   σ_m/S_ut = 200/800 = 0.25.",
         "1/n = 0.65  ⇒  n = 1.54.",
         "Without the mean stress, n would be 250/100 = 2.5. Tensile mean stress cuts fatigue life. Compressive mean stress helps, which is why shot peening works."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "The S-N curve was reported. This exact question was not.",
+        "sources": [
+          "sn"
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -160,7 +181,14 @@ window.QUESTION_SETS.push({
         "Final fracture: the remaining area overloads and breaks suddenly, leaving a rough, fibrous or grainy region.",
         "A small final-fracture zone means the stress was low and the life long. A large one means high stress.",
         "Necking with a cup-and-cone is ductile overload, not fatigue."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "The S-N curve and fatigue were reported. This exact question was not.",
+        "sources": [
+          "sn"
+        ]
+      }
     },
     {
       "level": "Design judgment",
@@ -198,7 +226,14 @@ window.QUESTION_SETS.push({
         "Second block:  200,000 / 1,000,000 = 0.20.",
         "Total damage D = 0.30. Failure is predicted when D reaches 1, so 70% of life remains.",
         "It ignores load sequence effects, so real designs often limit D to well below 1."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "The S-N curve and fatigue were reported. This exact question was not.",
+        "sources": [
+          "sn"
+        ]
+      }
     }
   ]
 });

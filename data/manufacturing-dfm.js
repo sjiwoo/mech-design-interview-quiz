@@ -21,7 +21,16 @@ window.QUESTION_SETS.push({
         "With zero draft, the wall slides against steel over the full ejection stroke. That causes drag marks, distortion, or a stuck part.",
         "With draft, the surfaces separate after the first fraction of a millimetre of travel.",
         "Typical: 1 to 2° per side, and more for textured surfaces (about 1° extra per 0.025 mm of texture depth)."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Candidates reported questions on casting, injection moulding and other manufacturing processes. This exact question was not reported.",
+        "sources": [
+          "xsec",
+          "mde2",
+          "mfgparts"
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -39,7 +48,16 @@ window.QUESTION_SETS.push({
         "As that hot core shrinks it pulls the outer skin inward, leaving a sink mark opposite the rib.",
         "Keeping the rib at 50 to 60% of the wall limits the extra mass:  0.5 × 3 = 1.5 mm to 0.6 × 3 = 1.8 mm.",
         "For more stiffness, use more or taller ribs (height up to about 3× wall) instead of thicker ones, and keep draft on them."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Candidates reported questions on casting, injection moulding and other manufacturing processes. This exact question was not reported.",
+        "sources": [
+          "xsec",
+          "mde2",
+          "mfgparts"
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -68,7 +86,16 @@ window.QUESTION_SETS.push({
             "This is why high-volume automotive parts are tooled and prototypes are machined or printed."
           ]
         }
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Candidates reported questions on casting, injection moulding and other manufacturing processes. This exact question was not reported.",
+        "sources": [
+          "xsec",
+          "mde2",
+          "mfgparts"
+        ]
+      }
     },
     {
       "level": "Fundamental",
@@ -86,7 +113,16 @@ window.QUESTION_SETS.push({
         "With R = t that is about 33%, which ductile steel and soft aluminium can take.",
         "Harder tempers such as 6061-T6 need larger radii, often 2 to 3× thickness, and bending across the grain direction helps.",
         "Related rules: keep holes at least about 2.5× thickness plus the bend radius away from a bend, and add bend relief at edges."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Candidates reported questions on casting, injection moulding and other manufacturing processes. This exact question was not reported.",
+        "sources": [
+          "xsec",
+          "mde2",
+          "mfgparts"
+        ]
+      }
     },
     {
       "level": "Design judgment",
@@ -105,7 +141,15 @@ window.QUESTION_SETS.push({
         "Die casting: molten aluminium injected into a steel die at high pressure. Walls of 1.5 to 3 mm, net-shape detail, cycle times under a minute.",
         "Open-die forging gives strength but only simple shapes.",
         "Die casting trade-offs: porosity (limits welding and heat treatment), draft needed, and critical faces still get machined."
-      ]
+      ],
+      "reported": {
+        "kind": "question",
+        "note": "Candidates reported being asked which manufacturing technique they would use for a given part.",
+        "sources": [
+          "sslabel2",
+          "mfgparts"
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -124,7 +168,16 @@ window.QUESTION_SETS.push({
         "A radius about 10 to 30% larger than the tool radius lets the tool follow a curved path.",
         "Deep pockets need long tools, so keep depth under about 4× the tool diameter. A larger corner radius allows a bigger, stiffer tool.",
         "If a mating part has a sharp corner, add relief (dog-bone) cuts or chamfer the mating part."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Candidates reported questions on casting, injection moulding and other manufacturing processes. This exact question was not reported.",
+        "sources": [
+          "xsec",
+          "mde2",
+          "mfgparts"
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -142,7 +195,16 @@ window.QUESTION_SETS.push({
         "So the springback angle grows with yield strength and shrinks with modulus.",
         "Mild steel:  about 250/200,000 = 0.00125.   6061-T6:  about 275/69,000 = 0.0040, roughly three times more.",
         "Tooling compensates by overbending, bottoming or coining the bend. Springback also rises with a larger radius-to-thickness ratio."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Candidates reported questions on casting, injection moulding and other manufacturing processes. This exact question was not reported.",
+        "sources": [
+          "xsec",
+          "mde2",
+          "mfgparts"
+        ]
+      }
     },
     {
       "level": "Design judgment",
@@ -161,7 +223,16 @@ window.QUESTION_SETS.push({
         "Forging deforms solid metal under high pressure. That closes voids, refines the grain and makes it flow along the shape, like wood grain.",
         "The result is higher fatigue strength and toughness, and less scatter. Young's modulus is unchanged.",
         "Trade-offs: forging costs more and allows less complex shapes, so castings are used where geometry and cost matter more."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Candidates reported questions on casting, injection moulding and other manufacturing processes. This exact question was not reported.",
+        "sources": [
+          "xsec",
+          "mde2",
+          "mfgparts"
+        ]
+      }
     },
     {
       "level": "Fundamental",
@@ -180,7 +251,16 @@ window.QUESTION_SETS.push({
         "Strength across a weld line can drop noticeably, more so in glass-filled materials because fibres align along the line.",
         "Fixes: move the gate so the line falls in a low-stress area, raise melt and mould temperature, or add venting.",
         "The parting line and ejector marks are different features, caused by the tool and not by flow."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Candidates reported questions on casting, injection moulding and other manufacturing processes. This exact question was not reported.",
+        "sources": [
+          "xsec",
+          "mde2",
+          "mfgparts"
+        ]
+      }
     },
     {
       "level": "Design judgment",
@@ -199,7 +279,70 @@ window.QUESTION_SETS.push({
         "Other DFA rules: one assembly direction (top-down), self-locating features, snap fits in place of screws, a single fastener type.",
         "Mistake-proof (poka-yoke): make parts either fully symmetric or obviously asymmetric so they cannot go in wrong.",
         "Tesla's large single-piece castings follow this idea: one part replacing many stamped and welded pieces."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Candidates reported questions on casting, injection moulding and other manufacturing processes. This exact question was not reported.",
+        "sources": [
+          "xsec",
+          "mde2",
+          "mfgparts"
+        ]
+      }
+    },
+    {
+      "level": "Applied",
+      "q": "You need a car door outer panel: a large, thin, curved skin made in very high volume. Which material and process fit best?",
+      "options": [
+        "Aluminium billet, CNC machined",
+        "Steel or aluminium sheet, stamped in dies",
+        "Grey cast iron, sand cast",
+        "Titanium, 3D printed"
+      ],
+      "answer": 1,
+      "why": "Body panels are thin sheet formed in stamping dies. Cycle time is seconds, material waste is low and the surface is good enough to paint.",
+      "proof": [
+        "Shape: large, about 0.7 to 1 mm thick, smooth compound curves. That is sheet-metal geometry.",
+        "Volume: hundreds of thousands a year, which justifies expensive die sets.",
+        "Process: blanking, deep drawing, trimming and flanging in a press line.",
+        "Material: mild or bake-hardening steel, or 5xxx/6xxx aluminium sheet where mass matters.",
+        "Machining would waste nearly all the billet, casting cannot make it that thin with that finish, and printing is far too slow.",
+        "General method: start from geometry, volume, material and tolerance, then pick the process."
+      ],
+      "reported": {
+        "kind": "question",
+        "note": "Candidates reported being asked to identify manufacturing methods and materials for sample parts.",
+        "sources": [
+          "mfgparts",
+          "sslabel2"
+        ]
+      }
+    },
+    {
+      "level": "Fundamental",
+      "q": "Which pair are both machining (material removal) operations?",
+      "options": [
+        "Injection moulding and die casting",
+        "Stamping and forging",
+        "Milling and turning",
+        "Extrusion and rolling"
+      ],
+      "answer": 2,
+      "why": "Machining cuts material away with a tool. Milling uses a rotating cutter on a fixed part, and turning uses a fixed tool on a rotating part. The others shape material by casting or forming.",
+      "proof": [
+        "Machining: milling, turning, drilling, boring, reaming, tapping, grinding.",
+        "Milling: rotating multi-tooth cutter, used for faces, pockets and profiles.",
+        "Turning: part spins in a lathe, used for shafts, bores and threads.",
+        "Casting and moulding fill a cavity with liquid. Stamping, forging, extrusion and rolling deform solid material.",
+        "Cast and forged parts are usually machined afterwards on sealing faces, bores and threads, such as casting faces and motor shafts."
+      ],
+      "reported": {
+        "kind": "question",
+        "note": "A candidate reported being asked to name two machining operations used at Tesla.",
+        "sources": [
+          "machining"
+        ]
+      }
     }
   ]
 });

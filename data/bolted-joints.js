@@ -21,7 +21,15 @@ window.QUESTION_SETS.push({
         "The bolt tension is balanced by compression in the clamped parts. That is the clamp force, or preload.",
         "A shear load is resisted by friction:  capacity = μ × clamp force × number of friction interfaces.",
         "Only if the joint slips does the shank bear on the hole. Clearance holes mean bolts would then share load unevenly, so joints are designed not to slip."
-      ]
+      ],
+      "reported": {
+        "kind": "question",
+        "note": "A battery-team candidate reported being asked how a bolt works.",
+        "sources": [
+          "howbolt",
+          "boltheat"
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -39,7 +47,16 @@ window.QUESTION_SETS.push({
         "F = T/(K·d) = 50 / (0.2 × 0.010) = 50 / 0.002 = 25,000 N.",
         "K is about 0.2 for dry steel threads and about 0.12 to 0.15 when lubricated.",
         "So the same torque on lubricated threads gives 30 to 60% more preload. Torque specs must state the thread condition."
-      ]
+      ],
+      "reported": {
+        "kind": "question",
+        "note": "Candidates reported bolt preload questions, and one was asked for the torque on a specific bolt.",
+        "sources": [
+          "srme",
+          "boltcant",
+          "m5"
+        ]
+      }
     },
     {
       "level": "Fundamental",
@@ -57,7 +74,16 @@ window.QUESTION_SETS.push({
         "A small change in friction therefore makes a large change in preload.",
         "Torque control gives preload scatter of roughly ±25 to 30%.",
         "Critical joints use torque-plus-angle, or measure bolt stretch directly, to cut that scatter."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Bolts and bolt preload are reported in several Tesla interviews. This exact question was not reported.",
+        "sources": [
+          "srme",
+          "boltcant",
+          "boltheat"
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -87,7 +113,16 @@ window.QUESTION_SETS.push({
             "The stiffer path carries more load. A long, slender bolt in a stiff joint sees very little of the external load."
           ]
         }
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Bolts and bolt preload are reported in several Tesla interviews. This exact question was not reported.",
+        "sources": [
+          "srme",
+          "boltcant",
+          "boltheat"
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -105,7 +140,16 @@ window.QUESTION_SETS.push({
         "Separation when F_m = 0:  P = F_i/(1 − C) = 20/0.75 = 26.7 kN.",
         "After separation the bolt carries the whole external load, and its load rises one-for-one with P.",
         "It is higher than the preload because the bolt also picks up part of the load as it stretches."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Bolts and bolt preload are reported in several Tesla interviews. This exact question was not reported.",
+        "sources": [
+          "srme",
+          "boltcant",
+          "boltheat"
+        ]
+      }
     },
     {
       "level": "Design judgment",
@@ -123,7 +167,16 @@ window.QUESTION_SETS.push({
         "For C = 0.25 the alternating load is a quarter of the applied swing.",
         "If preload is too low and the joint separates, the bolt takes the full swing and fails quickly, usually at the first engaged thread.",
         "Preload does raise the mean stress, but bolt fatigue is far more sensitive to amplitude. Typical target: 75% of proof load."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Bolts and bolt preload are reported in several Tesla interviews. This exact question was not reported.",
+        "sources": [
+          "srme",
+          "boltcant",
+          "boltheat"
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -141,7 +194,16 @@ window.QUESTION_SETS.push({
         "Friction capacity:  μ·N = 0.2 × 80 = 16 kN for one interface.",
         "A double-lap joint has two interfaces and would carry 32 kN.",
         "To raise it: more preload, more or larger bolts, higher friction surfaces, or add dowels or a shoulder to take shear directly."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Bolts and bolt preload are reported in several Tesla interviews. This exact question was not reported.",
+        "sources": [
+          "srme",
+          "boltcant",
+          "boltheat"
+        ]
+      }
     },
     {
       "level": "Fundamental",
@@ -159,7 +221,16 @@ window.QUESTION_SETS.push({
         "Second digit:  0.8 × 800 = 640 MPa minimum yield.",
         "Class 10.9:  1,000 MPa ultimate, 900 MPa yield.   Class 12.9:  1,200 and 1,080 MPa.",
         "The rough inch equivalents are Grade 5 for 8.8 and Grade 8 for 10.9."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Bolts and bolt preload are reported in several Tesla interviews. This exact question was not reported.",
+        "sources": [
+          "srme",
+          "boltcant",
+          "boltheat"
+        ]
+      }
     },
     {
       "level": "Design judgment",
@@ -178,7 +249,16 @@ window.QUESTION_SETS.push({
         "Rule of thumb for full bolt strength: about 1× diameter in steel, 1.5 to 2× diameter in aluminium, because aluminium's shear strength is lower.",
         "Beyond that, extra length adds little because the first few threads carry most of the load.",
         "For joints that are taken apart often, use steel thread inserts in aluminium."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Bolts and bolt preload are reported in several Tesla interviews. This exact question was not reported.",
+        "sources": [
+          "srme",
+          "boltcant",
+          "boltheat"
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -208,7 +288,117 @@ window.QUESTION_SETS.push({
             "σ = 25,000 / 58.0 = 431 MPa. The effective diameter is between the pitch and minor diameters."
           ]
         }
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Bolts and bolt preload are reported in several Tesla interviews. This exact question was not reported.",
+        "sources": [
+          "srme",
+          "boltcant",
+          "boltheat"
+        ]
+      }
+    },
+    {
+      "level": "Applied",
+      "q": "Roughly what tightening torque does a dry M5 class 8.8 steel bolt need?",
+      "options": [
+        "About 0.6 N·m",
+        "About 6 N·m",
+        "About 25 N·m",
+        "About 60 N·m"
+      ],
+      "answer": 1,
+      "why": "Preload target is about 75% of proof: 0.75 × 580 MPa × 14.2 mm² ≈ 6.2 kN. T = K·d·F = 0.2 × 0.005 × 6,177 ≈ 6 N·m.",
+      "proof": [
+        "M5 coarse thread tensile stress area:  A_t = 14.2 mm².",
+        "Class 8.8 proof strength about 580 MPa. Target 75% of proof:  F = 0.75 × 580 × 14.2 = 6,177 N.",
+        "T = K·d·F with K = 0.2 (dry) and d = 0.005 m.",
+        "T = 0.2 × 0.005 × 6,177 = 6.2 N·m.",
+        "Lubricated threads (K about 0.15) need about 4.6 N·m for the same preload. Into aluminium, use less."
+      ],
+      "proofTitle": "From preload",
+      "methods": [
+        {
+          "title": "Scale from an M10",
+          "steps": [
+            "An M10 8.8 bolt takes about 50 N·m (25 kN preload).",
+            "Torque goes as d × A_t. Diameter ratio 0.5, stress area ratio 14.2/58 = 0.245.",
+            "T = 50 × 0.5 × 0.245 = 6.1 N·m.",
+            "Rule of thumb: torque scales roughly with d³, so half the diameter needs about one eighth of the torque."
+          ]
+        }
+      ],
+      "reported": {
+        "kind": "question",
+        "note": "A candidate reported being asked how much torque an M5 bolt requires, as an exact number.",
+        "sources": [
+          "m5"
+        ]
+      }
+    },
+    {
+      "level": "Design judgment",
+      "q": "A steel bolt clamps aluminium parts and is torqued at room temperature. The assembly then cools by 80 K. What happens to the bolt preload?",
+      "options": [
+        "It drops, because the aluminium shrinks more than the steel bolt",
+        "It rises, because the bolt shrinks",
+        "It does not change",
+        "It doubles"
+      ],
+      "answer": 0,
+      "why": "Aluminium contracts about twice as much as steel per kelvin. The clamped stack gets shorter than the bolt wants to be, so the bolt relaxes and preload falls. Heating does the opposite.",
+      "proof": [
+        "Expansion coefficients:  aluminium about 23 × 10⁻⁶ /K, steel about 12 × 10⁻⁶ /K.",
+        "Over a grip length L, the mismatch is Δ = (α_al − α_st)·L·ΔT.",
+        "For L = 20 mm and ΔT = 80 K:  Δ = 11 × 10⁻⁶ × 20 × 80 = 0.018 mm.",
+        "Cooling: the aluminium shrinks more, so the bolt is stretched less. Preload change = Δ × the combined stiffness k_b·k_m/(k_b + k_m), which can be a large share of the preload on a short bolt.",
+        "Heating: the aluminium grows more, preload rises and can yield the bolt or crush the aluminium under the head.",
+        "Friction also changes with temperature, so torque measured hot or cold does not give the same preload."
+      ],
+      "reported": {
+        "kind": "question",
+        "note": "A candidate reported being asked about the difference in bolt torque in hot and cold conditions.",
+        "sources": [
+          "hotcold"
+        ]
+      }
+    },
+    {
+      "level": "Applied",
+      "q": "A pin joint carries 20 kN through a single bolt in double shear. The allowable shear stress is 100 MPa. What bolt diameter is needed?",
+      "options": [
+        "About 8 mm",
+        "About 11.3 mm, so use M12",
+        "About 16 mm",
+        "About 22.6 mm"
+      ],
+      "answer": 1,
+      "why": "Double shear has two shear planes: A = F/(2τ) = 20,000/200 = 100 mm². d = √(4A/π) = 11.3 mm.",
+      "proof": [
+        "Double shear: the bolt is cut on two planes, so each carries F/2.",
+        "τ = F/(2A)  ⇒  A = F/(2·τ) = 20,000/(2 × 100) = 100 mm².",
+        "d = √(4·A/π) = √127.3 = 11.3 mm. Choose M12.",
+        "Also check bearing stress on the plates, F/(d·t), and keep threads out of the shear planes."
+      ],
+      "proofTitle": "Two shear planes",
+      "methods": [
+        {
+          "title": "From single shear",
+          "steps": [
+            "In single shear the area needed would be F/τ = 200 mm², giving d = 16 mm.",
+            "Double shear halves the area needed, so the diameter falls by √2:  16/1.414 = 11.3 mm.",
+            "That is why clevis joints are used: same load, smaller pin, and no bending from offset plates."
+          ]
+        }
+      ],
+      "reported": {
+        "kind": "question",
+        "note": "A candidate reported being asked how to determine the diameter of a bolt in double shear under a known force.",
+        "sources": [
+          "dshear"
+        ]
+      }
     }
   ]
 });

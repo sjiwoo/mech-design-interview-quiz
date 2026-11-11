@@ -62,8 +62,10 @@
 
   function loadProgress(set) {
     var p = readJSON(progressKey(set));
-    if (!p || !Array.isArray(p.answers) || p.answers.length !== set.questions.length) return null;
-    return p;
+    if (!p || !Array.isArray(p.answers)) return null;
+    // sections can gain questions later: keep old answers, pad the rest
+    var answers = set.questions.map(function (_, i) { return Number.isInteger(p.answers[i]) ? p.answers[i] : null; });
+    return { index: Math.min(Math.max(0, p.index | 0), set.questions.length - 1), answers: answers };
   }
   function saveProgress() {
     if (!state || !state.full) return;
@@ -594,6 +596,38 @@
     ]);
   }
 
+  /* ---------- reported-in-interview tags ---------- */
+
+  var SOURCES = window.SOURCES || {};
+  var REPORT_LABELS = {
+    question: "Reported in a Tesla interview",
+    topic: "Reported topic, practice question",
+    secondhand: "Attributed to Tesla, not first-hand",
+    none: "Practice question, not reported"
+  };
+  function reportKind(q) { return q.reported ? q.reported.kind : "none"; }
+  function reportBadge(q) {
+    var kind = reportKind(q);
+    return el("span", { class: "report-badge report-" + kind, text: REPORT_LABELS[kind] });
+  }
+  function reportDetails(q) {
+    if (!q.reported) return null;
+    var links = (q.reported.sources || []).map(function (id) {
+      var src = SOURCES[id];
+      return src ? el("li", {}, [el("a", { href: src.url, target: "_blank", rel: "noopener noreferrer", text: src.title })]) : null;
+    });
+    return el("details", { class: "report-details" }, [
+      el("summary", { text: "Where this was reported" }),
+      el("p", { text: q.reported.note }),
+      el("ul", {}, links)
+    ]);
+  }
+  function reportCounts(set) {
+    var c = { question: 0, topic: 0, secondhand: 0, none: 0 };
+    set.questions.forEach(function (q) { c[reportKind(q)]++; });
+    return c;
+  }
+
   /* ---------- views ---------- */
 
   var selector = document.getElementById("section-select");
@@ -638,11 +672,22 @@
       } else {
         buttons = el("button", { class: "btn btn-primary", type: "button", text: "Start", onclick: function () { clearSet(set); startQuiz(set, set.questions); } });
       }
+      var rc = reportCounts(set);
+      var reportedQs = set.questions.filter(function (q) { return reportKind(q) === "question"; });
+      if (reportedQs.length) {
+        var row = buttons.classList && buttons.classList.contains("btn-row") ? buttons : el("div", { class: "btn-row" }, [buttons]);
+        row.appendChild(el("button", {
+          class: "btn", type: "button", text: "Reported only (" + reportedQs.length + ")",
+          onclick: function () { startQuiz(set, reportedQs); }
+        }));
+        buttons = row;
+      }
       nodes.push(el("section", { class: "card" }, [
         el("h2", { text: set.title }),
         el("p", { class: "muted", text: set.blurb }),
         el("div", { class: "topic-meta" }, [
           el("span", { text: set.questions.length + " questions" }),
+          el("span", { class: rc.question ? "meta-reported" : "", text: rc.question + " reported in interviews" }),
           prog && done ? el("span", { text: done + " answered" }) : null,
           best ? el("span", { text: "Best: " + best.score + "/" + best.total }) : null
         ]),
@@ -737,8 +782,9 @@
       ]),
       el("div", { class: "bar" }, [el("span", { style: "width:" + ((state.index + (answered ? 1 : 0)) / total) * 100 + "%" })]),
       el("section", { class: "card" }, [
-        el("span", { class: "level", text: q.level }),
+        el("div", { class: "tag-row" }, [el("span", { class: "level", text: q.level }), reportBadge(q)]),
         el("p", { class: "question", text: q.q }),
+        reportDetails(q),
         q.diagram ? (q.diagram.section ? drawSection(q.diagram.section) : drawDiagram(q.diagram)) : null,
         options,
         feedback,

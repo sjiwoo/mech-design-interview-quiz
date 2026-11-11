@@ -32,7 +32,15 @@ window.QUESTION_SETS.push({
             "As the cables get flatter, T = W/(2·sin θ) grows without limit. A perfectly horizontal cable cannot hold any weight."
           ]
         }
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Free-body diagrams and static equilibrium problems are reported in Tesla interviews. This exact question was not reported.",
+        "sources": [
+          "fbd",
+          "joint"
+        ]
+      }
     },
     {
       "level": "Fundamental",
@@ -61,7 +69,15 @@ window.QUESTION_SETS.push({
             "The normal is tilted θ from vertical, so R is θ from the normal. Slip starts when θ = φ = arctan(0.5) = 26.6°."
           ]
         }
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Free-body diagrams and static equilibrium problems are reported in Tesla interviews. This exact question was not reported.",
+        "sources": [
+          "fbd",
+          "joint"
+        ]
+      }
     },
     {
       "level": "Fundamental",
@@ -79,7 +95,15 @@ window.QUESTION_SETS.push({
         "ΣM about the pivot = 0:  600 × 0.5 − F × 1.5 = 0.",
         "F = 300 / 1.5 = 200 N. Mechanical advantage is 1.5/0.5 = 3.",
         "Check with forces: the pivot reaction is 600 + 200 = 800 N upward."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Free-body diagrams and static equilibrium problems are reported in Tesla interviews. This exact question was not reported.",
+        "sources": [
+          "fbd",
+          "joint"
+        ]
+      }
     },
     {
       "level": "Fundamental",
@@ -97,7 +121,15 @@ window.QUESTION_SETS.push({
         "ΣM = 0 about one pin means the other force has no moment arm, so it passes through that pin.",
         "Both forces therefore lie on the line through the two pins. The member is in pure tension or compression, even if the link itself is curved.",
         "Spotting two-force members first cuts the unknowns in frame and mechanism problems."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Free-body diagrams and static equilibrium problems are reported in Tesla interviews. This exact question was not reported.",
+        "sources": [
+          "fbd",
+          "joint"
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -126,7 +158,15 @@ window.QUESTION_SETS.push({
             "Without the bottom member the supports would need to resist that 0.5P thrust themselves."
           ]
         }
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Free-body diagrams and static equilibrium problems are reported in Tesla interviews. This exact question was not reported.",
+        "sources": [
+          "fbd",
+          "joint"
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -156,7 +196,15 @@ window.QUESTION_SETS.push({
             "f = W/(2·tan θ), so μ_min = 1/(2·tan θ) = 0.289. Same result, and neither W nor L matters."
           ]
         }
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Free-body diagrams and static equilibrium problems are reported in Tesla interviews. This exact question was not reported.",
+        "sources": [
+          "fbd",
+          "joint"
+        ]
+      }
     },
     {
       "level": "Fundamental",
@@ -175,7 +223,15 @@ window.QUESTION_SETS.push({
         "Planar equilibrium gives 3 equations:  ΣF_x = 0, ΣF_y = 0, ΣM = 0.",
         "Degree of indeterminacy = 6 − 3 = 3. The extra equations come from compatibility of deflections.",
         "With only transverse loads and small deflections the axial reactions are zero, which is why textbook problems solve it with fewer unknowns."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Free-body diagrams and static equilibrium problems are reported in Tesla interviews. This exact question was not reported.",
+        "sources": [
+          "fbd",
+          "joint"
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -194,7 +250,15 @@ window.QUESTION_SETS.push({
         "F = W·(0.4/2)/1.0 = 0.2W.",
         "0.2W < 0.3W, so the crate tips before it slides.",
         "General condition for tipping first:  μ > b/(2h) = 0.2. Pushing lower down raises the force needed to tip."
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Free-body diagrams and static equilibrium problems are reported in Tesla interviews. This exact question was not reported.",
+        "sources": [
+          "fbd",
+          "joint"
+        ]
+      }
     },
     {
       "level": "Fundamental",
@@ -222,7 +286,15 @@ window.QUESTION_SETS.push({
             "F = 490 N. You trade distance for force: mechanical advantage 2."
           ]
         }
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Free-body diagrams and static equilibrium problems are reported in Tesla interviews. This exact question was not reported.",
+        "sources": [
+          "fbd",
+          "joint"
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -251,7 +323,169 @@ window.QUESTION_SETS.push({
             "Shortcut: weight distribution is 60% front, so the centre of gravity is 40% of the wheelbase back:  0.4 × 3.0 = 1.2 m."
           ]
         }
-      ]
+      ],
+      "reported": {
+        "kind": "topic",
+        "note": "Free-body diagrams and static equilibrium problems are reported in Tesla interviews. This exact question was not reported.",
+        "sources": [
+          "fbd",
+          "joint"
+        ]
+      }
+    },
+    {
+      "level": "Applied",
+      "q": "A pendulum bob of mass m is released from rest with the string horizontal. What is the string tension as it passes through the lowest point?",
+      "options": [
+        "mg",
+        "2mg",
+        "3mg",
+        "Zero"
+      ],
+      "answer": 2,
+      "why": "At the bottom the string must hold the weight and also supply the centripetal force: T = mg + mv²/L. Energy gives v² = 2gL, so T = 3mg.",
+      "proof": [
+        "Free body at the bottom: tension T up, weight mg down. The bob is moving in a circle of radius L.",
+        "Newton along the string:  T − mg = m·v²/L.",
+        "Energy from release to the bottom, a drop of L:  ½·m·v² = m·g·L  ⇒  v² = 2gL.",
+        "T = mg + m(2gL)/L = 3mg."
+      ],
+      "proofTitle": "Free body plus energy",
+      "methods": [
+        {
+          "title": "General angle",
+          "steps": [
+            "At angle θ from vertical, released from θ₀:  v² = 2gL(cos θ − cos θ₀).",
+            "Along the string:  T − mg·cos θ = m·v²/L.",
+            "T = mg(3·cos θ − 2·cos θ₀).",
+            "With θ₀ = 90° and θ = 0:  T = 3mg. At the release point T = 0, and at rest hanging straight down T = mg."
+          ]
+        }
+      ],
+      "reported": {
+        "kind": "question",
+        "note": "A candidate reported being asked for the free-body diagram of a pendulum.",
+        "sources": [
+          "pend"
+        ]
+      }
+    },
+    {
+      "level": "Applied",
+      "q": "A motor produces 400 N·m of torque at 3,000 rpm. What power is that?",
+      "options": [
+        "About 12.6 kW",
+        "About 40 kW",
+        "About 126 kW (169 hp)",
+        "About 1,200 kW"
+      ],
+      "answer": 2,
+      "why": "P = T·ω. ω = 3,000 × 2π/60 = 314 rad/s, so P = 400 × 314 = 125.7 kW, about 169 hp.",
+      "proof": [
+        "Power = torque × angular speed, with ω in rad/s.",
+        "ω = 3,000 rev/min × 2π/60 = 314.2 rad/s.",
+        "P = 400 × 314.2 = 125,664 W = 125.7 kW.",
+        "In horsepower:  125.7 kW / 0.7457 = 168.5 hp."
+      ],
+      "proofTitle": "P = T·ω in SI",
+      "methods": [
+        {
+          "title": "Imperial shortcut",
+          "steps": [
+            "hp = torque (lb·ft) × rpm / 5,252.",
+            "400 N·m × 0.7376 = 295 lb·ft.",
+            "hp = 295 × 3,000 / 5,252 = 168.5 hp.",
+            "Torque and horsepower curves always cross at 5,252 rpm for that reason. A gearbox trades torque for speed, and power stays the same apart from losses."
+          ]
+        }
+      ],
+      "reported": {
+        "kind": "question",
+        "note": "A candidate reported torque and horsepower coming up in a hiring-manager round.",
+        "sources": [
+          "srme"
+        ]
+      }
+    },
+    {
+      "level": "Fundamental",
+      "q": "A motor applies a constant 100 N·m of torque through 10 full revolutions. How much energy does it deliver?",
+      "options": [
+        "100 J",
+        "628 J",
+        "1,000 J",
+        "About 6,280 J"
+      ],
+      "answer": 3,
+      "why": "Work = torque × angle in radians = 100 × (10 × 2π) = 6,283 J. Energy is an amount, and power is the rate of delivering it.",
+      "proof": [
+        "Energy (work) is force × distance. For rotation, it is torque × angle, with the angle in radians.",
+        "Angle:  10 rev × 2π = 62.83 rad.",
+        "W = 100 × 62.83 = 6,283 J.",
+        "Power is energy per unit time:  P = T·ω. If the 10 turns take 2 s, P = 6,283/2 = 3.1 kW.",
+        "Units: energy in J or kWh, power in W. A battery stores kWh, and a motor is rated in kW."
+      ],
+      "reported": {
+        "kind": "question",
+        "note": "A candidate reported being asked the difference between power and energy, and how torque relates to energy.",
+        "sources": [
+          "mdesearch"
+        ]
+      }
+    },
+    {
+      "level": "Applied",
+      "q": "A horizontal arm is welded to a vertical post and carries a downward load at its tip. What stresses act on the welded joint?",
+      "options": [
+        "Only axial tension",
+        "Bending stress plus transverse shear",
+        "Only torsion",
+        "No stress, the post carries it"
+      ],
+      "answer": 1,
+      "why": "Cut the arm at the weld: the tip load needs a shear force V = P and a moment M = PL there. The moment gives bending stress, usually the larger part, and the shear force gives shear stress.",
+      "proof": [
+        "Free body of the arm: load P down at the tip. At the weld the reactions are V = P up and M = P·L.",
+        "M produces normal stress σ = M·c/I: tension at the top of the joint, compression at the bottom.",
+        "V produces shear stress τ, about V/A on average.",
+        "For a long arm, bending dominates because M grows with L and V does not.",
+        "If the load is offset sideways from the arm axis, add torsion T = P·e. If the load is angled, add axial stress.",
+        "Combine them with von Mises to check the joint."
+      ],
+      "reported": {
+        "kind": "question",
+        "note": "A candidate reported being shown a diagram of forces and moments and asked what stresses one of the joints would feel.",
+        "sources": [
+          "joint"
+        ]
+      }
+    },
+    {
+      "level": "Fundamental",
+      "q": "Treating it as a rigid body sliding on a desk, how many degrees of freedom does a computer mouse have?",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "6"
+      ],
+      "answer": 2,
+      "why": "A free body has 6. The desk surface removes three (lift, pitch and roll), leaving 3: slide in x, slide in y, and rotate about the vertical axis. The sensor only reports two of them.",
+      "proof": [
+        "A free rigid body has 6 degrees of freedom: translations x, y, z and rotations Rx, Ry, Rz.",
+        "Flat contact with the desk removes z, Rx and Ry.",
+        "Remaining: x, y and Rz (yaw). That is 3.",
+        "The optical sensor measures only x and y, which is why twisting the mouse on the spot barely moves the cursor.",
+        "If you count its mechanisms, each button and the scroll wheel add one more each."
+      ],
+      "reported": {
+        "kind": "question",
+        "note": "Candidates reported being asked the degrees of freedom of a computer mouse, and general x, y, z and rotation questions.",
+        "sources": [
+          "mdesearch",
+          "dof"
+        ]
+      }
     }
   ]
 });
