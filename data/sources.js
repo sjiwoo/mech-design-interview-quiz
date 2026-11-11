@@ -315,5 +315,9 @@ window.SOURCES = {
   "ikintern": {
     "title": "Glassdoor candidate report: Robotics Intern (inverse kinematics solver)",
     "url": "https://www.glassdoor.ca/Interview/Tesla-Interview-E43129-RVW104034800.htm"
+  },
+  "hoopder": {
+    "title": "Glassdoor candidate report: Mechanical Design Engineer (derive the hoop stress equation)",
+    "url": "https://www.glassdoor.sg/Interview/Tesla-Interview-E43129-RVW82263407.htm"
   }
 };
