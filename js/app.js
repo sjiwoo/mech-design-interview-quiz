@@ -759,10 +759,30 @@
       nodes.push(el("section", { class: "card" }, [
         el("h2", { text: set.title }),
         el("p", { class: "muted", text: set.blurb }),
+        (function () {
+          var total = set.questions.length, right = 0, wrong = 0;
+          if (prog) prog.answers.forEach(function (ans, i) {
+            if (ans === null) return;
+            if (ans === set.questions[i].answer) right++; else wrong++;
+          });
+          var answered = right + wrong;
+          var label = answered === 0 ? "Not started"
+            : answered === total ? "Complete: " + right + " of " + total + " correct"
+            : answered + " of " + total + " answered, " + right + " correct";
+          return el("div", { class: "sec-progress" }, [
+            el("div", { class: "sec-bar", role: "progressbar", "aria-valuemin": "0", "aria-valuemax": String(total), "aria-valuenow": String(answered), "aria-label": set.title + " progress" }, [
+              el("span", { class: "sec-right", style: "width:" + (right / total) * 100 + "%" }),
+              el("span", { class: "sec-wrong", style: "width:" + (wrong / total) * 100 + "%" })
+            ]),
+            el("div", { class: "sec-label" }, [
+              el("span", { text: label }),
+              el("span", { text: Math.round((answered / total) * 100) + "%" })
+            ])
+          ]);
+        })(),
         el("div", { class: "topic-meta" }, [
           el("span", { text: set.questions.length + " questions" }),
           el("span", { class: rc.question ? "meta-reported" : "", text: rc.question + " reported in interviews" }),
-          prog && done ? el("span", { text: done + " answered" }) : null,
           best ? el("span", { text: "Best: " + best.score + "/" + best.total }) : null
         ]),
         buttons
