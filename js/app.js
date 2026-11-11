@@ -735,7 +735,7 @@
     if (!onlyId && CARDS.length) {
       nodes.push(el("section", { class: "card" }, [
         el("h2", { text: "Flashcards" }),
-        el("p", { class: "muted", text: CARDS.length + " cards covering the key equations and concepts from every section." }),
+        el("p", { class: "muted", text: CARDS.length + " cards: key equations, concepts and terms from every section." }),
         el("button", { class: "btn", type: "button", text: "Open flashcards", onclick: function () { setHash("flashcards"); showFlashcards(); } })
       ]));
     }
@@ -1033,7 +1033,7 @@
     secSel.value = fcState.section;
     secSel.addEventListener("change", function () { go({ section: secSel.value, index: 0, flipped: false }); });
     var kindSel = el("select", { "aria-label": "Card type" }, [
-      el("option", { value: "", text: "Equations and concepts" }), el("option", { value: "eq", text: "Equations only" }), el("option", { value: "concept", text: "Concepts only" })]);
+      el("option", { value: "", text: "All card types" }), el("option", { value: "eq", text: "Equations" }), el("option", { value: "concept", text: "Concepts" }), el("option", { value: "term", text: "Key terms" })]);
     kindSel.value = fcState.kind;
     kindSel.addEventListener("change", function () { go({ kind: kindSel.value, index: 0, flipped: false }); });
     var unk = el("button", { class: "btn btn-small", type: "button", "aria-pressed": String(fcState.onlyUnknown), text: "Hide cards I know",
@@ -1042,7 +1042,7 @@
     var knownCount = CARDS.filter(function (c) { return known[cardKey(c)]; }).length;
     var nodes = [
       el("h1", { text: "Flashcards" }),
-      el("p", { class: "muted", text: "Key equations and concepts from the sections. Tap a card to flip it. " + knownCount + " of " + CARDS.length + " marked as known." }),
+      el("p", { class: "muted", text: "Key equations, concepts and terms from the sections. Tap a card to flip it. " + knownCount + " of " + CARDS.length + " marked as known." }),
       el("div", { class: "fc-filters section-picker" }, [secSel, kindSel, unk])
     ];
 
@@ -1052,7 +1052,7 @@
       var isKnown = !!known[cardKey(card)];
       var face = el("button", { class: "fc-card" + (fcState.flipped ? " fc-back" : ""), type: "button", "aria-label": "Flashcard. Tap to flip.",
         onclick: function () { go({ flipped: !fcState.flipped }); } }, [
-        el("span", { class: "fc-tag", text: titleOf(card.section) + " · " + (card.kind === "eq" ? "Equation" : "Concept") }),
+        el("span", { class: "fc-tag", text: titleOf(card.section) + " · " + ({ eq: "Equation", concept: "Concept", term: "Key term" }[card.kind]) }),
         el("span", { class: "fc-text", text: fcState.flipped ? card.back : card.front }),
         el("span", { class: "fc-hint", text: fcState.flipped ? "Answer · tap to see the prompt" : "Tap to reveal" })
       ]);

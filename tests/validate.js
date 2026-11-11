@@ -43,7 +43,7 @@ const supports = ["simple", "cantilever", "fixed", "propped"];
 
 const ids = new Set((window.QUESTION_SETS || []).map((x) => x.id));
 (window.FLASHCARDS || []).forEach((c, i) => {
-  if (!Array.isArray(c) || c.length !== 4 || !ids.has(c[0]) || !["eq", "concept"].includes(c[1]) || !c[2] || !c[3]) errors.push(`flashcard ${i + 1}: bad card`);
+  if (!Array.isArray(c) || c.length !== 4 || !ids.has(c[0]) || !["eq", "concept", "term"].includes(c[1]) || !c[2] || !c[3]) errors.push(`flashcard ${i + 1}: bad card`);
 });
 console.log(`Flashcards: ${(window.FLASHCARDS || []).length} cards`);
 if (errors.length) {
