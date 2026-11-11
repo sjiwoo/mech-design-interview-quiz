@@ -7,21 +7,21 @@
 /* Neutral Axis. Palette taken from the drawing office: drafting film, graphite,
    machinist's layout-dye blue, and inspection red/green for marking parts. */
 :root {
-  --bg: #e9edf1;
-  --grid: rgba(47, 62, 158, 0.07);
+  --bg: #eef0f2;
+  --grid: rgba(74, 90, 130, 0.06);
   --surface: #ffffff;
-  --ink: #1d2530;
-  --muted: #586372;
-  --line: #c9d0d8;
-  --accent: #2f3e9e;
-  --accent-soft: #e3e6f6;
+  --ink: #20262e;
+  --muted: #66707c;
+  --line: #d5d9de;
+  --accent: #4a5a82;
+  --accent-soft: #e8ebf2;
   --accent-ink: #ffffff;
-  --comp: #2f3e9e;
-  --tens: #b8322a;
-  --good: #1b7a4b;
-  --good-bg: #e3f3ea;
-  --bad: #b3261e;
-  --bad-bg: #fbe8e6;
+  --comp: #4a5a82;
+  --tens: #a8574f;
+  --good: #3c7a5c;
+  --good-bg: #e8f1ec;
+  --bad: #a4504a;
+  --bad-bg: #f6eae8;
   --radius: 18px;
   --radius-sm: 12px;
   --shadow: 0 1px 2px rgba(29, 37, 48, 0.05), 0 6px 20px rgba(29, 37, 48, 0.06);
@@ -32,21 +32,21 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #151a21;
-    --grid: rgba(142, 156, 242, 0.06);
-    --surface: #1c232c;
-    --ink: #e6eaf0;
-    --muted: #9aa5b3;
-    --line: #2f3944;
-    --accent: #8e9cf2;
-    --accent-soft: #252c4a;
-    --accent-ink: #10142a;
-    --comp: #8e9cf2;
-    --tens: #f08a7f;
-    --good: #5fd08f;
-    --good-bg: #12301f;
-    --bad: #ff8a80;
-    --bad-bg: #3a1614;
+    --bg: #15181c;
+    --grid: rgba(154, 168, 204, 0.05);
+    --surface: #1d2126;
+    --ink: #e4e7eb;
+    --muted: #98a1ac;
+    --line: #30363d;
+    --accent: #9aa8cc;
+    --accent-soft: #272d3b;
+    --accent-ink: #14181f;
+    --comp: #9aa8cc;
+    --tens: #d49a92;
+    --good: #7fc4a0;
+    --good-bg: #1a2c24;
+    --bad: #e09a93;
+    --bad-bg: #33201e;
     --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 6px 20px rgba(0, 0, 0, 0.25);
   }
 }
@@ -412,10 +412,10 @@ body.pad-active, body.pad-active * {
   padding: 3px 9px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted);
 }
 .report-question { color: var(--good); border-color: var(--good); background: var(--good-bg); }
-.report-secondhand { color: #8a5a00; border-color: #c98a1a; background: #fdf1d8; }
+.report-secondhand { color: #7a6030; border-color: #b9a274; background: #f5efe2; }
 .report-topic { color: var(--ink); }
 .report-none { border-style: dashed; }
-@media (prefers-color-scheme: dark) { .report-secondhand { color: #f0c36a; border-color: #8a6a1e; background: #33270c; } }
+@media (prefers-color-scheme: dark) { .report-secondhand { color: #d6c08e; border-color: #6e6040; background: #2c281c; } }
 .report-details { margin: 0 0 14px; font-size: 0.9rem; }
 .report-details summary { cursor: pointer; color: var(--muted); font-weight: 600; padding: 4px 0; }
 .report-details p { margin: 6px 0; }
