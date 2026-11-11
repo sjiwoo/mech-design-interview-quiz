@@ -263,5 +263,57 @@ window.SOURCES = {
   "sw": {
     "title": "Glassdoor: Tesla Mechanical Engineer Intern interview question (strength-to-weight)",
     "url": "https://www.glassdoor.com/Interview/Asked-how-the-strength-to-weight-ratio-of-aluminum-and-steel-compared-QTN_1134254.htm"
+  },
+  "ohms": {
+    "title": "Glassdoor: Tesla Mechanical Design Engineer interviews (Ohm's law questions)",
+    "url": "https://www.glassdoor.com.au/Interview/Tesla-Mechanical-Design-Engineer-Interview-Questions-EI_IE43129.0,5_KO6,32.htm"
+  },
+  "switch": {
+    "title": "Glassdoor candidate report: Mechanical Design Engineer (circuit and wire temperature test questions)",
+    "url": "https://www.glassdoor.com.au/Interview/Tesla-Interview-E43129-RVW80368903.htm"
+  },
+  "rcvid": {
+    "title": "YouTube: Tesla Mechanical Design Engineer interview question solved #10, RC circuit",
+    "url": "https://www.youtube.com/watch?v=iYHwPXAhx6Q"
+  },
+  "caprail": {
+    "title": "Glassdoor: Tesla Battery Engineer interviews (capacitor on a ground rail)",
+    "url": "https://www.glassdoor.com/Interview/Tesla-Battery-Engineer-Interview-Questions-EI_IE43129.0,5_KO6,22.htm"
+  },
+  "gearratio": {
+    "title": "Glassdoor: Tesla Mechanical Engineering Intern interviews (gear ratio and speed)",
+    "url": "https://www.glassdoor.ca/Interview/Tesla-Mechanical-Engineering-Intern-Interview-Questions-EI_IE43129.0,5_KO6,35.htm"
+  },
+  "loopctl": {
+    "title": "Glassdoor candidate report: Mechanical Design Engineer (open and closed loop control)",
+    "url": "https://www.glassdoor.com.au/Interview/Tesla-Interview-E43129-RVW88664880.htm"
+  },
+  "piezo": {
+    "title": "Glassdoor candidate report: Mechanical Engineer Intern (piezoelectric materials)",
+    "url": "https://www.glassdoor.com/Interview/Tesla-Interview-E43129-RVW81074354.htm"
+  },
+  "fastelec": {
+    "title": "Taro: Tesla Mechanical Engineer interview, Palo Alto (fasteners, electrical components, enclosures)",
+    "url": "https://www.jointaro.com/interviews/companies/tesla/experiences/mechanical-engineer-palo-alto-ca-july-31-2025-no-offer-positive-324e4cd8"
+  },
+  "recontest": {
+    "title": "Glassdoor candidate report: Mechanical Engineer, Reno (test on statics, dynamics, E&M and circuits)",
+    "url": "https://www.glassdoor.com/Interview/Tesla-Interview-E43129-RVW101125940.htm"
+  },
+  "linckt": {
+    "title": "Glassdoor: Tesla Mechanical Design Engineer interviews (solid mechanics and linear circuits)",
+    "url": "https://www.glassdoor.ca/Interview/Tesla-Mechanical-Design-Engineer-Interview-Questions-EI_IE43129.0,5_KO6,32_IP2.htm"
+  },
+  "creepage": {
+    "title": "Blind: Tesla Mechanical Design Engineer hiring manager interview (creepage and clearance)",
+    "url": "https://www.teamblind.com/post/tesla-interview-with-the-hiring-manager-kuv7hwpp"
+  },
+  "robeng": {
+    "title": "Glassdoor: Tesla Robotics Engineer interviews (dynamics, controller design, stability, robot hardware)",
+    "url": "https://static.glassdoor.at/Interview/Tesla-Robotics-Engineer-Interview-Questions-EI_IE43129.0,5_KO6,23.htm"
+  },
+  "ikintern": {
+    "title": "Glassdoor candidate report: Robotics Intern (inverse kinematics solver)",
+    "url": "https://www.glassdoor.ca/Interview/Tesla-Interview-E43129-RVW104034800.htm"
   }
 };

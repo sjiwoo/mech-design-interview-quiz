@@ -12,6 +12,7 @@ Unofficial practice material. Not affiliated with or endorsed by Tesla, and not 
 - **Moment of inertia** (20 questions): standard sections, parallel axis, centroids, hollow and built-up sections, orientation, buckling, composite beams.
 - **Stress–strain and materials**, **GD&T**, **Tolerance stack-up**, **Bolted joints**, **Manufacturing and DFM**, **Statics and free-body diagrams**, **Fatigue and failure**, **Heat transfer**, **Vibrations and dynamics**, **Torsion, combined loading and buckling** (10 questions each).
 - **Brain teasers** and **Trick questions** (10 each).
+- **Mechatronics** (23 questions): circuits, RC timing, motors and gearboxes, drives, encoders, control loops, strain gauges, battery packs, HV clearance, and robot-arm statics and kinematics.
 - **Materials science fundamentals**, **Polymer fundamentals** and **Tactile sensing** (10 each).
 
 Each question is tagged with whether it was reported by a candidate as asked in a Tesla interview, with source links
