@@ -154,8 +154,11 @@
     add("rect", { x: x0, y: y - 5, width: x1 - x0, height: 10, rx: 1 });
 
     // supports
-    if (spec.support === "simple") { pin(x0); roller(x1); }
-    if (spec.support === "cantilever") { wall(x0, -1); }
+    if (spec.support === "simple") {
+      var at = spec.at || [0, 1];
+      pin(x0 + at[0] * (x1 - x0)); roller(x0 + at[1] * (x1 - x0));
+    }
+    if (spec.support === "cantilever") { if (spec.wall === "right") wall(x1, 1); else wall(x0, -1); }
     if (spec.support === "fixed") { wall(x0, -1); wall(x1, 1); }
     if (spec.support === "propped") { wall(x0, -1); roller(x1); }
 
@@ -171,6 +174,23 @@
         add("line", { x1: a, y1: y - 42, x2: b, y2: y - 42 });
         for (var i = 0; i <= n; i++) arrow(a + (i * (b - a)) / n, y - 42, y - 8);
         label((a + b) / 2, y - 52, ld.label);
+      } else if (ld.kind === "tri") {
+        // linearly varying load, zero at one end and peak at the other (peak: "right" by default)
+        var ta = x0 + ld.from * (x1 - x0), tb = x0 + ld.to * (x1 - x0), left = ld.peak === "left";
+        var tn = Math.max(3, Math.round((tb - ta) / 34));
+        add("line", { x1: ta, y1: left ? y - 50 : y - 10, x2: tb, y2: left ? y - 10 : y - 50 });
+        for (var j = 0; j <= tn; j++) {
+          var f = j / tn, hgt = 40 * (left ? 1 - f : f);
+          if (hgt > 12) arrow(ta + f * (tb - ta), y - 10 - hgt, y - 8);
+        }
+        label(left ? ta : tb, y - 58, ld.label);
+      } else if (ld.kind === "couple") {
+        // applied couple drawn as an arc over the beam; cw by default, ccw: true to reverse
+        var cx = x0 + ld.x * (x1 - x0), r = 20, cy = y;
+        add("path", { d: "M" + (cx - r) + " " + (cy - 10) + " A" + r + " " + r + " 0 0 1 " + (cx + r) + " " + (cy - 10) });
+        var hx = ld.ccw ? cx - r : cx + r, dir = ld.ccw ? 1 : -1;
+        add("path", { d: "M" + (hx + dir * 9) + " " + (cy - 16) + " L" + hx + " " + (cy - 9) + " L" + (hx + dir * 1) + " " + (cy - 20) });
+        label(cx, y - 40, ld.label);
       }
     });
 
@@ -178,7 +198,7 @@
     add("line", { x1: x0, y1: y + 52, x2: x1, y2: y + 52, "stroke-width": 1 });
     add("line", { x1: x0, y1: y + 46, x2: x0, y2: y + 58, "stroke-width": 1 });
     add("line", { x1: x1, y1: y + 46, x2: x1, y2: y + 58, "stroke-width": 1 });
-    label((x0 + x1) / 2, y + 68, "L");
+    label((x0 + x1) / 2, y + 68, spec.span || "L");
 
     return root;
   }
@@ -260,6 +280,50 @@
 
     panel("Shear force V", 0, "V", maxV, notes.shear);
     panel("Bending moment M (sagging +)", 185, "M", maxM, notes.moment);
+    return root;
+  }
+
+
+  /* ---------- generic shear / moment curves ----------
+   * panels: [{ t: title, pts: [[x, y], ...], notes: [{ x, text }], marks: [x, ...] }]
+   * x runs 0..1 along the beam, y is -1..1 (already normalised). marks draw support ticks.
+   * compact = true draws one small untitled panel, used inside answer buttons.
+   */
+  function drawCurves(panels, compact) {
+    var W = compact ? 220 : 460, x0 = compact ? 14 : 36, x1 = compact ? 206 : 424;
+    var ph = compact ? 104 : 172, amp = compact ? 36 : 42;
+    var root = svg("svg", { viewBox: "0 0 " + W + " " + ph * panels.length, class: "diagram curves" + (compact ? " compact" : ""), role: "img" });
+    var tt = svg("title", {}); tt.textContent = panels.map(function (p) { return p.t || "Diagram"; }).join(" and "); root.appendChild(tt);
+    function X(x) { return x0 + x * (x1 - x0); }
+    function add(tag, attrs) {
+      var base = { stroke: "currentColor", "stroke-width": 1.5, fill: "none", "stroke-linejoin": "round" };
+      Object.keys(attrs).forEach(function (k) { base[k] = attrs[k]; });
+      var n = svg(tag, base); root.appendChild(n); return n;
+    }
+    function text(x, y, str, opts) {
+      var o = { x: x, y: y, fill: "currentColor", "font-size": 14, "font-family": "inherit", "text-anchor": "middle" };
+      Object.keys(opts || {}).forEach(function (k) { o[k] = opts[k]; });
+      var n = svg("text", o); n.textContent = str; root.appendChild(n);
+    }
+    panels.forEach(function (p, i) {
+      var top = i * ph, base = top + (compact ? ph / 2 : 92);
+      if (p.t && !compact) text(x0 - 4, top + 14, p.t, { "text-anchor": "start", "font-weight": 700 });
+      var poly = p.pts.map(function (q) { return X(q[0]).toFixed(1) + "," + (base - q[1] * amp).toFixed(1); }).join(" ");
+      add("polygon", { points: X(0) + "," + base + " " + poly + " " + X(1) + "," + base, fill: "currentColor", "fill-opacity": 0.12, stroke: "none" });
+      add("line", { x1: x0, y1: base, x2: x1, y2: base, "stroke-width": 1, opacity: 0.6 });
+      add("line", { x1: x0, y1: base - amp - 6, x2: x0, y2: base + amp + 6, "stroke-width": 1, opacity: 0.4 });
+      add("line", { x1: x1, y1: base - amp - 6, x2: x1, y2: base + amp + 6, "stroke-width": 1, opacity: 0.4 });
+      add("polyline", { points: poly, style: "stroke: var(--accent, #c8102e)", "stroke-width": 2.5 });
+      (p.marks || []).forEach(function (m) {
+        add("path", { d: "M" + X(m) + " " + base + " l-5 8 h10 z", fill: "currentColor", "fill-opacity": 0.5, "stroke-width": 1 });
+      });
+      (p.notes || []).forEach(function (n) {
+        var v = 0, best = 1e9;
+        p.pts.forEach(function (q) { var d = Math.abs(q[0] - n.x); if (d < best) { best = d; v = q[1]; } });
+        var yy = base - v * amp;
+        text(Math.min(Math.max(X(n.x), x0 + 30), x1 - 30), v >= 0 ? yy - 8 : yy + 20, n.text, { "font-weight": 600, "font-size": 15 });
+      });
+    });
     return root;
   }
 
@@ -401,7 +465,10 @@
       propped: "Beam fixed at the left with a roller at the right"
     };
     var loads = (spec.loads || []).map(function (ld) {
-      return ld.kind === "udl" ? "uniform load " + ld.label : "point load " + ld.label;
+      if (ld.kind === "udl") return "uniform load " + ld.label;
+      if (ld.kind === "tri") return "linearly varying load " + ld.label;
+      if (ld.kind === "couple") return "applied couple " + ld.label;
+      return "point load " + ld.label;
     });
     return names[spec.support] + (loads.length ? " with " + loads.join(" and ") : "");
   }
@@ -846,14 +913,19 @@
     var total = state.items.length;
     var answered = item.picked !== null;
 
-    var options = el("div", { class: "options" }, item.order.map(function (optIndex, pos) {
-      var cls = "option";
+    var figs = q.optionCurves;
+    var options = el("div", { class: "options" + (figs ? " options-fig" : "") }, item.order.map(function (optIndex, pos) {
+      var cls = "option" + (figs ? " option-fig" : "");
       if (answered && optIndex === q.answer) cls += " correct";
       else if (answered && optIndex === item.picked) cls += " wrong";
       var btn = el("button", { class: cls, type: "button", onclick: function () { pick(optIndex); } }, [
         el("span", { class: "key", text: KEYS[pos] }),
-        el("span", { text: q.options[optIndex] })
+        figs ? el("span", { class: "fig" }, [
+          drawCurves([figs[optIndex]], true),
+          answered ? el("span", { class: "fig-cap", text: q.options[optIndex] }) : null
+        ]) : el("span", { text: q.options[optIndex] })
       ]);
+      if (figs) btn.setAttribute("aria-label", "Option " + KEYS[pos] + (answered ? ": " + q.options[optIndex] : ""));
       if (answered) btn.disabled = true;
       return btn;
     }));
@@ -864,7 +936,8 @@
       feedback = el("div", { class: "feedback" + (right ? "" : " miss") }, [
         el("strong", { text: right ? "Correct" : "Not quite. Answer: " + q.options[q.answer] }),
         el("p", { text: q.why }),
-        q.plots ? drawPlots(q.diagram, q.plots) : null
+        q.plots ? drawPlots(q.diagram, q.plots) : null,
+        q.after ? drawCurves(q.after) : null
       ]);
       if (q.proof && q.proof.length) {
         feedback = el("div", {}, [feedback, buildSolution(q, item)]);
@@ -905,6 +978,7 @@
         reportDetails(q),
         q.diagram ? (q.diagram.section ? drawSection(q.diagram.section) : drawDiagram(q.diagram)) : null,
         q.sketch ? drawSketch(q.sketch) : null,
+        q.given ? drawCurves(q.given) : null,
         options,
         feedback,
         next

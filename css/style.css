@@ -200,6 +200,12 @@ p { margin: 0 0 12px; }
   color: var(--muted);
 }
 
+.options-fig { grid-template-columns: 1fr 1fr; }
+.option-fig { padding: 8px 8px 6px; gap: 6px; }
+.option-fig .fig { flex: 1; min-width: 0; display: block; }
+.option-fig .fig-cap { display: block; font-size: 0.8rem; color: var(--muted); line-height: 1.3; padding: 2px 4px 4px; }
+.diagram.curves.compact { display: block; width: 100%; max-width: none; margin: 0; }
+
 .option:not(:disabled):hover { border-color: var(--muted); }
 .option:disabled { cursor: default; opacity: 1; }
 
@@ -219,6 +225,7 @@ p { margin: 0 0 12px; }
 .feedback.miss { border-left-color: var(--bad); background: var(--bad-bg); }
 .feedback strong { display: block; margin-bottom: 4px; }
 .feedback p { margin: 0; }
+.feedback .diagram { margin: 14px auto 0; }
 
 /* Results */
 .score { font-size: 2.6rem; font-weight: 800; line-height: 1.1; margin: 4px 0 6px; }

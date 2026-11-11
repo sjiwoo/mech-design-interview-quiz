@@ -7,6 +7,8 @@ Unofficial practice material. Not affiliated with or endorsed by Tesla, and not 
 ## Topics
 
 - **Beam loading** (20 questions): reactions, shear, moment, stress, deflection, and scaling rules.
+- **More beam problems** (21 questions): off-centre loads, overhangs, partial loads, superposition and sizing, each solvable in three minutes or less.
+- **Shear and moment diagrams** (20 questions): pick the diagram that matches a loading, or read the loading and peak moment off a diagram. Answer options are drawn as small diagrams (`optionCurves`).
 - **Moment of inertia** (20 questions): standard sections, parallel axis, centroids, hollow and built-up sections, orientation, buckling, composite beams.
 - **Stress–strain and materials**, **GD&T**, **Tolerance stack-up**, **Bolted joints**, **Manufacturing and DFM**, **Statics and free-body diagrams**, **Fatigue and failure**, **Heat transfer**, **Vibrations and dynamics**, **Torsion, combined loading and buckling** (10 questions each).
 - **Brain teasers** and **Trick questions** (10 each).

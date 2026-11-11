@@ -35,6 +35,10 @@ const supports = ["simple", "cantilever", "fixed", "propped"];
       (q.reported.sources || []).forEach((id) => { if (!(window.SOURCES || {})[id]) errors.push(`${tag}: unknown source ${id}`); });
       if (!(q.reported.sources || []).length) errors.push(`${tag}: reported needs a source`);
     }
+    const curveOk = (c) => c && Array.isArray(c.pts) && c.pts.length >= 2 && c.pts.every((p) => p.length === 2 && p[0] >= 0 && p[0] <= 1 && Math.abs(p[1]) <= 1);
+    if (q.optionCurves && (q.optionCurves.length !== 4 || !q.optionCurves.every(curveOk))) errors.push(`${tag}: optionCurves needs 4 valid curves`);
+    if (q.optionCurves && new Set(q.optionCurves.map((c) => JSON.stringify(c.pts))).size !== 4) errors.push(`${tag}: duplicate option curves`);
+    ["given", "after"].forEach((k) => { if (q[k] && !(Array.isArray(q[k]) && q[k].every(curveOk))) errors.push(`${tag}: bad ${k} curves`); });
     if (!levels.includes(q.level)) errors.push(`${tag}: bad level`);
     if (q.diagram && !q.diagram.section && !supports.includes(q.diagram.support)) errors.push(`${tag}: bad diagram support`);
   });
