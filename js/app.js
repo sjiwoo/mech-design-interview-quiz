@@ -311,6 +311,80 @@
     return root;
   }
 
+
+  /* ---------- general sketch renderer ----------
+   * q.sketch = { h: height, items: [...] } on a 460-wide canvas (y down).
+   *   ["l",x1,y1,x2,y2,o]  line        ["a",x1,y1,x2,y2,o]  arrow, head at x2,y2
+   *   ["r",x,y,w,h,o]      rect        ["c",cx,cy,r,o]      circle
+   *   ["p",[[x,y],..],o]   polyline    ["t",x,y,text,o]     text
+   *   ["h",x1,y1,x2,y2,side] hatched ground line   ["s",x1,y1,x2,y2,n] spring
+   * o: d dashed, a accent, m muted, w width, f fill (1 light, 2 mid, "s" surface),
+   *    n no stroke, close polygon, s font size, an anchor, b bold
+   */
+  function drawSketch(spec) {
+    var W = 460, H = spec.h || 180;
+    var root = svg("svg", { viewBox: "0 0 " + W + " " + H, class: "diagram sketch", role: "img" });
+    var t = svg("title", {}); t.textContent = spec.alt || "Diagram for this question"; root.appendChild(t);
+    function col(o) { return o.a ? "var(--accent, #c8102e)" : "currentColor"; }
+    function base(o) {
+      var at = { stroke: col(o), "stroke-width": o.w || 2, fill: "none", "stroke-linecap": "round", "stroke-linejoin": "round" };
+      if (o.d) at["stroke-dasharray"] = "6 5";
+      if (o.m) at.opacity = 0.5;
+      if (o.f === "s") at.fill = "var(--surface)";
+      else if (o.f) { at.fill = col(o); at["fill-opacity"] = o.f === 2 ? 0.4 : 0.14; }
+      if (o.n) at.stroke = "none";
+      return at;
+    }
+    function add(tag, at) { var n = svg(tag, at); root.appendChild(n); return n; }
+    function ext(a, b) { Object.keys(b).forEach(function (k) { a[k] = b[k]; }); return a; }
+    (spec.items || []).forEach(function (it) {
+      var k = it[0], o;
+      if (k === "l" || k === "a") {
+        o = it[5] || {};
+        add("line", ext(base(o), { x1: it[1], y1: it[2], x2: it[3], y2: it[4] }));
+        if (k === "a") {
+          var ang = Math.atan2(it[4] - it[2], it[3] - it[1]), hs = 8;
+          var p1 = [it[3] - hs * Math.cos(ang - 0.45), it[4] - hs * Math.sin(ang - 0.45)];
+          var p2 = [it[3] - hs * Math.cos(ang + 0.45), it[4] - hs * Math.sin(ang + 0.45)];
+          var ho = ext(base(o), { points: p1.join(",") + " " + it[3] + "," + it[4] + " " + p2.join(",") });
+          delete ho["stroke-dasharray"];
+          add("polyline", ho);
+        }
+      } else if (k === "r") {
+        o = it[5] || {};
+        add("rect", ext(base(o), { x: it[1], y: it[2], width: it[3], height: it[4], rx: o.rx || 0 }));
+      } else if (k === "c") {
+        o = it[4] || {};
+        add("circle", ext(base(o), { cx: it[1], cy: it[2], r: it[3] }));
+      } else if (k === "p") {
+        o = it[2] || {};
+        add(o.close ? "polygon" : "polyline", ext(base(o), { points: it[1].map(function (q) { return q[0] + "," + q[1]; }).join(" ") }));
+      } else if (k === "t") {
+        o = it[4] || {};
+        var n = add("text", { x: it[1], y: it[2], fill: col(o), "font-size": o.s || 14, "font-weight": o.b === 0 ? 400 : 600,
+          "text-anchor": o.an || "middle", "font-family": "inherit", opacity: o.m ? 0.6 : 1 });
+        n.textContent = it[3];
+      } else if (k === "h") {
+        var dx = it[3] - it[1], dy = it[4] - it[2], len = Math.hypot(dx, dy), ux = dx / len, uy = dy / len;
+        var side = it[5] || 1, nx = -uy * side, ny = ux * side;
+        add("line", ext(base({ w: 2.5 }), { x1: it[1], y1: it[2], x2: it[3], y2: it[4] }));
+        for (var d = 4; d < len; d += 10) {
+          add("line", ext(base({ w: 1.2 }), { x1: it[1] + ux * d, y1: it[2] + uy * d, x2: it[1] + ux * (d - 6) + nx * 8, y2: it[2] + uy * (d - 6) + ny * 8 }));
+        }
+      } else if (k === "s") {
+        var sx = it[3] - it[1], sy = it[4] - it[2], sl = Math.hypot(sx, sy), ax = sx / sl, ay = sy / sl, px = -ay, py = ax;
+        var coils = it[5] || 6, lead = Math.min(12, sl * 0.15), amp = 8, pts = [[it[1], it[2]], [it[1] + ax * lead, it[2] + ay * lead]];
+        for (var i = 0; i < coils * 2; i++) {
+          var f = lead + ((sl - 2 * lead) * (i + 0.5)) / (coils * 2), sgn = i % 2 ? -1 : 1;
+          pts.push([it[1] + ax * f + px * amp * sgn, it[2] + ay * f + py * amp * sgn]);
+        }
+        pts.push([it[3] - ax * lead, it[4] - ay * lead], [it[3], it[4]]);
+        add("polyline", ext(base({}), { points: pts.map(function (q) { return q[0].toFixed(1) + "," + q[1].toFixed(1); }).join(" ") }));
+      }
+    });
+    return root;
+  }
+
   function describe(spec) {
     var names = {
       simple: "Simply supported beam",
@@ -786,6 +860,7 @@
         el("p", { class: "question", text: q.q }),
         reportDetails(q),
         q.diagram ? (q.diagram.section ? drawSection(q.diagram.section) : drawDiagram(q.diagram)) : null,
+        q.sketch ? drawSketch(q.sketch) : null,
         options,
         feedback,
         next
@@ -896,6 +971,8 @@
     var id = (location.hash || "").slice(1);
     showHome(sets.some(function (x) { return x.id === id; }) ? id : null);
   });
+
+  window.QUIZ_DEBUG = { drawSketch: drawSketch };
 
   var startId = (location.hash || "").slice(1);
   showHome(sets.some(function (x) { return x.id === startId; }) ? startId : null);

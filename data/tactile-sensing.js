@@ -22,7 +22,127 @@ window.QUESTION_SETS.push({
         "That is +11.1%. The response is nonlinear: each further 10 µm gives a bigger change.",
         "A softer or thinner dielectric gives more signal per newton but less force range.",
         "Shear can be sensed with offset electrode pairs whose overlap area changes."
-      ]
+      ],
+      "sketch": {
+        "h": 170,
+        "items": [
+          [
+            "r",
+            120,
+            50,
+            220,
+            12,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "r",
+            120,
+            62,
+            220,
+            36,
+            {
+              "f": 1
+            }
+          ],
+          [
+            "r",
+            120,
+            98,
+            220,
+            12,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "l",
+            350,
+            62,
+            350,
+            98,
+            {
+              "w": 1
+            }
+          ],
+          [
+            "l",
+            345,
+            62,
+            355,
+            62,
+            {
+              "w": 1
+            }
+          ],
+          [
+            "l",
+            345,
+            98,
+            355,
+            98,
+            {
+              "w": 1
+            }
+          ],
+          [
+            "t",
+            358,
+            85,
+            "gap",
+            {
+              "s": 13,
+              "an": "start"
+            }
+          ],
+          [
+            "t",
+            360,
+            112,
+            "100 → 90 µm",
+            {
+              "an": "start",
+              "s": 12
+            }
+          ],
+          [
+            "a",
+            230,
+            14,
+            230,
+            46,
+            {
+              "a": 1
+            }
+          ],
+          [
+            "t",
+            240,
+            24,
+            "press",
+            {
+              "an": "start",
+              "a": 1
+            }
+          ],
+          [
+            "t",
+            230,
+            84,
+            "soft dielectric",
+            {
+              "s": 12
+            }
+          ],
+          [
+            "t",
+            230,
+            140,
+            "capacitance change = ?"
+          ]
+        ]
+      }
     },
     {
       "level": "Fundamental",
@@ -60,7 +180,185 @@ window.QUESTION_SETS.push({
         "Thicker, softer skin gives better conformance, grip, protection and durability, but less resolution and more hysteresis.",
         "Thin skin gives sharp images but less protection and compliance.",
         "Design choice: keep skin thickness comparable to the taxel pitch, or use ridges or bumps to concentrate load onto each element."
-      ]
+      ],
+      "sketch": {
+        "h": 180,
+        "items": [
+          [
+            "r",
+            80,
+            60,
+            300,
+            60,
+            {
+              "f": 1
+            }
+          ],
+          [
+            "r",
+            92,
+            124,
+            28,
+            14,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "r",
+            132,
+            124,
+            28,
+            14,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "r",
+            172,
+            124,
+            28,
+            14,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "r",
+            212,
+            124,
+            28,
+            14,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "r",
+            252,
+            124,
+            28,
+            14,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "r",
+            292,
+            124,
+            28,
+            14,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "r",
+            332,
+            124,
+            28,
+            14,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "a",
+            230,
+            16,
+            230,
+            56,
+            {
+              "a": 1
+            }
+          ],
+          [
+            "l",
+            230,
+            60,
+            170,
+            120,
+            {
+              "d": 1,
+              "a": 1,
+              "w": 1.5
+            }
+          ],
+          [
+            "l",
+            230,
+            60,
+            290,
+            120,
+            {
+              "d": 1,
+              "a": 1,
+              "w": 1.5
+            }
+          ],
+          [
+            "t",
+            390,
+            94,
+            "skin",
+            {
+              "an": "start",
+              "s": 12
+            }
+          ],
+          [
+            "t",
+            230,
+            160,
+            "sensing elements",
+            {
+              "s": 12
+            }
+          ],
+          [
+            "l",
+            64,
+            60,
+            64,
+            120,
+            {
+              "w": 1
+            }
+          ],
+          [
+            "l",
+            59,
+            60,
+            69,
+            60,
+            {
+              "w": 1
+            }
+          ],
+          [
+            "l",
+            59,
+            120,
+            69,
+            120,
+            {
+              "w": 1
+            }
+          ],
+          [
+            "t",
+            56,
+            95,
+            "t",
+            {
+              "s": 13,
+              "an": "end"
+            }
+          ]
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -98,7 +396,170 @@ window.QUESTION_SETS.push({
         "At a 2 mm pitch both bumps could land on adjacent taxels and look like one wide contact.",
         "The skin also blurs, so thickness must be small enough not to wash out the detail.",
         "Human fingertip two-point discrimination is about 1 to 2 mm, and several times coarser on the palm, so robot hands use dense arrays at fingertips and sparse ones elsewhere."
-      ]
+      ],
+      "sketch": {
+        "h": 170,
+        "items": [
+          [
+            "r",
+            110,
+            90,
+            36,
+            36,
+            {
+              "f": 1
+            }
+          ],
+          [
+            "r",
+            150,
+            90,
+            36,
+            36,
+            {
+              "f": 1
+            }
+          ],
+          [
+            "r",
+            190,
+            90,
+            36,
+            36,
+            {
+              "f": 1
+            }
+          ],
+          [
+            "r",
+            230,
+            90,
+            36,
+            36,
+            {
+              "f": 1
+            }
+          ],
+          [
+            "r",
+            270,
+            90,
+            36,
+            36,
+            {
+              "f": 1
+            }
+          ],
+          [
+            "r",
+            310,
+            90,
+            36,
+            36,
+            {
+              "f": 1
+            }
+          ],
+          [
+            "c",
+            210,
+            60,
+            9,
+            {
+              "f": 2,
+              "a": 1
+            }
+          ],
+          [
+            "c",
+            250,
+            60,
+            9,
+            {
+              "f": 2,
+              "a": 1
+            }
+          ],
+          [
+            "l",
+            210,
+            36,
+            250,
+            36,
+            {
+              "w": 1
+            }
+          ],
+          [
+            "l",
+            210,
+            31,
+            210,
+            41,
+            {
+              "w": 1
+            }
+          ],
+          [
+            "l",
+            250,
+            31,
+            250,
+            41,
+            {
+              "w": 1
+            }
+          ],
+          [
+            "t",
+            230,
+            30,
+            "2 mm",
+            {
+              "s": 13
+            }
+          ],
+          [
+            "l",
+            110,
+            146,
+            150,
+            146,
+            {
+              "w": 1
+            }
+          ],
+          [
+            "l",
+            110,
+            141,
+            110,
+            151,
+            {
+              "w": 1
+            }
+          ],
+          [
+            "l",
+            150,
+            141,
+            150,
+            151,
+            {
+              "w": 1
+            }
+          ],
+          [
+            "t",
+            130,
+            162,
+            "pitch = ?",
+            {
+              "s": 13
+            }
+          ]
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -128,7 +589,104 @@ window.QUESTION_SETS.push({
             "A tactile sensor that measures shear f and normal N lets the hand hold f/N just under μ, gripping gently without slipping."
           ]
         }
-      ]
+      ],
+      "sketch": {
+        "h": 190,
+        "items": [
+          [
+            "r",
+            120,
+            30,
+            50,
+            130,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "r",
+            290,
+            30,
+            50,
+            130,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "r",
+            170,
+            50,
+            120,
+            90,
+            {
+              "f": 1
+            }
+          ],
+          [
+            "t",
+            230,
+            90,
+            "0.5 kg"
+          ],
+          [
+            "a",
+            70,
+            95,
+            116,
+            95,
+            {
+              "a": 1
+            }
+          ],
+          [
+            "a",
+            390,
+            95,
+            344,
+            95,
+            {
+              "a": 1
+            }
+          ],
+          [
+            "t",
+            70,
+            82,
+            "N = ?",
+            {
+              "an": "start",
+              "a": 1
+            }
+          ],
+          [
+            "a",
+            230,
+            144,
+            230,
+            182
+          ],
+          [
+            "t",
+            240,
+            176,
+            "weight",
+            {
+              "an": "start",
+              "s": 12
+            }
+          ],
+          [
+            "t",
+            230,
+            24,
+            "μ = 0.5",
+            {
+              "s": 12
+            }
+          ]
+        ]
+      }
     },
     {
       "level": "Design judgment",
@@ -166,7 +724,482 @@ window.QUESTION_SETS.push({
         "Each element sits at a row-column crossing and is read by driving one row and sensing one column.",
         "Drawbacks: scan time grows with element count, and sneak paths through other elements create crosstalk. Fix with grounding or guarding of unselected lines, or a diode or transistor at each element.",
         "Alternative: put the readout chip in the fingertip and send data over a serial bus, so only a few wires cross the joints."
-      ]
+      ],
+      "sketch": {
+        "h": 180,
+        "items": [
+          [
+            "l",
+            110,
+            40,
+            350,
+            40,
+            {
+              "w": 1.5
+            }
+          ],
+          [
+            "l",
+            110,
+            62,
+            350,
+            62,
+            {
+              "w": 1.5
+            }
+          ],
+          [
+            "l",
+            110,
+            84,
+            350,
+            84,
+            {
+              "w": 1.5
+            }
+          ],
+          [
+            "l",
+            110,
+            106,
+            350,
+            106,
+            {
+              "w": 1.5
+            }
+          ],
+          [
+            "l",
+            110,
+            128,
+            350,
+            128,
+            {
+              "w": 1.5
+            }
+          ],
+          [
+            "l",
+            110,
+            150,
+            350,
+            150,
+            {
+              "w": 1.5
+            }
+          ],
+          [
+            "l",
+            120,
+            30,
+            120,
+            160,
+            {
+              "w": 1.5,
+              "a": 1
+            }
+          ],
+          [
+            "l",
+            164,
+            30,
+            164,
+            160,
+            {
+              "w": 1.5,
+              "a": 1
+            }
+          ],
+          [
+            "l",
+            208,
+            30,
+            208,
+            160,
+            {
+              "w": 1.5,
+              "a": 1
+            }
+          ],
+          [
+            "l",
+            252,
+            30,
+            252,
+            160,
+            {
+              "w": 1.5,
+              "a": 1
+            }
+          ],
+          [
+            "l",
+            296,
+            30,
+            296,
+            160,
+            {
+              "w": 1.5,
+              "a": 1
+            }
+          ],
+          [
+            "l",
+            340,
+            30,
+            340,
+            160,
+            {
+              "w": 1.5,
+              "a": 1
+            }
+          ],
+          [
+            "c",
+            120,
+            40,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            120,
+            62,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            120,
+            84,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            120,
+            106,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            120,
+            128,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            120,
+            150,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            164,
+            40,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            164,
+            62,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            164,
+            84,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            164,
+            106,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            164,
+            128,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            164,
+            150,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            208,
+            40,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            208,
+            62,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            208,
+            84,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            208,
+            106,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            208,
+            128,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            208,
+            150,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            252,
+            40,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            252,
+            62,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            252,
+            84,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            252,
+            106,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            252,
+            128,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            252,
+            150,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            296,
+            40,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            296,
+            62,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            296,
+            84,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            296,
+            106,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            296,
+            128,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            296,
+            150,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            340,
+            40,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            340,
+            62,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            340,
+            84,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            340,
+            106,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            340,
+            128,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            340,
+            150,
+            3.5,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "t",
+            104,
+            44,
+            "rows",
+            {
+              "an": "end",
+              "s": 12
+            }
+          ],
+          [
+            "t",
+            230,
+            176,
+            "columns",
+            {
+              "s": 12,
+              "a": 1
+            }
+          ]
+        ]
+      }
     },
     {
       "level": "Design judgment",
@@ -186,7 +1219,151 @@ window.QUESTION_SETS.push({
         "The gap is small, so its tolerance stack and the stiffness of the stop matter.",
         "Stiffening the element instead would cut sensitivity in proportion. Software cannot react fast enough to an impact.",
         "The compliant skin also helps by spreading and slowing impact loads."
-      ]
+      ],
+      "sketch": {
+        "h": 180,
+        "items": [
+          [
+            "r",
+            110,
+            30,
+            240,
+            22,
+            {
+              "f": 1
+            }
+          ],
+          [
+            "r",
+            190,
+            52,
+            80,
+            34,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "r",
+            110,
+            96,
+            240,
+            40,
+            {
+              "f": 1
+            }
+          ],
+          [
+            "r",
+            120,
+            58,
+            50,
+            32,
+            {
+              "f": 1
+            }
+          ],
+          [
+            "r",
+            290,
+            58,
+            50,
+            32,
+            {
+              "f": 1
+            }
+          ],
+          [
+            "l",
+            176,
+            90,
+            176,
+            96,
+            {
+              "a": 1,
+              "w": 3
+            }
+          ],
+          [
+            "t",
+            230,
+            112,
+            "small gap at each stop",
+            {
+              "s": 11,
+              "a": 1
+            }
+          ],
+          [
+            "a",
+            230,
+            2,
+            230,
+            26,
+            {
+              "a": 1
+            }
+          ],
+          [
+            "t",
+            240,
+            12,
+            "overload",
+            {
+              "an": "start",
+              "a": 1,
+              "s": 12
+            }
+          ],
+          [
+            "t",
+            230,
+            74,
+            "sensor",
+            {
+              "s": 12
+            }
+          ],
+          [
+            "t",
+            145,
+            150,
+            "hard stop",
+            {
+              "s": 12
+            }
+          ],
+          [
+            "t",
+            315,
+            150,
+            "hard stop",
+            {
+              "s": 12
+            }
+          ],
+          [
+            "l",
+            145,
+            140,
+            145,
+            94,
+            {
+              "w": 1
+            }
+          ],
+          [
+            "l",
+            315,
+            140,
+            315,
+            94,
+            {
+              "w": 1
+            }
+          ]
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -205,7 +1382,133 @@ window.QUESTION_SETS.push({
         "Doubling F:  area × 2^(2/3) = 1.59.",
         "Average pressure F/area ∝ F^(1/3), so it rises only 26%.",
         "For tactile sensing this means area is a nonlinear measure of force, and curved soft fingertips naturally spread load and gain grip as they press harder. Large soft deformations deviate from Hertz, so calibrate."
-      ]
+      ],
+      "sketch": {
+        "h": 180,
+        "items": [
+          [
+            "h",
+            90,
+            140,
+            370,
+            140,
+            1
+          ],
+          [
+            "p",
+            [
+              [
+                160,
+                70
+              ],
+              [
+                161.8,
+                85.6
+              ],
+              [
+                166.9,
+                100.4
+              ],
+              [
+                175.3,
+                113.6
+              ],
+              [
+                186.4,
+                124.7
+              ],
+              [
+                199.6,
+                133.1
+              ],
+              [
+                214.4,
+                138.2
+              ],
+              [
+                230,
+                140
+              ],
+              [
+                245.6,
+                138.2
+              ],
+              [
+                260.4,
+                133.1
+              ],
+              [
+                273.6,
+                124.7
+              ],
+              [
+                284.7,
+                113.6
+              ],
+              [
+                293.1,
+                100.4
+              ],
+              [
+                298.2,
+                85.6
+              ],
+              [
+                300,
+                70
+              ],
+              [
+                160,
+                70
+              ]
+            ],
+            {
+              "close": 1,
+              "f": 1
+            }
+          ],
+          [
+            "l",
+            196,
+            140,
+            264,
+            140,
+            {
+              "a": 1,
+              "w": 5
+            }
+          ],
+          [
+            "a",
+            230,
+            6,
+            230,
+            50,
+            {
+              "a": 1
+            }
+          ],
+          [
+            "t",
+            240,
+            22,
+            "F → 2F",
+            {
+              "an": "start",
+              "a": 1
+            }
+          ],
+          [
+            "t",
+            230,
+            166,
+            "contact area grows by?",
+            {
+              "s": 12
+            }
+          ]
+        ]
+      }
     }
   ]
 });

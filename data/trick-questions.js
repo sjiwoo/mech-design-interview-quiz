@@ -41,6 +41,98 @@ window.QUESTION_SETS.push({
           "boat1",
           "boat2"
         ]
+      },
+      "sketch": {
+        "h": 170,
+        "items": [
+          [
+            "r",
+            40,
+            90,
+            380,
+            60,
+            {
+              "f": 1,
+              "n": 1
+            }
+          ],
+          [
+            "l",
+            40,
+            90,
+            420,
+            90,
+            {
+              "w": 2
+            }
+          ],
+          [
+            "p",
+            [
+              [
+                170,
+                76
+              ],
+              [
+                290,
+                76
+              ],
+              [
+                270,
+                112
+              ],
+              [
+                190,
+                112
+              ]
+            ],
+            {
+              "close": 1,
+              "f": "s"
+            }
+          ],
+          [
+            "c",
+            230,
+            64,
+            13,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "t",
+            250,
+            58,
+            "rock",
+            {
+              "an": "start",
+              "s": 12
+            }
+          ],
+          [
+            "a",
+            256,
+            70,
+            330,
+            104,
+            {
+              "d": 1,
+              "a": 1,
+              "w": 1.5
+            }
+          ],
+          [
+            "t",
+            410,
+            80,
+            "level?",
+            {
+              "an": "end",
+              "a": 1
+            }
+          ]
+        ]
       }
     },
     {
@@ -60,7 +152,96 @@ window.QUESTION_SETS.push({
         "Melted, it is water of mass m, which occupies volume m/ρ_water.",
         "The melt water exactly fills the hole the ice was making, so the level does not change.",
         "The part above the surface exists because ice is about 9% less dense than water. Melting land ice raises sea level because it was not floating to begin with."
-      ]
+      ],
+      "sketch": {
+        "h": 180,
+        "items": [
+          [
+            "p",
+            [
+              [
+                170,
+                30
+              ],
+              [
+                180,
+                160
+              ],
+              [
+                280,
+                160
+              ],
+              [
+                290,
+                30
+              ]
+            ],
+            {
+              "w": 2.5
+            }
+          ],
+          [
+            "r",
+            174,
+            36,
+            112,
+            122,
+            {
+              "f": 1,
+              "n": 1
+            }
+          ],
+          [
+            "l",
+            171,
+            36,
+            289,
+            36,
+            {
+              "w": 1.5
+            }
+          ],
+          [
+            "r",
+            205,
+            22,
+            44,
+            40,
+            {
+              "f": "s"
+            }
+          ],
+          [
+            "t",
+            227,
+            48,
+            "ice",
+            {
+              "s": 12
+            }
+          ],
+          [
+            "t",
+            300,
+            40,
+            "full to the brim",
+            {
+              "an": "start",
+              "s": 12
+            }
+          ],
+          [
+            "t",
+            300,
+            100,
+            "after melting?",
+            {
+              "an": "start",
+              "a": 1
+            }
+          ]
+        ]
+      }
     },
     {
       "level": "Trick question",
@@ -89,7 +270,126 @@ window.QUESTION_SETS.push({
             "This is how shrink fits work: heat the hub so its bore grows, slide it on the shaft, and let it cool."
           ]
         }
-      ]
+      ],
+      "sketch": {
+        "h": 170,
+        "items": [
+          [
+            "r",
+            120,
+            30,
+            220,
+            110,
+            {
+              "f": 1
+            }
+          ],
+          [
+            "c",
+            230,
+            85,
+            28,
+            {
+              "f": "s"
+            }
+          ],
+          [
+            "p",
+            [
+              [
+                150,
+                165
+              ],
+              [
+                145,
+                158
+              ],
+              [
+                155,
+                150
+              ],
+              [
+                150,
+                143
+              ]
+            ],
+            {
+              "a": 1,
+              "w": 1.5
+            }
+          ],
+          [
+            "p",
+            [
+              [
+                210,
+                165
+              ],
+              [
+                205,
+                158
+              ],
+              [
+                215,
+                150
+              ],
+              [
+                210,
+                143
+              ]
+            ],
+            {
+              "a": 1,
+              "w": 1.5
+            }
+          ],
+          [
+            "p",
+            [
+              [
+                270,
+                165
+              ],
+              [
+                265,
+                158
+              ],
+              [
+                275,
+                150
+              ],
+              [
+                270,
+                143
+              ]
+            ],
+            {
+              "a": 1,
+              "w": 1.5
+            }
+          ],
+          [
+            "t",
+            350,
+            160,
+            "heated",
+            {
+              "an": "start",
+              "a": 1,
+              "s": 12
+            }
+          ],
+          [
+            "t",
+            230,
+            90,
+            "?",
+            {
+              "a": 1
+            }
+          ]
+        ]
+      }
     },
     {
       "level": "Trick question",
@@ -116,6 +416,56 @@ window.QUESTION_SETS.push({
           "intern5",
           "xsec"
         ]
+      },
+      "sketch": {
+        "h": 160,
+        "items": [
+          [
+            "c",
+            150,
+            75,
+            45,
+            {
+              "f": 1
+            }
+          ],
+          [
+            "c",
+            310,
+            75,
+            45,
+            {
+              "f": 1
+            }
+          ],
+          [
+            "c",
+            310,
+            75,
+            34,
+            {
+              "f": "s"
+            }
+          ],
+          [
+            "t",
+            150,
+            142,
+            "solid"
+          ],
+          [
+            "t",
+            310,
+            142,
+            "tube"
+          ],
+          [
+            "t",
+            230,
+            80,
+            "vs"
+          ]
+        ]
       }
     },
     {
@@ -135,7 +485,121 @@ window.QUESTION_SETS.push({
         "A helium balloon moves opposite to effective gravity. That is why it floats up, and here it also moves forward.",
         "Combined effective gravity points down and back, so the balloon tilts up and forward.",
         "Under braking it moves backward. A hanging pendulum does the opposite of the balloon every time."
-      ]
+      ],
+      "sketch": {
+        "h": 170,
+        "items": [
+          [
+            "p",
+            [
+              [
+                70,
+                130
+              ],
+              [
+                70,
+                80
+              ],
+              [
+                130,
+                76
+              ],
+              [
+                170,
+                40
+              ],
+              [
+                300,
+                40
+              ],
+              [
+                340,
+                76
+              ],
+              [
+                390,
+                84
+              ],
+              [
+                390,
+                130
+              ]
+            ],
+            {
+              "close": 1,
+              "f": 1
+            }
+          ],
+          [
+            "c",
+            130,
+            132,
+            18,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "c",
+            330,
+            132,
+            18,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "l",
+            240,
+            118,
+            240,
+            84,
+            {
+              "w": 1.2
+            }
+          ],
+          [
+            "c",
+            240,
+            70,
+            14,
+            {
+              "f": "s",
+              "a": 1
+            }
+          ],
+          [
+            "a",
+            300,
+            16,
+            380,
+            16,
+            {
+              "a": 1
+            }
+          ],
+          [
+            "t",
+            290,
+            20,
+            "accelerating",
+            {
+              "an": "end",
+              "a": 1,
+              "s": 12
+            }
+          ],
+          [
+            "t",
+            262,
+            74,
+            "?",
+            {
+              "an": "start"
+            }
+          ]
+        ]
+      }
     },
     {
       "level": "Trick question",
@@ -154,7 +618,62 @@ window.QUESTION_SETS.push({
         "Hoop stress is twice as large, so the wall fails in the hoop direction first.",
         "A crack opens perpendicular to the stress that causes it, so the split runs along the length.",
         "It is the reason pipes burst in long slits and why wound pressure vessels put more fibre in the hoop direction."
-      ]
+      ],
+      "sketch": {
+        "h": 160,
+        "items": [
+          [
+            "r",
+            70,
+            40,
+            320,
+            80,
+            {
+              "f": 1,
+              "rx": 36
+            }
+          ],
+          [
+            "l",
+            110,
+            80,
+            350,
+            80,
+            {
+              "d": 1,
+              "a": 1
+            }
+          ],
+          [
+            "l",
+            230,
+            44,
+            230,
+            116,
+            {
+              "d": 1
+            }
+          ],
+          [
+            "t",
+            230,
+            144,
+            "bursts along its length or around?",
+            {
+              "s": 12
+            }
+          ],
+          [
+            "t",
+            96,
+            74,
+            "p",
+            {
+              "s": 13
+            }
+          ]
+        ]
+      }
     },
     {
       "level": "Trick question",
@@ -183,7 +702,61 @@ window.QUESTION_SETS.push({
             "Same idea as a bar in tension, k = AE/L: a shorter bar is stiffer."
           ]
         }
-      ]
+      ],
+      "sketch": {
+        "h": 150,
+        "items": [
+          [
+            "h",
+            60,
+            30,
+            60,
+            100,
+            -1
+          ],
+          [
+            "s",
+            60,
+            65,
+            380,
+            65,
+            12
+          ],
+          [
+            "l",
+            220,
+            36,
+            220,
+            96,
+            {
+              "d": 1,
+              "a": 1
+            }
+          ],
+          [
+            "t",
+            220,
+            28,
+            "cut here",
+            {
+              "a": 1,
+              "s": 12
+            }
+          ],
+          [
+            "t",
+            140,
+            110,
+            "whole spring: k"
+          ],
+          [
+            "t",
+            310,
+            110,
+            "one half: ?"
+          ]
+        ]
+      }
     },
     {
       "level": "Trick question",
@@ -202,7 +775,83 @@ window.QUESTION_SETS.push({
         "L cancels. Strain, and so stress σ = E·α·ΔT, is identical for both bars.",
         "The cross-section does not matter either. The wall force does scale with area.",
         "The long bar is, however, much more likely to buckle under that same stress."
-      ]
+      ],
+      "sketch": {
+        "h": 180,
+        "items": [
+          [
+            "h",
+            100,
+            20,
+            100,
+            70,
+            -1
+          ],
+          [
+            "h",
+            180,
+            20,
+            180,
+            70,
+            1
+          ],
+          [
+            "r",
+            100,
+            36,
+            80,
+            18,
+            {
+              "f": 1
+            }
+          ],
+          [
+            "t",
+            260,
+            50,
+            "short bar",
+            {
+              "an": "start",
+              "s": 12
+            }
+          ],
+          [
+            "h",
+            60,
+            100,
+            60,
+            150,
+            -1
+          ],
+          [
+            "h",
+            400,
+            100,
+            400,
+            150,
+            1
+          ],
+          [
+            "r",
+            60,
+            116,
+            340,
+            18,
+            {
+              "f": 1
+            }
+          ],
+          [
+            "t",
+            230,
+            170,
+            "same heating: which has more stress?",
+            {
+              "s": 12
+            }
+          ]
+        ]
+      }
     },
     {
       "level": "Trick question",
@@ -231,7 +880,122 @@ window.QUESTION_SETS.push({
             "For equal distances the average is the harmonic mean, 2·v₁·v₂/(v₁ + v₂) = 3,600/90 = 40. It would be 45 only if the two speeds were held for equal times."
           ]
         }
-      ]
+      ],
+      "sketch": {
+        "h": 130,
+        "items": [
+          [
+            "l",
+            60,
+            60,
+            400,
+            60,
+            {
+              "w": 4
+            }
+          ],
+          [
+            "l",
+            230,
+            48,
+            230,
+            72,
+            {
+              "w": 2
+            }
+          ],
+          [
+            "t",
+            145,
+            44,
+            "30 mph"
+          ],
+          [
+            "t",
+            315,
+            44,
+            "60 mph"
+          ],
+          [
+            "l",
+            60,
+            84,
+            230,
+            84,
+            {
+              "w": 1
+            }
+          ],
+          [
+            "l",
+            60,
+            79,
+            60,
+            89,
+            {
+              "w": 1
+            }
+          ],
+          [
+            "l",
+            230,
+            79,
+            230,
+            89,
+            {
+              "w": 1
+            }
+          ],
+          [
+            "t",
+            145,
+            100,
+            "half the distance",
+            {
+              "s": 13
+            }
+          ],
+          [
+            "l",
+            230,
+            84,
+            400,
+            84,
+            {
+              "w": 1
+            }
+          ],
+          [
+            "l",
+            230,
+            79,
+            230,
+            89,
+            {
+              "w": 1
+            }
+          ],
+          [
+            "l",
+            400,
+            79,
+            400,
+            89,
+            {
+              "w": 1
+            }
+          ],
+          [
+            "t",
+            315,
+            100,
+            "half the distance",
+            {
+              "s": 13
+            }
+          ]
+        ]
+      }
     },
     {
       "level": "Trick question",
@@ -250,7 +1014,124 @@ window.QUESTION_SETS.push({
         "That same tension runs through the scale, so it reads 100 N.",
         "Compare with a scale hooked to a wall holding one 100 N weight. The wall pulls with 100 N on the other end and the scale reads 100 N. The second weight simply replaces the wall.",
         "The net force on the scale is zero, which is why it does not accelerate. Net force and tension are different things."
-      ]
+      ],
+      "sketch": {
+        "h": 180,
+        "items": [
+          [
+            "r",
+            175,
+            40,
+            110,
+            26,
+            {
+              "f": 1
+            }
+          ],
+          [
+            "t",
+            230,
+            58,
+            "scale",
+            {
+              "s": 12
+            }
+          ],
+          [
+            "l",
+            110,
+            53,
+            175,
+            53
+          ],
+          [
+            "l",
+            285,
+            53,
+            350,
+            53
+          ],
+          [
+            "c",
+            96,
+            58,
+            14,
+            {
+              "f": 1
+            }
+          ],
+          [
+            "c",
+            364,
+            58,
+            14,
+            {
+              "f": 1
+            }
+          ],
+          [
+            "l",
+            82,
+            58,
+            82,
+            120
+          ],
+          [
+            "l",
+            378,
+            58,
+            378,
+            120
+          ],
+          [
+            "r",
+            60,
+            120,
+            44,
+            36,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "r",
+            356,
+            120,
+            44,
+            36,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "t",
+            82,
+            174,
+            "100 N",
+            {
+              "s": 12
+            }
+          ],
+          [
+            "t",
+            378,
+            174,
+            "100 N",
+            {
+              "s": 12
+            }
+          ],
+          [
+            "t",
+            230,
+            100,
+            "reads?",
+            {
+              "a": 1
+            }
+          ]
+        ]
+      }
     }
   ]
 });

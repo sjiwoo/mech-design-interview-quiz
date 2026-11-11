@@ -71,7 +71,91 @@ window.QUESTION_SETS.push({
         "The elasticity solution (Kirsch) gives peak stress 3σ at the edge, on the diameter perpendicular to the load.",
         "For an ellipse:  K_t = 1 + 2a/b, with a the half-width across the load. A circle has a = b, giving 3.",
         "A sharp crack is a very thin ellipse, so K_t becomes very large. That is why cracks are stopped by drilling a round hole at the tip."
-      ]
+      ],
+      "sketch": {
+        "h": 170,
+        "items": [
+          [
+            "r",
+            110,
+            30,
+            240,
+            110,
+            {
+              "f": 1
+            }
+          ],
+          [
+            "c",
+            230,
+            85,
+            16,
+            {
+              "f": "s"
+            }
+          ],
+          [
+            "a",
+            350,
+            50,
+            400,
+            50
+          ],
+          [
+            "a",
+            350,
+            85,
+            400,
+            85
+          ],
+          [
+            "a",
+            350,
+            120,
+            400,
+            120
+          ],
+          [
+            "a",
+            110,
+            50,
+            60,
+            50
+          ],
+          [
+            "a",
+            110,
+            85,
+            60,
+            85
+          ],
+          [
+            "a",
+            110,
+            120,
+            60,
+            120
+          ],
+          [
+            "t",
+            230,
+            60,
+            "K_t = ?",
+            {
+              "a": 1
+            }
+          ],
+          [
+            "t",
+            410,
+            40,
+            "σ",
+            {
+              "an": "end"
+            }
+          ]
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -95,6 +179,349 @@ window.QUESTION_SETS.push({
         "note": "The S-N curve was reported. This exact question was not.",
         "sources": [
           "sn"
+        ]
+      },
+      "sketch": {
+        "h": 180,
+        "items": [
+          [
+            "a",
+            60,
+            155,
+            420,
+            155,
+            {
+              "w": 1.5
+            }
+          ],
+          [
+            "a",
+            60,
+            155,
+            60,
+            20,
+            {
+              "w": 1.5
+            }
+          ],
+          [
+            "t",
+            420,
+            173,
+            "time",
+            {
+              "an": "end",
+              "s": 13
+            }
+          ],
+          [
+            "t",
+            66,
+            24,
+            "stress",
+            {
+              "an": "start",
+              "s": 13
+            }
+          ],
+          [
+            "p",
+            [
+              [
+                70,
+                85
+              ],
+              [
+                75,
+                72.3
+              ],
+              [
+                80,
+                60.7
+              ],
+              [
+                85,
+                51
+              ],
+              [
+                90,
+                44.1
+              ],
+              [
+                95,
+                40.5
+              ],
+              [
+                100,
+                40.5
+              ],
+              [
+                105,
+                44.1
+              ],
+              [
+                110,
+                51
+              ],
+              [
+                115,
+                60.7
+              ],
+              [
+                120,
+                72.3
+              ],
+              [
+                125,
+                85
+              ],
+              [
+                130,
+                97.7
+              ],
+              [
+                135,
+                109.3
+              ],
+              [
+                140,
+                119
+              ],
+              [
+                145,
+                125.9
+              ],
+              [
+                150,
+                129.5
+              ],
+              [
+                155,
+                129.5
+              ],
+              [
+                160,
+                125.9
+              ],
+              [
+                165,
+                119
+              ],
+              [
+                170,
+                109.3
+              ],
+              [
+                175,
+                97.7
+              ],
+              [
+                180,
+                85
+              ],
+              [
+                185,
+                72.3
+              ],
+              [
+                190,
+                60.7
+              ],
+              [
+                195,
+                51
+              ],
+              [
+                200,
+                44.1
+              ],
+              [
+                205,
+                40.5
+              ],
+              [
+                210,
+                40.5
+              ],
+              [
+                215,
+                44.1
+              ],
+              [
+                220,
+                51
+              ],
+              [
+                225,
+                60.7
+              ],
+              [
+                230,
+                72.3
+              ],
+              [
+                235,
+                85
+              ],
+              [
+                240,
+                97.7
+              ],
+              [
+                245,
+                109.3
+              ],
+              [
+                250,
+                119
+              ],
+              [
+                255,
+                125.9
+              ],
+              [
+                260,
+                129.5
+              ],
+              [
+                265,
+                129.5
+              ],
+              [
+                270,
+                125.9
+              ],
+              [
+                275,
+                119
+              ],
+              [
+                280,
+                109.3
+              ],
+              [
+                285,
+                97.7
+              ],
+              [
+                290,
+                85
+              ],
+              [
+                295,
+                72.3
+              ],
+              [
+                300,
+                60.7
+              ],
+              [
+                305,
+                51
+              ],
+              [
+                310,
+                44.1
+              ],
+              [
+                315,
+                40.5
+              ],
+              [
+                320,
+                40.5
+              ],
+              [
+                325,
+                44.1
+              ],
+              [
+                330,
+                51
+              ],
+              [
+                335,
+                60.7
+              ],
+              [
+                340,
+                72.3
+              ],
+              [
+                345,
+                85
+              ],
+              [
+                350,
+                97.7
+              ],
+              [
+                355,
+                109.3
+              ],
+              [
+                360,
+                119
+              ],
+              [
+                365,
+                125.9
+              ],
+              [
+                370,
+                129.5
+              ],
+              [
+                375,
+                129.5
+              ]
+            ],
+            {
+              "a": 1,
+              "w": 2.5
+            }
+          ],
+          [
+            "l",
+            60,
+            85,
+            400,
+            85,
+            {
+              "d": 1,
+              "w": 1
+            }
+          ],
+          [
+            "t",
+            396,
+            78,
+            "mean 200 MPa",
+            {
+              "an": "end",
+              "s": 12
+            }
+          ],
+          [
+            "l",
+            97.5,
+            40,
+            97.5,
+            85,
+            {
+              "w": 1
+            }
+          ],
+          [
+            "t",
+            104,
+            34,
+            "amplitude 100 MPa",
+            {
+              "an": "start",
+              "s": 12
+            }
+          ]
         ]
       }
     },
@@ -125,7 +552,97 @@ window.QUESTION_SETS.push({
             "σ_vm = 132.3 MPa. Same answer, and you also learn the largest principal stress."
           ]
         }
-      ]
+      ],
+      "sketch": {
+        "h": 170,
+        "items": [
+          [
+            "r",
+            166,
+            51,
+            68,
+            68,
+            {
+              "f": 1
+            }
+          ],
+          [
+            "a",
+            238,
+            85,
+            268,
+            85
+          ],
+          [
+            "a",
+            162,
+            85,
+            132,
+            85
+          ],
+          [
+            "t",
+            272,
+            77,
+            "σ = 100 MPa",
+            {
+              "an": "start",
+              "s": 13
+            }
+          ],
+          [
+            "a",
+            172,
+            43,
+            228,
+            43,
+            {
+              "a": 1
+            }
+          ],
+          [
+            "a",
+            228,
+            127,
+            172,
+            127,
+            {
+              "a": 1
+            }
+          ],
+          [
+            "a",
+            242,
+            57,
+            242,
+            113,
+            {
+              "a": 1
+            }
+          ],
+          [
+            "a",
+            158,
+            113,
+            158,
+            57,
+            {
+              "a": 1
+            }
+          ],
+          [
+            "t",
+            152,
+            39,
+            "τ = 50",
+            {
+              "an": "end",
+              "s": 13,
+              "a": 1
+            }
+          ]
+        ]
+      }
     },
     {
       "level": "Fundamental",
@@ -162,7 +679,187 @@ window.QUESTION_SETS.push({
         "Ductile metal is weakest in shear, so it shears off flat across the shaft, on the plane of maximum shear.",
         "Brittle material is weakest in tension, so it cracks perpendicular to the maximum tensile stress. That surface is a 45° helix.",
         "Reading the fracture surface this way tells you the failure mode and the type of loading."
-      ]
+      ],
+      "sketch": {
+        "h": 150,
+        "items": [
+          [
+            "r",
+            110,
+            58,
+            240,
+            34,
+            {
+              "f": 1
+            }
+          ],
+          [
+            "p",
+            [
+              [
+                114.5,
+                57.7
+              ],
+              [
+                112,
+                55.5
+              ],
+              [
+                109.3,
+                55.1
+              ],
+              [
+                106.7,
+                56.4
+              ],
+              [
+                104.4,
+                59.4
+              ],
+              [
+                102.6,
+                63.7
+              ],
+              [
+                101.4,
+                69.1
+              ],
+              [
+                101,
+                75
+              ],
+              [
+                101.4,
+                80.9
+              ],
+              [
+                102.6,
+                86.3
+              ],
+              [
+                104.4,
+                90.6
+              ],
+              [
+                106.7,
+                93.6
+              ],
+              [
+                109.3,
+                94.9
+              ],
+              [
+                112,
+                94.5
+              ],
+              [
+                114.5,
+                92.3
+              ]
+            ],
+            {
+              "a": 1,
+              "w": 2
+            }
+          ],
+          [
+            "p",
+            [
+              [
+                345.5,
+                92.3
+              ],
+              [
+                343,
+                87.5
+              ],
+              [
+                341.4,
+                80.9
+              ],
+              [
+                341,
+                73.5
+              ],
+              [
+                341.9,
+                66.3
+              ],
+              [
+                343.9,
+                60.3
+              ],
+              [
+                346.7,
+                56.4
+              ],
+              [
+                350,
+                55
+              ],
+              [
+                353.3,
+                56.4
+              ],
+              [
+                356.1,
+                60.3
+              ],
+              [
+                358.1,
+                66.3
+              ],
+              [
+                359,
+                73.5
+              ],
+              [
+                358.6,
+                80.9
+              ],
+              [
+                357,
+                87.5
+              ],
+              [
+                354.5,
+                92.3
+              ]
+            ],
+            {
+              "a": 1,
+              "w": 2
+            }
+          ],
+          [
+            "t",
+            96,
+            40,
+            "T",
+            {
+              "a": 1
+            }
+          ],
+          [
+            "t",
+            364,
+            40,
+            "T",
+            {
+              "a": 1
+            }
+          ],
+          [
+            "t",
+            230,
+            120,
+            "ductile steel vs cast iron: fracture surface?",
+            {
+              "s": 12
+            }
+          ]
+        ]
+      }
     },
     {
       "level": "Fundamental",
@@ -207,7 +904,71 @@ window.QUESTION_SETS.push({
         "Shot peening leaves the surface in compression, which opposes the tensile part of each cycle and slows crack initiation.",
         "A smoother surface finish also helps. All steels have nearly the same modulus, so that option changes nothing.",
         "If a bearing needs a sharp corner to seat, use an undercut relief groove or a spacer ring instead of a sharp fillet."
-      ]
+      ],
+      "sketch": {
+        "h": 170,
+        "items": [
+          [
+            "r",
+            70,
+            50,
+            150,
+            70,
+            {
+              "f": 1
+            }
+          ],
+          [
+            "r",
+            220,
+            68,
+            170,
+            34,
+            {
+              "f": 1
+            }
+          ],
+          [
+            "c",
+            222,
+            66,
+            9,
+            {
+              "a": 1,
+              "w": 2.5
+            }
+          ],
+          [
+            "a",
+            260,
+            30,
+            230,
+            58,
+            {
+              "a": 1
+            }
+          ],
+          [
+            "t",
+            266,
+            30,
+            "cracks start here",
+            {
+              "an": "start",
+              "a": 1
+            }
+          ],
+          [
+            "t",
+            145,
+            144,
+            "stepped shaft",
+            {
+              "s": 12
+            }
+          ]
+        ]
+      }
     },
     {
       "level": "Applied",
@@ -232,6 +993,89 @@ window.QUESTION_SETS.push({
         "note": "The S-N curve and fatigue were reported. This exact question was not.",
         "sources": [
           "sn"
+        ]
+      },
+      "sketch": {
+        "h": 180,
+        "items": [
+          [
+            "a",
+            60,
+            155,
+            420,
+            155,
+            {
+              "w": 1.5
+            }
+          ],
+          [
+            "a",
+            60,
+            155,
+            60,
+            20,
+            {
+              "w": 1.5
+            }
+          ],
+          [
+            "t",
+            420,
+            173,
+            "cycles",
+            {
+              "an": "end",
+              "s": 13
+            }
+          ],
+          [
+            "t",
+            66,
+            24,
+            "stress amplitude",
+            {
+              "an": "start",
+              "s": 13
+            }
+          ],
+          [
+            "r",
+            70,
+            55,
+            40,
+            100,
+            {
+              "f": 2
+            }
+          ],
+          [
+            "r",
+            110,
+            105,
+            270,
+            50,
+            {
+              "f": 1
+            }
+          ],
+          [
+            "t",
+            90,
+            46,
+            "10,000",
+            {
+              "s": 12
+            }
+          ],
+          [
+            "t",
+            245,
+            96,
+            "200,000 cycles",
+            {
+              "s": 12
+            }
+          ]
         ]
       }
     }
