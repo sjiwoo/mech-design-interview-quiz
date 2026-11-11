@@ -618,12 +618,13 @@ window.QUESTION_SETS.push({
         "At fracture"
       ],
       "answer": 1,
-      "why": "Up to the ultimate tensile strength the specimen deforms uniformly. At the peak, deformation localises into a neck.",
+      "why": "The cross-section shrinks all along the gauge length from the start of loading, but the shrinkage stays uniform until the ultimate tensile strength. At the peak it localises into a neck.",
       "proof": [
-        "Before the peak, work hardening raises the strength faster than the cross-section shrinks, so deformation spreads evenly.",
+        "Area reduction itself starts at zero load (Poisson contraction, then constant volume in plastic flow). Before the peak it is uniform along the length, because work hardening raises strength faster than the area shrinks.",
         "At the ultimate tensile strength the two effects balance: load capacity is at its maximum.",
         "Beyond it, any slightly thinner spot weakens faster than it hardens, so strain concentrates there and a neck forms.",
-        "Engineering stress then falls because it is load divided by the original area."
+        "Engineering stress then falls because it is load divided by the original area.",
+        "Caveat: this is the Considère criterion for a smooth, uniform bar. Defects, notches or Lüders bands on a mild-steel yield plateau can cause localised thinning earlier, which is why necking is defined as localised reduction, not just area reduction."
       ],
       "reported": {
         "kind": "topic",
@@ -1251,7 +1252,7 @@ window.QUESTION_SETS.push({
         "Elastic limit: just beyond, the last point from which unloading leaves no permanent strain.",
         "Yield point: plastic flow begins. Mild steel shows an upper and lower yield point and a flat yield plateau.",
         "Strain hardening: stress rises again as dislocations pile up.",
-        "Ultimate tensile strength: the peak of the engineering curve. Necking starts here.",
+        "Ultimate tensile strength: the peak of the engineering curve. Uniform deformation ends and necking (localised thinning) normally starts here.",
         "Fracture: engineering stress falls during necking until the specimen breaks.",
         "Areas: under the elastic triangle is resilience, under the whole curve is toughness."
       ],
