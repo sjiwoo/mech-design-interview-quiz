@@ -195,5 +195,13 @@ window.SOURCES = {
   "boat2": {
     "title": "4 Day Week: Elon Musk interview questions",
     "url": "https://4dayweek.io/interview-questions/elon-musk"
+  },
+  "matfocus": {
+    "title": "Glassdoor candidate report: Mechanical Design Engineer",
+    "url": "https://www.glassdoor.ca/Interview/Tesla-Interview-E43129-RVW82895632.htm"
+  },
+  "srpanel": {
+    "title": "Glassdoor: Tesla Sr. Mechanical Engineer interviews",
+    "url": "https://www.glassdoor.com/Interview/Tesla-Interview-Questions-E43129.htm?filter.jobTitleExact=Sr.+Mechanical+Engineer"
   }
 };
