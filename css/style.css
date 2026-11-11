@@ -376,3 +376,6 @@ body.pad-active, body.pad-active * {
 .fc-text { font-size: 1.2rem; font-weight: 600; line-height: 1.45; }
 .fc-hint { font-size: 0.85rem; color: var(--muted); }
 .btn-good { border-color: var(--good); color: var(--good); }
+
+.sec-progress.sec-reported .sec-bar { height: 6px; }
+.sec-progress.sec-reported .sec-label span:first-child { color: var(--good); font-weight: 600; }

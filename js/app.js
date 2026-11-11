@@ -68,11 +68,19 @@
     return { index: Math.min(Math.max(0, p.index | 0), set.questions.length - 1), answers: answers };
   }
   function saveProgress() {
-    if (!state || !state.full) return;
-    writeJSON(progressKey(state.set), {
-      index: state.index,
-      answers: state.items.map(function (it) { return it.picked; })
-    });
+    if (!state) return;
+    if (state.full) {
+      writeJSON(progressKey(state.set), {
+        index: state.index,
+        answers: state.items.map(function (it) { return it.picked; })
+      });
+      return;
+    }
+    // Partial runs (Reported only, Retry missed): record each answer against its
+    // question so the section's progress counts it, without moving the resume point.
+    var prev = loadProgress(state.set) || { index: 0, answers: state.set.questions.map(function () { return null; }) };
+    state.items.forEach(function (it) { if (it.picked !== null) prev.answers[it.qi] = it.picked; });
+    writeJSON(progressKey(state.set), prev);
   }
   function clearPads(set, indexes) {
     indexes.forEach(function (qi) { removeKey(padKey(set, qi)); });
@@ -768,29 +776,37 @@
         el("h2", { text: set.title }),
         el("p", { class: "muted", text: set.blurb }),
         (function () {
-          var total = set.questions.length, right = 0, wrong = 0;
-          if (prog) prog.answers.forEach(function (ans, i) {
-            if (ans === null) return;
-            if (ans === set.questions[i].answer) right++; else wrong++;
-          });
-          var answered = right + wrong;
-          var label = answered === 0 ? "Not started"
-            : answered === total ? "Complete: " + right + " of " + total + " correct"
-            : answered + " of " + total + " answered, " + right + " correct";
-          return el("div", { class: "sec-progress" }, [
-            el("div", { class: "sec-bar", role: "progressbar", "aria-valuemin": "0", "aria-valuemax": String(total), "aria-valuenow": String(answered), "aria-label": set.title + " progress" }, [
-              el("span", { class: "sec-right", style: "width:" + (right / total) * 100 + "%" }),
-              el("span", { class: "sec-wrong", style: "width:" + (wrong / total) * 100 + "%" })
-            ]),
-            el("div", { class: "sec-label" }, [
-              el("span", { text: label }),
-              el("span", { text: Math.round((answered / total) * 100) + "%" })
-            ])
+          function bar(qs, name, cls) {
+            var total = qs.length, right = 0, wrong = 0;
+            qs.forEach(function (q) {
+              var ans = prog ? prog.answers[set.questions.indexOf(q)] : null;
+              if (ans === null || ans === undefined) return;
+              if (ans === q.answer) right++; else wrong++;
+            });
+            var answered = right + wrong;
+            var label = answered === 0 ? name + ": not started"
+              : answered === total ? name + ": complete, " + right + " of " + total + " correct"
+              : name + ": " + answered + " of " + total + " answered, " + right + " correct";
+            return el("div", { class: "sec-progress " + cls }, [
+              el("div", { class: "sec-bar", role: "progressbar", "aria-valuemin": "0", "aria-valuemax": String(total), "aria-valuenow": String(answered), "aria-label": set.title + ", " + name + " progress" }, [
+                el("span", { class: "sec-right", style: "width:" + (right / total) * 100 + "%" }),
+                el("span", { class: "sec-wrong", style: "width:" + (wrong / total) * 100 + "%" })
+              ]),
+              el("div", { class: "sec-label" }, [
+                el("span", { text: label }),
+                el("span", { text: Math.round((answered / total) * 100) + "%" })
+              ])
+            ]);
+          }
+          var reported = set.questions.filter(function (q) { return reportKind(q) === "question"; });
+          return el("div", {}, [
+            bar(set.questions, "All questions", ""),
+            reported.length ? bar(reported, "Reported in interviews", "sec-reported") : null
           ]);
         })(),
         el("div", { class: "topic-meta" }, [
           el("span", { text: set.questions.length + " questions" }),
-          el("span", { class: rc.question ? "meta-reported" : "", text: rc.question + " reported in interviews" }),
+          rc.question ? null : el("span", { text: "none reported in interviews" }),
           best ? el("span", { text: "Best: " + best.score + "/" + best.total }) : null
         ]),
         buttons
