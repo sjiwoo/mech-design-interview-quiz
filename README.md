@@ -41,6 +41,11 @@ python3 -m http.server 8000
 
 The home page lists every loaded topic automatically.
 
+## Releasing
+
+`index.html` loads the CSS and scripts with a `?v=` number so browsers pick up new versions straight away.
+Change that number whenever you change those files.
+
 ## Check the question data
 
 ```
