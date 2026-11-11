@@ -1010,7 +1010,7 @@
   /* ---------- flashcards ---------- */
 
   var CARDS = (window.FLASHCARDS || []).map(function (c, i) { return { id: i, section: c[0], kind: c[1], front: c[2], back: c[3] }; });
-  var fcState = { section: "", kind: "", onlyUnknown: false, index: 0, flipped: false };
+  var fcState = { section: "", kind: "", onlyUnknown: false, index: 0, flipped: false, order: null };
   function knownSet() { return readJSON("flashcards:known") || {}; }
   function cardKey(c) { return c.section + "|" + c.front; }
 
@@ -1022,6 +1022,7 @@
       return (!fcState.section || c.section === fcState.section) && (!fcState.kind || c.kind === fcState.kind) &&
         (!fcState.onlyUnknown || !known[cardKey(c)]);
     });
+    if (fcState.order) deck.sort(function (a, b) { return fcState.order[a.id] - fcState.order[b.id]; });
     if (fcState.index >= deck.length) fcState.index = Math.max(0, deck.length - 1);
     var card = deck[fcState.index];
     function go(patch) { Object.keys(patch).forEach(function (k) { fcState[k] = patch[k]; }); showFlashcards(); }
@@ -1043,7 +1044,16 @@
     var nodes = [
       el("h1", { text: "Flashcards" }),
       el("p", { class: "muted", text: "Key equations, concepts and terms from the sections. Tap a card to flip it. " + knownCount + " of " + CARDS.length + " marked as known." }),
-      el("div", { class: "fc-filters section-picker" }, [secSel, kindSel, unk])
+      el("div", { class: "fc-filters section-picker" }, [secSel, kindSel, unk,
+        el("button", { class: "btn btn-small", type: "button", "aria-pressed": String(!!fcState.order), text: fcState.order ? "Shuffle: on" : "Shuffle: off",
+          onclick: function () {
+            var order = null;
+            if (!fcState.order) {
+              order = [];
+              shuffle(CARDS.map(function (c) { return c.id; })).forEach(function (id, pos) { order[id] = pos; });
+            }
+            go({ order: order, index: 0, flipped: false });
+          } })])
     ];
 
     if (!card) {
