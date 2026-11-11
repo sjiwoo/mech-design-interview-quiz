@@ -21,7 +21,8 @@ Unofficial practice material. Not affiliated with or endorsed by Tesla, and not 
 
 Each question is tagged with whether it was reported by a candidate as asked in a Tesla interview, with source links
 (`reported` in the data, sources in `data/sources.js`). Most questions also carry a diagram: `diagram` for beams and
-cross-sections, or `sketch` for the general drawing primitives documented in `js/app.js`.
+cross-sections, or `sketch` for the general drawing primitives documented in `js/app.js`. A question drawing must only show the setup:
+put the labelled answer in `sketchAfter`, which appears with the explanation once the question is answered.
 
 Pick a section from the menu at the top. Each section has its own link, e.g. `#moment-of-inertia`.
 

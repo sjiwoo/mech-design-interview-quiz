@@ -36,6 +36,99 @@ window.QUESTION_SETS.push({
     }
    ],
    "sketch": {
+    "h": 176,
+    "alt": "Rolling wheel: the centre moves at v; the top and the contact point are marked",
+    "items": [
+     [
+      "c",
+      200,
+      90,
+      60,
+      {
+       "f": 1
+      }
+     ],
+     [
+      "h",
+      60,
+      150,
+      400,
+      150,
+      1
+     ],
+     [
+      "c",
+      200,
+      90,
+      4,
+      {
+       "f": 2
+      }
+     ],
+     [
+      "a",
+      200,
+      90,
+      260,
+      90,
+      {
+       "w": 2
+      }
+     ],
+     [
+      "t",
+      272,
+      94,
+      "v",
+      {
+       "s": 14,
+       "an": "start"
+      }
+     ],
+     [
+      "c",
+      200,
+      30,
+      4,
+      {
+       "f": 2,
+       "a": 1
+      }
+     ],
+     [
+      "t",
+      214,
+      24,
+      "top: ?",
+      {
+       "s": 14,
+       "an": "start",
+       "a": 1
+      }
+     ],
+     [
+      "c",
+      200,
+      150,
+      4,
+      {
+       "f": 2
+      }
+     ],
+     [
+      "t",
+      212,
+      166,
+      "contact",
+      {
+       "s": 12,
+       "an": "start",
+       "m": 1
+      }
+     ]
+    ]
+   },
+   "sketchAfter": {
     "h": 170,
     "alt": "Rolling wheel with velocity arrows: 2v at the top, v at the centre, zero at the contact point",
     "items": [
@@ -150,6 +243,84 @@ window.QUESTION_SETS.push({
     "Same idea: a fuel tank in a car braking hard sees g_eff tilted, which is why tanks have baffles and pickups placed where the fuel goes."
    ],
    "sketch": {
+    "h": 170,
+    "alt": "Cup with a hole in its side, dropped",
+    "items": [
+     [
+      "p",
+      [
+       [
+        170,
+        40
+       ],
+       [
+        180,
+        140
+       ],
+       [
+        260,
+        140
+       ],
+       [
+        270,
+        40
+       ]
+      ]
+     ],
+     [
+      "r",
+      176,
+      70,
+      88,
+      66,
+      {
+       "f": 1,
+       "n": 1
+      }
+     ],
+     [
+      "c",
+      266,
+      110,
+      3,
+      {
+       "f": 2
+      }
+     ],
+     [
+      "a",
+      220,
+      150,
+      220,
+      166,
+      {
+       "m": 1
+      }
+     ],
+     [
+      "t",
+      300,
+      110,
+      "jet while falling?",
+      {
+       "s": 13,
+       "an": "start",
+       "a": 1
+      }
+     ],
+     [
+      "t",
+      220,
+      30,
+      "dropped",
+      {
+       "s": 12,
+       "m": 1
+      }
+     ]
+    ]
+   },
+   "sketchAfter": {
     "h": 170,
     "alt": "Cup with a hole falling: no jet comes out",
     "items": [

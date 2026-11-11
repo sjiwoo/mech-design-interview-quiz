@@ -2186,6 +2186,80 @@ window.QUESTION_SETS.push({
    ],
    "sketch": {
     "h": 170,
+    "alt": "Flex circuit bending around a robot finger knuckle",
+    "items": [
+     [
+      "p",
+      [
+       [
+        60,
+        120
+       ],
+       [
+        190,
+        120
+       ],
+       [
+        230,
+        108
+       ],
+       [
+        255,
+        80
+       ],
+       [
+        262,
+        40
+       ]
+      ],
+      {
+       "w": 7,
+       "m": 1
+      }
+     ],
+     [
+      "c",
+      225,
+      70,
+      26,
+      {
+       "d": 1
+      }
+     ],
+     [
+      "t",
+      225,
+      75,
+      "R",
+      {
+       "s": 13
+      }
+     ],
+     [
+      "t",
+      110,
+      150,
+      "flex circuit, bends every grip",
+      {
+       "s": 12,
+       "m": 1
+      }
+     ],
+     [
+      "t",
+      300,
+      60,
+      "traces crack here?",
+      {
+       "s": 12,
+       "an": "start",
+       "a": 1
+      }
+     ]
+    ]
+   },
+   "sketchAfter": {
+    "h": 170,
     "alt": "Flex circuit bent around a knuckle with the copper on the neutral axis",
     "items": [
      [
@@ -2279,12 +2353,13 @@ window.QUESTION_SETS.push({
      ],
      [
       "t",
-      110,
+      60,
       150,
       "copper in the middle of the stack (neutral axis)",
       {
        "s": 12,
-       "a": 1
+       "a": 1,
+       "an": "start"
       }
      ],
      [

@@ -44,6 +44,161 @@ window.QUESTION_SETS.push({
     ]
    },
    "sketch": {
+    "h": 160,
+    "alt": "Half of a pressurised cylinder cut along its length",
+    "items": [
+     [
+      "p",
+      [
+       [
+        100,
+        140
+       ],
+       [
+        100,
+        120
+       ],
+       [
+        120,
+        72
+       ],
+       [
+        170,
+        42
+       ],
+       [
+        230,
+        32
+       ],
+       [
+        290,
+        42
+       ],
+       [
+        340,
+        72
+       ],
+       [
+        360,
+        120
+       ],
+       [
+        360,
+        140
+       ]
+      ],
+      {
+       "w": 2
+      }
+     ],
+     [
+      "p",
+      [
+       [
+        112,
+        140
+       ],
+       [
+        112,
+        122
+       ],
+       [
+        130,
+        80
+       ],
+       [
+        176,
+        52
+       ],
+       [
+        230,
+        44
+       ],
+       [
+        284,
+        52
+       ],
+       [
+        330,
+        80
+       ],
+       [
+        348,
+        122
+       ],
+       [
+        348,
+        140
+       ]
+      ],
+      {
+       "w": 1,
+       "m": 1
+      }
+     ],
+     [
+      "a",
+      230,
+      120,
+      230,
+      52,
+      {
+       "m": 1
+      }
+     ],
+     [
+      "a",
+      170,
+      122,
+      150,
+      72,
+      {
+       "m": 1
+      }
+     ],
+     [
+      "a",
+      290,
+      122,
+      310,
+      72,
+      {
+       "m": 1
+      }
+     ],
+     [
+      "t",
+      230,
+      135,
+      "p inside",
+      {
+       "s": 12
+      }
+     ],
+     [
+      "l",
+      100,
+      140,
+      360,
+      140,
+      {
+       "d": 1,
+       "m": 1
+      }
+     ],
+     [
+      "t",
+      230,
+      156,
+      "cut plane",
+      {
+       "s": 12,
+       "m": 1
+      }
+     ]
+    ]
+   },
+   "sketchAfter": {
     "h": 180,
     "alt": "Half of a pressurised cylinder with pressure arrows and wall stress at the two cut edges",
     "items": [
@@ -533,6 +688,53 @@ window.QUESTION_SETS.push({
     ]
    },
    "sketch": {
+    "h": 160,
+    "alt": "Thin ring spinning with rim speed 100 m/s",
+    "items": [
+     [
+      "c",
+      230,
+      90,
+      62,
+      {
+       "w": 6,
+       "m": 1
+      }
+     ],
+     [
+      "c",
+      230,
+      90,
+      4,
+      {
+       "f": 2
+      }
+     ],
+     [
+      "a",
+      230,
+      28,
+      300,
+      28,
+      {
+       "a": 1,
+       "w": 2
+      }
+     ],
+     [
+      "t",
+      310,
+      32,
+      "v = 100 m/s",
+      {
+       "s": 13,
+       "an": "start",
+       "a": 1
+      }
+     ]
+    ]
+   },
+   "sketchAfter": {
     "h": 170,
     "alt": "Spinning ring with hoop tension",
     "items": [
@@ -617,6 +819,60 @@ window.QUESTION_SETS.push({
     ]
    },
    "sketch": {
+    "h": 170,
+    "alt": "Shaft pressed into a hub",
+    "items": [
+     [
+      "c",
+      230,
+      90,
+      70,
+      {
+       "f": 1
+      }
+     ],
+     [
+      "c",
+      230,
+      90,
+      30,
+      {
+       "f": 2
+      }
+     ],
+     [
+      "t",
+      230,
+      95,
+      "shaft",
+      {
+       "s": 12
+      }
+     ],
+     [
+      "t",
+      230,
+      146,
+      "hub",
+      {
+       "s": 12,
+       "m": 1
+      }
+     ],
+     [
+      "t",
+      320,
+      94,
+      "highest stress: where?",
+      {
+       "s": 12,
+       "an": "start",
+       "a": 1
+      }
+     ]
+    ]
+   },
+   "sketchAfter": {
     "h": 170,
     "alt": "Shaft pressed into a hub: contact pressure pushes the bore outward",
     "items": [

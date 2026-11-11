@@ -34,6 +34,62 @@ window.QUESTION_SETS.push({
    },
    "sketch": {
     "h": 170,
+    "alt": "Square ±0.1 zone with the measured hole centre near its corner",
+    "items": [
+     [
+      "r",
+      160,
+      30,
+      120,
+      120,
+      {
+       "d": 1
+      }
+     ],
+     [
+      "c",
+      220,
+      90,
+      3,
+      {
+       "f": 2
+      }
+     ],
+     [
+      "c",
+      273,
+      37,
+      5,
+      {
+       "f": 2,
+       "a": 1
+      }
+     ],
+     [
+      "t",
+      290,
+      40,
+      "(0.09, 0.09)",
+      {
+       "s": 12,
+       "an": "start",
+       "a": 1
+      }
+     ],
+     [
+      "t",
+      220,
+      166,
+      "old zone: ±0.1 square",
+      {
+       "s": 12,
+       "m": 1
+      }
+     ]
+    ]
+   },
+   "sketchAfter": {
+    "h": 170,
     "alt": "Square ±0.1 zone with a circular Ø0.2 zone inside; a point in the corner is outside the circle",
     "items": [
      [
@@ -295,11 +351,74 @@ window.QUESTION_SETS.push({
    },
    "sketch": {
     "h": 84,
-    "alt": "Invalid feature control frame: flatness 0.05 with datum A",
+    "alt": "Feature control frame: flatness 0.05 with datum A",
     "items": [
      [
       "r",
       150,
+      24,
+      36,
+      32,
+      {
+       "f": "s"
+      }
+     ],
+     [
+      "t",
+      168,
+      45,
+      "⏥",
+      {
+       "s": 15
+      }
+     ],
+     [
+      "r",
+      186,
+      24,
+      54,
+      32,
+      {
+       "f": "s"
+      }
+     ],
+     [
+      "t",
+      213,
+      45,
+      "0.05",
+      {
+       "s": 15
+      }
+     ],
+     [
+      "r",
+      240,
+      24,
+      36,
+      32,
+      {
+       "f": "s"
+      }
+     ],
+     [
+      "t",
+      258,
+      45,
+      "A",
+      {
+       "s": 15
+      }
+     ]
+    ]
+   },
+   "sketchAfter": {
+    "h": 150,
+    "alt": "Invalid flatness frame and the two valid alternatives",
+    "items": [
+     [
+      "r",
+      40,
       14,
       36,
       32,
@@ -310,7 +429,7 @@ window.QUESTION_SETS.push({
      ],
      [
       "t",
-      168,
+      58,
       35,
       "⏥",
       {
@@ -319,7 +438,7 @@ window.QUESTION_SETS.push({
      ],
      [
       "r",
-      186,
+      76,
       14,
       54,
       32,
@@ -330,7 +449,7 @@ window.QUESTION_SETS.push({
      ],
      [
       "t",
-      213,
+      103,
       35,
       "0.05",
       {
@@ -339,7 +458,7 @@ window.QUESTION_SETS.push({
      ],
      [
       "r",
-      240,
+      130,
       14,
       36,
       32,
@@ -350,7 +469,7 @@ window.QUESTION_SETS.push({
      ],
      [
       "t",
-      258,
+      148,
       35,
       "A",
       {
@@ -359,12 +478,130 @@ window.QUESTION_SETS.push({
      ],
      [
       "t",
-      230,
-      72,
-      "flatness with a datum: not valid",
+      200,
+      36,
+      "not valid",
       {
        "s": 12,
+       "an": "start",
        "a": 1
+      }
+     ],
+     [
+      "r",
+      40,
+      62,
+      36,
+      32,
+      {
+       "f": "s"
+      }
+     ],
+     [
+      "t",
+      58,
+      83,
+      "⏥",
+      {
+       "s": 15
+      }
+     ],
+     [
+      "r",
+      76,
+      62,
+      54,
+      32,
+      {
+       "f": "s"
+      }
+     ],
+     [
+      "t",
+      103,
+      83,
+      "0.05",
+      {
+       "s": 15
+      }
+     ],
+     [
+      "t",
+      150,
+      84,
+      "flat only",
+      {
+       "s": 12,
+       "an": "start",
+       "m": 1
+      }
+     ],
+     [
+      "r",
+      40,
+      108,
+      36,
+      32,
+      {
+       "f": "s"
+      }
+     ],
+     [
+      "t",
+      58,
+      129,
+      "∥",
+      {
+       "s": 15
+      }
+     ],
+     [
+      "r",
+      76,
+      108,
+      54,
+      32,
+      {
+       "f": "s"
+      }
+     ],
+     [
+      "t",
+      103,
+      129,
+      "0.05",
+      {
+       "s": 15
+      }
+     ],
+     [
+      "r",
+      130,
+      108,
+      36,
+      32,
+      {
+       "f": "s"
+      }
+     ],
+     [
+      "t",
+      148,
+      129,
+      "A",
+      {
+       "s": 15
+      }
+     ],
+     [
+      "t",
+      200,
+      130,
+      "flat and parallel to A",
+      {
+       "s": 12,
+       "an": "start",
+       "m": 1
       }
      ]
     ]
@@ -398,13 +635,13 @@ window.QUESTION_SETS.push({
     ]
    },
    "sketch": {
-    "h": 90,
+    "h": 80,
     "alt": "Boxed basic dimension 40 with ±0.1 written beside it",
     "items": [
      [
       "r",
       190,
-      30,
+      24,
       50,
       30,
       {
@@ -414,7 +651,7 @@ window.QUESTION_SETS.push({
      [
       "t",
       215,
-      51,
+      45,
       "40",
       {
        "s": 15
@@ -423,32 +660,133 @@ window.QUESTION_SETS.push({
      [
       "t",
       270,
-      51,
+      45,
       "± 0.1",
       {
        "s": 15,
-       "an": "start",
-       "a": 1
+       "an": "start"
       }
      ],
      [
       "l",
       60,
-      75,
+      68,
       400,
-      75,
+      68,
       {
        "m": 1
+      }
+     ]
+    ]
+   },
+   "sketchAfter": {
+    "h": 110,
+    "alt": "Corrected: basic dimension 40 with a position tolerance frame",
+    "items": [
+     [
+      "r",
+      190,
+      14,
+      50,
+      30,
+      {
+       "f": "s"
       }
      ],
      [
       "t",
-      230,
-      88,
-      "basic dimensions cannot carry ±",
+      215,
+      35,
+      "40",
+      {
+       "s": 15
+      }
+     ],
+     [
+      "t",
+      260,
+      35,
+      "basic, no ±",
       {
        "s": 12,
+       "an": "start",
        "m": 1
+      }
+     ],
+     [
+      "r",
+      120,
+      62,
+      36,
+      32,
+      {
+       "f": "s"
+      }
+     ],
+     [
+      "t",
+      138,
+      83,
+      "⌖",
+      {
+       "s": 15
+      }
+     ],
+     [
+      "r",
+      156,
+      62,
+      54,
+      32,
+      {
+       "f": "s"
+      }
+     ],
+     [
+      "t",
+      183,
+      83,
+      "Ø0.2",
+      {
+       "s": 15
+      }
+     ],
+     [
+      "r",
+      210,
+      62,
+      36,
+      32,
+      {
+       "f": "s"
+      }
+     ],
+     [
+      "t",
+      228,
+      83,
+      "A",
+      {
+       "s": 15
+      }
+     ],
+     [
+      "r",
+      246,
+      62,
+      36,
+      32,
+      {
+       "f": "s"
+      }
+     ],
+     [
+      "t",
+      264,
+      83,
+      "B",
+      {
+       "s": 15
       }
      ]
     ]
@@ -482,6 +820,78 @@ window.QUESTION_SETS.push({
     ]
    },
    "sketch": {
+    "h": 130,
+    "alt": "True profile with a profile of a surface tolerance of 0.4",
+    "items": [
+     [
+      "p",
+      [
+       [
+        60,
+        90
+       ],
+       [
+        160,
+        90
+       ],
+       [
+        220,
+        60
+       ],
+       [
+        300,
+        60
+       ],
+       [
+        400,
+        90
+       ]
+      ],
+      {
+       "w": 2
+      }
+     ],
+     [
+      "r",
+      160,
+      8,
+      36,
+      32,
+      {
+       "f": "s"
+      }
+     ],
+     [
+      "t",
+      178,
+      29,
+      "⌓",
+      {
+       "s": 15
+      }
+     ],
+     [
+      "r",
+      196,
+      8,
+      45,
+      32,
+      {
+       "f": "s"
+      }
+     ],
+     [
+      "t",
+      218.5,
+      29,
+      "0.4",
+      {
+       "s": 15
+      }
+     ]
+    ]
+   },
+   "sketchAfter": {
     "h": 120,
     "alt": "True profile with a band 0.2 either side",
     "items": [

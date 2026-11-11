@@ -39,6 +39,7 @@ const supports = ["simple", "cantilever", "fixed", "propped"];
     if (q.optionCurves && (q.optionCurves.length !== 4 || !q.optionCurves.every(curveOk))) errors.push(`${tag}: optionCurves needs 4 valid curves`);
     if (q.optionCurves && new Set(q.optionCurves.map((c) => JSON.stringify(c.pts))).size !== 4) errors.push(`${tag}: duplicate option curves`);
     ["given", "after"].forEach((k) => { if (q[k] && !(Array.isArray(q[k]) && q[k].every(curveOk))) errors.push(`${tag}: bad ${k} curves`); });
+    if (q.sketchAfter && !(Array.isArray(q.sketchAfter.items) && q.sketchAfter.items.length)) errors.push(`${tag}: bad sketchAfter`);
     if (!levels.includes(q.level)) errors.push(`${tag}: bad level`);
     if (q.diagram && !q.diagram.section && !supports.includes(q.diagram.support)) errors.push(`${tag}: bad diagram support`);
   });

@@ -955,7 +955,8 @@
         el("strong", { text: right ? "Correct" : "Not quite. Answer: " + q.options[q.answer] }),
         el("p", { text: q.why }),
         q.plots ? drawPlots(q.diagram, q.plots) : null,
-        q.after ? drawCurves(q.after) : null
+        q.after ? drawCurves(q.after) : null,
+        q.sketchAfter ? drawSketch(q.sketchAfter) : null
       ]);
       if (q.proof && q.proof.length) {
         feedback = el("div", {}, [feedback, buildSolution(q, item)]);
