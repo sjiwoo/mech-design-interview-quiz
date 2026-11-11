@@ -11,6 +11,7 @@ Unofficial practice material. Not affiliated with or endorsed by Tesla, and not 
 - **Shear and moment diagrams** (20 questions): pick the diagram that matches a loading, or read the loading and peak moment off a diagram. Answer options are drawn as small diagrams (`optionCurves`).
 - **Moment of inertia** (20 questions): standard sections, parallel axis, centroids, hollow and built-up sections, orientation, buckling, composite beams.
 - **Stress–strain and materials**, **GD&T**, **Tolerance stack-up**, **Bolted joints**, **Manufacturing and DFM**, **Statics and free-body diagrams**, **Fatigue and failure**, **Heat transfer**, **Vibrations and dynamics**, **Torsion, combined loading and buckling** (10 questions each).
+- **Trick questions, part 2** (15 questions): rolling, free fall, friction, gears, bolt preload, critical insulation radius and displacement-controlled loads.
 - **Brain teasers** and **Trick questions** (10 each).
 - **Mechatronics** (27 questions): circuits and RC timing, sensor readout (dividers, ADC resolution, sampling, filtering, charge amplifiers, shielding, drift), flex circuits in moving joints, small motors and gearing, control loops, and robot-arm statics and kinematics.
 - **Materials science fundamentals**, **Polymer fundamentals** and **Tactile sensing** (10 each).
