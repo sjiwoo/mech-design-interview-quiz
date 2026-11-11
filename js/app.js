@@ -794,18 +794,32 @@
     state = null;
     syncSelector(onlyId);
     var shown = onlyId ? sets.filter(function (x) { return x.id === onlyId; }) : sets;
-    var nodes = onlyId ? [] : [
-      el("h1", { text: "Mechanical design interview practice" }),
-      el("p", { class: "muted", text: "Multiple choice problems on the fundamentals that come up in Tesla-style mechanical design interviews. Pick a section to start, or use the section menu at the top." })
-    ];
-
-    if (!onlyId && CARDS.length) {
-      nodes.push(el("section", { class: "card" }, [
-        el("h2", { text: "Flashcards" }),
-        el("p", { class: "muted", text: CARDS.length + " cards: key equations, concepts and terms from every section." }),
-        el("button", { class: "btn", type: "button", text: "Open flashcards", onclick: function () { setHash("flashcards"); showFlashcards(); } })
+    var nodes = [];
+    if (!onlyId) {
+      var totalQ = 0, totalRep = 0;
+      sets.forEach(function (x) { totalQ += x.questions.length; totalRep += reportCounts(x).question; });
+      var beam = el("div", {});
+      beam.innerHTML = '<svg class="hero-beam" viewBox="0 0 640 200" role="img"><title>A beam in bending: the top is in compression, the bottom is in tension, and the neutral axis between them carries no stress</title>' +
+        '<path class="comp" d="M40 60Q320 112 600 60L600 80Q320 132 40 80Z"/>' +
+        '<path class="tens" d="M40 80Q320 132 600 80L600 100Q320 152 40 100Z"/>' +
+        '<path d="M40 60Q320 112 600 60L600 100Q320 152 40 100Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>' +
+        '<path class="axis" d="M14 76Q320 136 626 76"/>' +
+        '<path d="M40 102l-11 18h22zM600 102l-11 18h22z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>' +
+        '<path d="M320 12v70M313 72l7 12 7-12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
+        '<text class="t-comp" x="44" y="44">compression</text><text class="t-tens" x="64" y="152">tension</text>' +
+        '<text class="t-axis" x="372" y="190">neutral axis: zero stress</text><path d="M480 168V102" stroke="var(--accent)" stroke-width="1.5" fill="none"/>' +
+        '</svg>';
+      nodes.push(el("section", { class: "hero" }, [
+        el("h1", { text: "Neutral Axis" }),
+        el("p", { class: "hero-lede", text: "Practice problems for mechanical design interviews, worked from first principles with a diagram, a full solution and a scratchpad for every question." }),
+        beam.firstChild,
+        el("p", { class: "hero-stats", text: totalQ + " questions in " + sets.length + " sections. " + totalRep + " were reported by candidates as asked in Tesla interviews." }),
+        CARDS.length ? el("div", { class: "btn-row" }, [
+          el("button", { class: "btn", type: "button", text: "Open flashcards (" + CARDS.filter(function (c) { return !removedSet()[cardKey(c)]; }).length + ")", onclick: function () { setHash("flashcards"); showFlashcards(); } })
+        ]) : null
       ]));
     }
+    var rows = [];
 
     shown.forEach(function (set) {
       var best = loadBest(set.id);
@@ -839,7 +853,7 @@
         }));
         buttons = row;
       }
-      nodes.push(el("section", { class: "card" }, [
+      rows.push(el("section", { class: onlyId ? "card" : "part" }, [
         el("h2", { text: set.title }),
         el("p", { class: "muted", text: set.blurb }),
         (function () {
@@ -880,6 +894,10 @@
       ]));
     });
 
+    if (onlyId) nodes = nodes.concat(rows);
+    else nodes.push(el("div", { class: "parts" }, [
+      el("div", { class: "parts-head" }, [el("span", { text: "Sections" }), el("span", { text: sets.length + " in total" })])
+    ].concat(rows)));
     render(nodes);
   }
 
@@ -1084,15 +1102,18 @@
   /* ---------- flashcards ---------- */
 
   var CARDS = (window.FLASHCARDS || []).map(function (c, i) { return { id: i, section: c[0], kind: c[1], front: c[2], back: c[3] }; });
-  var fcState = { section: "", kind: "", onlyUnknown: false, index: 0, flipped: false, order: null };
+  var fcState = { section: "", kind: "", onlyUnknown: false, index: 0, flipped: false, order: null, edit: false };
+  function removedSet() { return readJSON("flashcards:removed") || {}; }
   function knownSet() { return readJSON("flashcards:known") || {}; }
   function cardKey(c) { return c.section + "|" + c.front; }
 
   function showFlashcards() {
     state = null;
     selector.value = "";
-    var known = knownSet();
-    var deck = CARDS.filter(function (c) {
+    var known = knownSet(), removed = removedSet();
+    var ALL = CARDS.filter(function (c) { return !removed[cardKey(c)]; });
+    var removedCount = CARDS.length - ALL.length;
+    var deck = ALL.filter(function (c) {
       return (!fcState.section || c.section === fcState.section) && (!fcState.kind || c.kind === fcState.kind) &&
         (!fcState.onlyUnknown || !known[cardKey(c)]);
     });
@@ -1114,10 +1135,11 @@
     var unk = el("button", { class: "btn btn-small", type: "button", "aria-pressed": String(fcState.onlyUnknown), text: "Hide cards I know",
       onclick: function () { go({ onlyUnknown: !fcState.onlyUnknown, index: 0, flipped: false }); } });
 
-    var knownCount = CARDS.filter(function (c) { return known[cardKey(c)]; }).length;
+    var knownCount = ALL.filter(function (c) { return known[cardKey(c)]; }).length;
+    var KIND = { eq: "Equation", concept: "Concept", term: "Key term" };
     var nodes = [
       el("h1", { text: "Flashcards" }),
-      el("p", { class: "muted", text: "Key equations, concepts and terms from the sections. Tap a card to flip it. " + knownCount + " of " + CARDS.length + " marked as known." }),
+      el("p", { class: "muted", text: "Key equations, concepts and terms from the sections. Tap a card to flip it. " + knownCount + " of " + ALL.length + " marked as known." }),
       el("div", { class: "fc-filters section-picker" }, [secSel, kindSel, unk,
         el("button", { class: "btn btn-small", type: "button", "aria-pressed": String(!!fcState.order), text: fcState.order ? "Shuffle: on" : "Shuffle: off",
           onclick: function () {
@@ -1127,18 +1149,46 @@
               shuffle(CARDS.map(function (c) { return c.id; })).forEach(function (id, pos) { order[id] = pos; });
             }
             go({ order: order, index: 0, flipped: false });
-          } })])
+          } }),
+        el("button", { class: "btn btn-small", type: "button", "aria-pressed": String(fcState.edit), text: fcState.edit ? "Done editing" : "Edit cards",
+          onclick: function () { go({ edit: !fcState.edit, flipped: false }); } })])
     ];
 
-    if (!card) {
+    if (fcState.edit) {
+      var rows = deck.map(function (c) {
+        return el("tr", {}, [
+          el("td", {}, [
+            el("span", { class: "fc-row-front", text: c.front }),
+            el("span", { class: "fc-row-back", text: c.back }),
+            el("span", { class: "fc-row-meta", text: titleOf(c.section) + ", " + KIND[c.kind].toLowerCase() })
+          ]),
+          el("td", { class: "fc-row-act" }, [
+            el("button", { class: "btn btn-small", type: "button", text: "Remove", "aria-label": "Remove card: " + c.front,
+              onclick: function () { var r = removedSet(); r[cardKey(c)] = 1; writeJSON("flashcards:removed", r); go({}); } })
+          ])
+        ]);
+      });
+      nodes.push(el("section", { class: "card fc-edit" }, [
+        el("div", { class: "pad-head" }, [
+          el("h2", { text: deck.length + (deck.length === 1 ? " card" : " cards") + " in this view" }),
+          removedCount ? el("button", { class: "btn btn-small", type: "button", text: "Restore " + removedCount + " removed",
+            onclick: function () { writeJSON("flashcards:removed", {}); go({}); } }) : null
+        ]),
+        el("p", { class: "muted", text: "Removed cards leave the deck on this device. The filters above also narrow this list." }),
+        deck.length ? el("table", { class: "fc-table" }, [
+          el("thead", {}, [el("tr", {}, [el("th", { scope: "col", text: "Card" }), el("th", { scope: "col" }, [el("span", { class: "visually-hidden", text: "Remove" })])])]),
+          el("tbody", {}, rows)
+        ]) : el("p", { text: "No cards match these filters." })
+      ]));
+    } else if (!card) {
       nodes.push(el("section", { class: "card" }, [el("p", { text: fcState.onlyUnknown ? "You have marked every card in this set as known." : "No cards match these filters." })]));
     } else {
       var isKnown = !!known[cardKey(card)];
       var face = el("button", { class: "fc-card" + (fcState.flipped ? " fc-back" : ""), type: "button", "aria-label": "Flashcard. Tap to flip.",
         onclick: function () { go({ flipped: !fcState.flipped }); } }, [
-        el("span", { class: "fc-tag", text: titleOf(card.section) + " · " + ({ eq: "Equation", concept: "Concept", term: "Key term" }[card.kind]) }),
+        el("span", { class: "fc-tag", text: titleOf(card.section) + ", " + KIND[card.kind].toLowerCase() }),
         el("span", { class: "fc-text", text: fcState.flipped ? card.back : card.front }),
-        el("span", { class: "fc-hint", text: fcState.flipped ? "Answer · tap to see the prompt" : "Tap to reveal" })
+        el("span", { class: "fc-hint", text: fcState.flipped ? "Answer. Tap to see the prompt." : "Tap to reveal" })
       ]);
       nodes.push(
         el("div", { class: "progress" }, [el("span", { text: "Card " + (fcState.index + 1) + " of " + deck.length }), el("span", { text: isKnown ? "Marked as known" : "" })]),

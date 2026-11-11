@@ -1,4 +1,4 @@
-# Mech Design Interview Quiz
+# Neutral Axis
 
 Multiple choice practice problems for mechanical design engineering interviews, in the style asked at Tesla.
 
@@ -19,6 +19,12 @@ Each question is tagged with whether it was reported by a candidate as asked in 
 cross-sections, or `sketch` for the general drawing primitives documented in `js/app.js`.
 
 Pick a section from the menu at the top. Each section has its own link, e.g. `#moment-of-inertia`.
+
+## Brand
+
+The name comes from the line through a bent beam that carries no stress. The logo is an I-beam section with a
+centre line through it (`favicon.svg`, also inline in `index.html`). Colours are set as CSS variables at the top of
+`css/style.css`. Type is Barlow and Barlow Semi Condensed, self-hosted in `fonts/` under the SIL Open Font License.
 
 ## Run it
 
