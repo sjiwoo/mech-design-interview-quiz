@@ -543,3 +543,20 @@ body.pad-active, body.pad-active * {
 @media (prefers-reduced-motion: no-preference) { .calc-key { transition: filter 0.1s; } }
 @media print { .calc, .calc-bubble { display: none !important; } }
 main { padding-bottom: 96px; }
+
+/* Starred flashcards */
+.fc-wrap { position: relative; }
+.fc-wrap .fc-card { padding-right: 64px; }
+.fc-star {
+  appearance: none; position: absolute; top: 22px; right: 10px; width: 48px; height: 48px; border: 0; border-radius: 50%;
+  background: transparent; color: var(--muted); cursor: pointer; display: grid; place-items: center;
+}
+.fc-star svg { width: 28px; height: 28px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+.fc-star:hover { background: var(--accent-soft); color: var(--accent); }
+.fc-star.on { color: #c99a2e; }
+.fc-star.on svg { fill: currentColor; }
+.fc-star:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.fc-star-sm { position: static; width: 40px; height: 40px; display: inline-grid; vertical-align: middle; margin-right: 6px; }
+.fc-star-sm svg { width: 22px; height: 22px; }
+@media (prefers-reduced-motion: no-preference) { .fc-star.on svg { animation: fc-pop 0.25s ease-out; } }
+@keyframes fc-pop { 0% { transform: scale(0.7); } 70% { transform: scale(1.15); } 100% { transform: scale(1); } }

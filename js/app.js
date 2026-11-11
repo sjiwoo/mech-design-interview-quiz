@@ -1105,6 +1105,24 @@
   var CARDS = (window.FLASHCARDS || []).map(function (c, i) { return { id: i, section: c[0], kind: c[1], front: c[2], back: c[3] }; });
   var fcState = { section: "", kind: "", onlyUnknown: false, index: 0, flipped: false, order: null, edit: false };
   function removedSet() { return readJSON("flashcards:removed") || {}; }
+  function starredSet() { return readJSON("flashcards:starred") || {}; }
+  var STARRED = "__starred";
+  var STAR_PATH = "M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3-4.6-4.4 6.3-.9z";
+  // star toggle used on the card and in the edit list
+  function starButton(c, starred, after, small) {
+    var on = !!starred[cardKey(c)];
+    var b = el("button", { class: "fc-star" + (on ? " on" : "") + (small ? " fc-star-sm" : ""), type: "button", "aria-pressed": String(on),
+      "aria-label": (on ? "Unstar" : "Star") + " card: " + c.front,
+      onclick: function (ev) {
+        ev.stopPropagation();
+        var st = starredSet();
+        if (st[cardKey(c)]) delete st[cardKey(c)]; else st[cardKey(c)] = 1;
+        writeJSON("flashcards:starred", st);
+        after();
+      } });
+    b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + STAR_PATH + '" stroke-linejoin="round"/></svg>';
+    return b;
+  }
   // Cards the user added in the edit view, kept on this device
   function customCards() {
     var list = readJSON("flashcards:custom");
@@ -1121,12 +1139,13 @@
   function showFlashcards() {
     state = null;
     selector.value = "";
-    var known = knownSet(), removed = removedSet();
+    var known = knownSet(), removed = removedSet(), starred = starredSet();
     var EVERY = allCards();
     var ALL = EVERY.filter(function (c) { return !removed[cardKey(c)]; });
     var removedCount = EVERY.length - ALL.length;
     var deck = ALL.filter(function (c) {
-      return (!fcState.section || c.section === fcState.section) && (!fcState.kind || c.kind === fcState.kind) &&
+      var secOk = !fcState.section || (fcState.section === STARRED ? !!starred[cardKey(c)] : c.section === fcState.section);
+      return secOk && (!fcState.kind || c.kind === fcState.kind) &&
         (!fcState.onlyUnknown || !known[cardKey(c)]);
     });
     if (fcState.order) deck.sort(function (a, b) {
@@ -1138,7 +1157,9 @@
     function go(patch) { Object.keys(patch).forEach(function (k) { fcState[k] = patch[k]; }); showFlashcards(); }
     function titleOf(id) { var st = sets.filter(function (x) { return x.id === id; })[0]; return st ? st.title : id; }
 
-    var secSel = el("select", { "aria-label": "Flashcard section" }, [el("option", { value: "", text: "All sections" })].concat(
+    var starCount = ALL.filter(function (c) { return starred[cardKey(c)]; }).length;
+    var secSel = el("select", { "aria-label": "Flashcard section" }, [el("option", { value: "", text: "All sections" }),
+      el("option", { value: STARRED, text: "★ Starred (" + starCount + ")" })].concat(
       sets.filter(function (st) { return EVERY.some(function (c) { return c.section === st.id; }); })
         .map(function (st) { return el("option", { value: st.id, text: st.title }); })));
     secSel.value = fcState.section;
@@ -1178,6 +1199,7 @@
             el("span", { class: "fc-row-meta", text: titleOf(c.section) + ", " + KIND[c.kind].toLowerCase() + (c.custom ? ", added by you" : "") })
           ]),
           el("td", { class: "fc-row-act" }, [
+            starButton(c, starred, function () { go({}); }, true),
             el("button", { class: "btn btn-small", type: "button", text: "Remove", "aria-label": "Remove card: " + c.front,
               onclick: function () {
                 if (c.custom) {
@@ -1239,7 +1261,9 @@
         ]) : el("p", { text: "No cards match these filters." })
       ]));
     } else if (!card) {
-      nodes.push(el("section", { class: "card" }, [el("p", { text: fcState.onlyUnknown ? "You have marked every card in this set as known." : "No cards match these filters." })]));
+      nodes.push(el("section", { class: "card" }, [el("p", { text:
+        fcState.section === STARRED && !starCount ? "No starred cards yet. Tap the star on any card to collect it here." :
+        fcState.onlyUnknown ? "You have marked every card in this set as known." : "No cards match these filters." })]));
     } else {
       var isKnown = !!known[cardKey(card)];
       var face = el("button", { class: "fc-card" + (fcState.flipped ? " fc-back" : ""), type: "button", "aria-label": "Flashcard. Tap to flip.",
@@ -1251,7 +1275,7 @@
       nodes.push(
         el("div", { class: "progress" }, [el("span", { text: "Card " + (fcState.index + 1) + " of " + deck.length }), el("span", { text: isKnown ? "Marked as known" : "" })]),
         el("div", { class: "bar" }, [el("span", { style: "width:" + ((fcState.index + 1) / deck.length) * 100 + "%" })]),
-        face,
+        el("div", { class: "fc-wrap" }, [face, starButton(card, starred, function () { go({}); })]),
         el("div", { class: "btn-row" }, [
           el("button", { class: "btn", type: "button", text: "Previous", onclick: function () { go({ index: (fcState.index - 1 + deck.length) % deck.length, flipped: false }); } }),
           el("button", { class: "btn" + (isKnown ? "" : " btn-good"), type: "button", text: isKnown ? "Mark as not known" : "I know this",
