@@ -12,6 +12,7 @@ Unofficial practice material. Not affiliated with or endorsed by Tesla, and not 
 - **Moment of inertia** (20 questions): standard sections, parallel axis, centroids, hollow and built-up sections, orientation, buckling, composite beams.
 - **Stress–strain and materials**, **GD&T**, **Tolerance stack-up**, **Bolted joints**, **Manufacturing and DFM**, **Statics and free-body diagrams**, **Fatigue and failure**, **Heat transfer**, **Vibrations and dynamics**, **Torsion, combined loading and buckling** (10 questions each).
 - **Trick questions, part 2** (15 questions): rolling, free fall, friction, gears, bolt preload, critical insulation radius and displacement-controlled loads.
+- **GD&T and tolerance trick questions** (14 questions): invalid or misread callouts, and stack-up assumptions that fail in practice.
 - **Pressure vessels and hoop stress** (14 questions): deriving hoop and axial stress, thin against thick walls, sizing, end caps, hydrotesting, rotating rings and press fits.
 - **GD&T, part 2** (14 questions) and **Tolerance analysis, part 2** (12 questions): the next layer of each topic.
 - **Brain teasers** and **Trick questions** (10 each).

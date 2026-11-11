@@ -231,5 +231,12 @@ window.FLASHCARDS = [
   ["tolerance-2","eq","Angular error at a distance","Displacement ≈ L·θ (θ in radians). 1° over 100 mm ≈ 1.75 mm."],
   ["tolerance-2","concept","Combining mean shifts","Add mean shifts arithmetically; combine only the random variation by RSS."],
   ["tolerance-2","concept","RSS contribution","Each contributor's share = T_i²/ΣT². Fix the biggest one first."],
-  ["tolerance-2","concept","Cp versus Cpk","Cp = spread only. Cpk = distance to the nearer limit. Cp > Cpk means the mean is off-centre."]
+  ["tolerance-2","concept","Cp versus Cpk","Cp = spread only. Cpk = distance to the nearer limit. Cp > Cpk means the mean is off-centre."],
+  ["gdt-tolerance-tricks","concept","MMC of a hole versus a pin","Hole: MMC is the smallest size. Pin: MMC is the largest size. At MMC the part weighs the most."],
+  ["gdt-tolerance-tricks","concept","No modifier means RFS","Without Ⓜ or Ⓛ the tolerance applies at every size, so there is no bonus tolerance."],
+  ["gdt-tolerance-tricks","concept","Form controls never take a datum","Flatness, straightness, circularity and cylindricity. Adding a datum turns flatness into parallelism."],
+  ["gdt-tolerance-tricks","concept","Profile value is the total band","Profile 0.4 means ±0.2 unless Ⓤ shows an unequal split."],
+  ["gdt-tolerance-tricks","concept","Thread tolerances apply to the pitch diameter","Unless MAJOR DIA or MINOR DIA is noted under the frame."],
+  ["gdt-tolerance-tricks","concept","Rule of ten for measurement","The gauge should be about ten times more accurate than the tolerance it checks."],
+  ["gdt-tolerance-tricks","concept","Reference temperature","Dimensions are specified at 20 °C. Measure warm parts after they cool, or correct for expansion."]
 ];
