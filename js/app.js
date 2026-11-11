@@ -724,6 +724,14 @@
       el("p", { class: "muted", text: "Multiple choice problems on the fundamentals that come up in Tesla-style mechanical design interviews. Pick a section to start, or use the section menu at the top." })
     ];
 
+    if (!onlyId && CARDS.length) {
+      nodes.push(el("section", { class: "card" }, [
+        el("h2", { text: "Flashcards" }),
+        el("p", { class: "muted", text: CARDS.length + " cards covering the key equations and concepts from every section." }),
+        el("button", { class: "btn", type: "button", text: "Open flashcards", onclick: function () { setHash("flashcards"); showFlashcards(); } })
+      ]));
+    }
+
     shown.forEach(function (set) {
       var best = loadBest(set.id);
       var prog = loadProgress(set);
@@ -982,18 +990,101 @@
     ]);
   }
 
-  document.getElementById("home-link").addEventListener("click", function (e) {
-    e.preventDefault();
-    showHome();
+
+  /* ---------- flashcards ---------- */
+
+  var CARDS = (window.FLASHCARDS || []).map(function (c, i) { return { id: i, section: c[0], kind: c[1], front: c[2], back: c[3] }; });
+  var fcState = { section: "", kind: "", onlyUnknown: false, index: 0, flipped: false };
+  function knownSet() { return readJSON("flashcards:known") || {}; }
+  function cardKey(c) { return c.section + "|" + c.front; }
+
+  function showFlashcards() {
+    state = null;
+    selector.value = "";
+    var known = knownSet();
+    var deck = CARDS.filter(function (c) {
+      return (!fcState.section || c.section === fcState.section) && (!fcState.kind || c.kind === fcState.kind) &&
+        (!fcState.onlyUnknown || !known[cardKey(c)]);
+    });
+    if (fcState.index >= deck.length) fcState.index = Math.max(0, deck.length - 1);
+    var card = deck[fcState.index];
+    function go(patch) { Object.keys(patch).forEach(function (k) { fcState[k] = patch[k]; }); showFlashcards(); }
+    function titleOf(id) { var st = sets.filter(function (x) { return x.id === id; })[0]; return st ? st.title : id; }
+
+    var secSel = el("select", { "aria-label": "Flashcard section" }, [el("option", { value: "", text: "All sections" })].concat(
+      sets.filter(function (st) { return CARDS.some(function (c) { return c.section === st.id; }); })
+        .map(function (st) { return el("option", { value: st.id, text: st.title }); })));
+    secSel.value = fcState.section;
+    secSel.addEventListener("change", function () { go({ section: secSel.value, index: 0, flipped: false }); });
+    var kindSel = el("select", { "aria-label": "Card type" }, [
+      el("option", { value: "", text: "Equations and concepts" }), el("option", { value: "eq", text: "Equations only" }), el("option", { value: "concept", text: "Concepts only" })]);
+    kindSel.value = fcState.kind;
+    kindSel.addEventListener("change", function () { go({ kind: kindSel.value, index: 0, flipped: false }); });
+    var unk = el("button", { class: "btn btn-small", type: "button", "aria-pressed": String(fcState.onlyUnknown), text: "Hide cards I know",
+      onclick: function () { go({ onlyUnknown: !fcState.onlyUnknown, index: 0, flipped: false }); } });
+
+    var knownCount = CARDS.filter(function (c) { return known[cardKey(c)]; }).length;
+    var nodes = [
+      el("h1", { text: "Flashcards" }),
+      el("p", { class: "muted", text: "Key equations and concepts from the sections. Tap a card to flip it. " + knownCount + " of " + CARDS.length + " marked as known." }),
+      el("div", { class: "fc-filters section-picker" }, [secSel, kindSel, unk])
+    ];
+
+    if (!card) {
+      nodes.push(el("section", { class: "card" }, [el("p", { text: fcState.onlyUnknown ? "You have marked every card in this set as known." : "No cards match these filters." })]));
+    } else {
+      var isKnown = !!known[cardKey(card)];
+      var face = el("button", { class: "fc-card" + (fcState.flipped ? " fc-back" : ""), type: "button", "aria-label": "Flashcard. Tap to flip.",
+        onclick: function () { go({ flipped: !fcState.flipped }); } }, [
+        el("span", { class: "fc-tag", text: titleOf(card.section) + " · " + (card.kind === "eq" ? "Equation" : "Concept") }),
+        el("span", { class: "fc-text", text: fcState.flipped ? card.back : card.front }),
+        el("span", { class: "fc-hint", text: fcState.flipped ? "Answer · tap to see the prompt" : "Tap to reveal" })
+      ]);
+      nodes.push(
+        el("div", { class: "progress" }, [el("span", { text: "Card " + (fcState.index + 1) + " of " + deck.length }), el("span", { text: isKnown ? "Marked as known" : "" })]),
+        el("div", { class: "bar" }, [el("span", { style: "width:" + ((fcState.index + 1) / deck.length) * 100 + "%" })]),
+        face,
+        el("div", { class: "btn-row" }, [
+          el("button", { class: "btn", type: "button", text: "Previous", onclick: function () { go({ index: (fcState.index - 1 + deck.length) % deck.length, flipped: false }); } }),
+          el("button", { class: "btn" + (isKnown ? "" : " btn-good"), type: "button", text: isKnown ? "Mark as not known" : "I know this",
+            onclick: function () {
+              var k = knownSet();
+              if (isKnown) delete k[cardKey(card)]; else k[cardKey(card)] = 1;
+              writeJSON("flashcards:known", k);
+              // when hiding known cards, the deck shrinks, so the same index is already the next card
+              go({ index: !isKnown && !fcState.onlyUnknown ? (fcState.index + 1) % deck.length : fcState.index, flipped: false });
+            } }),
+          el("button", { class: "btn btn-primary", type: "button", text: "Next", onclick: function () { go({ index: (fcState.index + 1) % deck.length, flipped: false }); } })
+        ])
+      );
+    }
+    nodes.push(el("div", { class: "btn-row" }, [el("button", { class: "btn", type: "button", text: "Back to sections", onclick: function () { setHash(""); showHome(null); } })]));
+    var y = window.scrollY;
+    app.replaceChildren.apply(app, nodes);
+    window.scrollTo(0, y);
+  }
+  function setHash(id) {
+    try { history.replaceState(null, "", id ? "#" + id : location.pathname + location.search); } catch (e) { location.hash = id; }
+  }
+  function route() {
+    var id = (location.hash || "").slice(1);
+    if (id === "flashcards") { showFlashcards(); return; }
+    showHome(sets.some(function (x) { return x.id === id; }) ? id : null);
+  }
+
+  document.getElementById("flash-link").addEventListener("click", function (e) {
+    e.preventDefault(); setHash("flashcards"); fcState.flipped = false; showFlashcards();
   });
 
-  window.addEventListener("hashchange", function () {
-    var id = (location.hash || "").slice(1);
-    showHome(sets.some(function (x) { return x.id === id; }) ? id : null);
+  document.getElementById("home-link").addEventListener("click", function (e) {
+    e.preventDefault();
+    setHash("");
+    showHome(null);
   });
+
+  window.addEventListener("hashchange", route);
 
   window.QUIZ_DEBUG = { drawSketch: drawSketch };
 
-  var startId = (location.hash || "").slice(1);
-  showHome(sets.some(function (x) { return x.id === startId; }) ? startId : null);
+  route();
 })();

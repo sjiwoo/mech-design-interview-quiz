@@ -359,3 +359,20 @@ body.pad-active, body.pad-active * {
 .sec-right { background: var(--good); }
 .sec-wrong { background: var(--bad); }
 .sec-label { display: flex; justify-content: space-between; gap: 12px; margin-top: 5px; font-size: 0.85rem; color: var(--muted); }
+
+/* Flashcards */
+.nav-link { color: var(--ink); font-weight: 600; text-decoration: none; padding: 9px 12px; border: 1px solid var(--line); border-radius: 10px; min-height: 42px; display: inline-flex; align-items: center; }
+.nav-link:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.fc-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 18px; }
+.fc-filters select { max-width: 100%; }
+.fc-card {
+  appearance: none; width: 100%; min-height: 260px; margin-top: 14px; padding: 22px 20px;
+  display: flex; flex-direction: column; justify-content: space-between; gap: 18px; text-align: left;
+  font: inherit; color: var(--ink); background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius); cursor: pointer;
+}
+.fc-card.fc-back { border-color: var(--good); background: var(--good-bg); }
+.fc-card:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.fc-tag { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
+.fc-text { font-size: 1.2rem; font-weight: 600; line-height: 1.45; }
+.fc-hint { font-size: 0.85rem; color: var(--muted); }
+.btn-good { border-color: var(--good); color: var(--good); }
