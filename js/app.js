@@ -815,7 +815,7 @@
         beam.firstChild,
         el("p", { class: "hero-stats", text: totalQ + " questions in " + sets.length + " sections. " + totalRep + " were reported by candidates as asked in Tesla interviews." }),
         CARDS.length ? el("div", { class: "btn-row" }, [
-          el("button", { class: "btn", type: "button", text: "Open flashcards (" + CARDS.filter(function (c) { return !removedSet()[cardKey(c)]; }).length + ")", onclick: function () { setHash("flashcards"); showFlashcards(); } })
+          el("button", { class: "btn", type: "button", text: "Open flashcards (" + liveCardCount() + ")", onclick: function () { setHash("flashcards"); showFlashcards(); } })
         ]) : null
       ]));
     }
@@ -1104,6 +1104,16 @@
   var CARDS = (window.FLASHCARDS || []).map(function (c, i) { return { id: i, section: c[0], kind: c[1], front: c[2], back: c[3] }; });
   var fcState = { section: "", kind: "", onlyUnknown: false, index: 0, flipped: false, order: null, edit: false };
   function removedSet() { return readJSON("flashcards:removed") || {}; }
+  // Cards the user added in the edit view, kept on this device
+  function customCards() {
+    var list = readJSON("flashcards:custom");
+    return (Array.isArray(list) ? list : []).map(function (c, i) {
+      return { id: CARDS.length + i, ci: i, custom: true, section: c.section, kind: c.kind, front: c.front, back: c.back };
+    });
+  }
+  function allCards() { return CARDS.concat(customCards()); }
+  function liveCardCount() { var r = removedSet(); return allCards().filter(function (c) { return !r[cardKey(c)]; }).length; }
+  var fcDraft = { section: "", kind: "eq", front: "", back: "", error: "" };
   function knownSet() { return readJSON("flashcards:known") || {}; }
   function cardKey(c) { return c.section + "|" + c.front; }
 
@@ -1111,20 +1121,24 @@
     state = null;
     selector.value = "";
     var known = knownSet(), removed = removedSet();
-    var ALL = CARDS.filter(function (c) { return !removed[cardKey(c)]; });
-    var removedCount = CARDS.length - ALL.length;
+    var EVERY = allCards();
+    var ALL = EVERY.filter(function (c) { return !removed[cardKey(c)]; });
+    var removedCount = EVERY.length - ALL.length;
     var deck = ALL.filter(function (c) {
       return (!fcState.section || c.section === fcState.section) && (!fcState.kind || c.kind === fcState.kind) &&
         (!fcState.onlyUnknown || !known[cardKey(c)]);
     });
-    if (fcState.order) deck.sort(function (a, b) { return fcState.order[a.id] - fcState.order[b.id]; });
+    if (fcState.order) deck.sort(function (a, b) {
+      var pa = fcState.order[a.id], pb = fcState.order[b.id];
+      return (pa === undefined ? 1e9 + a.id : pa) - (pb === undefined ? 1e9 + b.id : pb);
+    });
     if (fcState.index >= deck.length) fcState.index = Math.max(0, deck.length - 1);
     var card = deck[fcState.index];
     function go(patch) { Object.keys(patch).forEach(function (k) { fcState[k] = patch[k]; }); showFlashcards(); }
     function titleOf(id) { var st = sets.filter(function (x) { return x.id === id; })[0]; return st ? st.title : id; }
 
     var secSel = el("select", { "aria-label": "Flashcard section" }, [el("option", { value: "", text: "All sections" })].concat(
-      sets.filter(function (st) { return CARDS.some(function (c) { return c.section === st.id; }); })
+      sets.filter(function (st) { return EVERY.some(function (c) { return c.section === st.id; }); })
         .map(function (st) { return el("option", { value: st.id, text: st.title }); })));
     secSel.value = fcState.section;
     secSel.addEventListener("change", function () { go({ section: secSel.value, index: 0, flipped: false }); });
@@ -1146,7 +1160,7 @@
             var order = null;
             if (!fcState.order) {
               order = [];
-              shuffle(CARDS.map(function (c) { return c.id; })).forEach(function (id, pos) { order[id] = pos; });
+              shuffle(EVERY.map(function (c) { return c.id; })).forEach(function (id, pos) { order[id] = pos; });
             }
             go({ order: order, index: 0, flipped: false });
           } }),
@@ -1160,21 +1174,64 @@
           el("td", {}, [
             el("span", { class: "fc-row-front", text: c.front }),
             el("span", { class: "fc-row-back", text: c.back }),
-            el("span", { class: "fc-row-meta", text: titleOf(c.section) + ", " + KIND[c.kind].toLowerCase() })
+            el("span", { class: "fc-row-meta", text: titleOf(c.section) + ", " + KIND[c.kind].toLowerCase() + (c.custom ? ", added by you" : "") })
           ]),
           el("td", { class: "fc-row-act" }, [
             el("button", { class: "btn btn-small", type: "button", text: "Remove", "aria-label": "Remove card: " + c.front,
-              onclick: function () { var r = removedSet(); r[cardKey(c)] = 1; writeJSON("flashcards:removed", r); go({}); } })
+              onclick: function () {
+                if (c.custom) {
+                  var list = readJSON("flashcards:custom") || [];
+                  list.splice(c.ci, 1); writeJSON("flashcards:custom", list);
+                } else { var r = removedSet(); r[cardKey(c)] = 1; writeJSON("flashcards:removed", r); }
+                go({});
+              } })
           ])
         ]);
       });
+      var dSec = el("select", { id: "fc-new-section" }, sets.map(function (st) { return el("option", { value: st.id, text: st.title }); }));
+      dSec.value = fcDraft.section || fcState.section || sets[0].id;
+      var dKind = el("select", { id: "fc-new-kind" }, [el("option", { value: "eq", text: "Equation" }), el("option", { value: "concept", text: "Concept" }), el("option", { value: "term", text: "Key term" })]);
+      dKind.value = fcDraft.kind;
+      var dFront = el("input", { id: "fc-new-front", type: "text", maxlength: "200", autocomplete: "off" });
+      dFront.value = fcDraft.front;
+      var dBack = el("textarea", { id: "fc-new-back", rows: "3", maxlength: "600" });
+      dBack.value = fcDraft.back;
+      var dErr = el("p", { class: "fc-error", role: "alert", text: fcDraft.error });
+      function keep() { fcDraft.section = dSec.value; fcDraft.kind = dKind.value; fcDraft.front = dFront.value; fcDraft.back = dBack.value; }
+      [dFront, dBack].forEach(function (n) { n.addEventListener("input", function () { keep(); fcDraft.error = ""; dErr.textContent = ""; }); });
+      [dSec, dKind].forEach(function (n) { n.addEventListener("change", keep); });
+      var form = el("form", { class: "fc-form", onsubmit: function (ev) {
+        ev.preventDefault(); keep();
+        var front = fcDraft.front.trim(), back = fcDraft.back.trim(), msg = "";
+        if (!front) msg = "Write the front of the card (the prompt).";
+        else if (!back) msg = "Write the back of the card (the answer).";
+        else if (EVERY.some(function (c) { return c.section === fcDraft.section && c.front === front; })) msg = "This section already has a card with that front. Change the wording.";
+        if (msg) { fcDraft.error = msg; dErr.textContent = msg; (front ? dBack : dFront).focus(); return; }
+        var list = readJSON("flashcards:custom"); if (!Array.isArray(list)) list = [];
+        list.push({ section: fcDraft.section, kind: fcDraft.kind, front: front, back: back });
+        if (!writeJSON("flashcards:custom", list)) { fcDraft.error = "Could not save the card. Browser storage is full or turned off."; dErr.textContent = fcDraft.error; return; }
+        fcDraft.front = ""; fcDraft.back = ""; fcDraft.error = "";
+        go({});
+        var again = document.getElementById("fc-new-front"); if (again) again.focus();
+      } }, [
+        el("h2", { text: "Add a card" }),
+        el("div", { class: "fc-form-row section-picker" }, [
+          el("label", {}, [el("span", { text: "Section" }), dSec]),
+          el("label", {}, [el("span", { text: "Type" }), dKind])
+        ]),
+        el("label", {}, [el("span", { text: "Front (prompt)" }), dFront]),
+        el("label", {}, [el("span", { text: "Back (answer)" }), dBack]),
+        dErr,
+        el("button", { class: "btn btn-primary", type: "submit", text: "Add card" })
+      ]);
+      nodes.push(el("section", { class: "card" }, [form]));
       nodes.push(el("section", { class: "card fc-edit" }, [
         el("div", { class: "pad-head" }, [
           el("h2", { text: deck.length + (deck.length === 1 ? " card" : " cards") + " in this view" }),
           removedCount ? el("button", { class: "btn btn-small", type: "button", text: "Restore " + removedCount + " removed",
             onclick: function () { writeJSON("flashcards:removed", {}); go({}); } }) : null
         ]),
-        el("p", { class: "muted", text: "Removed cards leave the deck on this device. The filters above also narrow this list." }),
+        el("p", { class: "muted", text: "Removing a built-in card hides it on this device, and Restore brings it back. Removing a card you added deletes it. The filters above also narrow this list." }),
         deck.length ? el("table", { class: "fc-table" }, [
           el("thead", {}, [el("tr", {}, [el("th", { scope: "col", text: "Card" }), el("th", { scope: "col" }, [el("span", { class: "visually-hidden", text: "Remove" })])])]),
           el("tbody", {}, rows)
