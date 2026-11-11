@@ -3,7 +3,7 @@ window.QUESTION_SETS = window.QUESTION_SETS || [];
 window.QUESTION_SETS.push({
  "id": "mechatronics",
  "title": "Mechatronics",
- "blurb": "Circuits, motors and drives, sensors and control: the electrical side that comes up for mechanical engineers on robotics, drive and battery teams.",
+ "blurb": "Circuits, sensor readout and signal quality, small motors and control: the electrical side that comes up for mechanical engineers on robotics and tactile sensing teams.",
  "questions": [
   {
    "level": "Fundamental",
@@ -909,32 +909,6 @@ window.QUESTION_SETS.push({
    }
   },
   {
-   "level": "Applied",
-   "q": "A car's wheels are 0.7 m in diameter and turn at 1,333 rpm. About how fast is the car going?",
-   "options": [
-    "About 49 km/h",
-    "About 176 km/h",
-    "About 98 km/h",
-    "About 293 km/h"
-   ],
-   "answer": 1,
-   "why": "Each turn moves the car one circumference, π × 0.7 = 2.2 m. At 1,333 rpm that is 2,932 m per minute, or 48.9 m/s, about 176 km/h.",
-   "proof": [
-    "Distance per turn:  πd = π × 0.7 = 2.199 m.",
-    "Turns per second:  1,333/60 = 22.2.",
-    "Speed:  2.199 × 22.2 = 48.9 m/s.",
-    "Convert:  48.9 × 3.6 = 176 km/h (about 109 mph).",
-    "Ignores tyre slip and the slightly smaller rolling radius of a loaded tyre."
-   ],
-   "reported": {
-    "kind": "topic",
-    "note": "A candidate reported being asked how gear ratio and speed apply to vehicles. This exact calculation was not reported.",
-    "sources": [
-     "gearratio"
-    ]
-   }
-  },
-  {
    "level": "Fundamental",
    "q": "A brushed DC motor's torque falls in a straight line from stall torque at zero speed to zero at no-load speed. At what speed does it deliver the most mechanical power?",
    "options": [
@@ -1294,320 +1268,6 @@ window.QUESTION_SETS.push({
    }
   },
   {
-   "level": "Fundamental",
-   "q": "A 12 V supply drives a motor through PWM at a 25% duty cycle. What average voltage does the motor see?",
-   "options": [
-    "9 V",
-    "12 V",
-    "3 V",
-    "0.25 V"
-   ],
-   "answer": 2,
-   "why": "PWM switches fully on and fully off very fast. The average is the supply times the fraction of time it is on: 12 × 0.25 = 3 V. The motor's inductance and inertia smooth the pulses.",
-   "proof": [
-    "Duty cycle D = on-time / period = 0.25.",
-    "Average voltage = D × V_supply = 0.25 × 12 = 3 V.",
-    "The transistor is either fully on (low voltage across it) or fully off (no current), so it wastes very little power. A resistor dropping 9 V would waste most of the energy as heat.",
-    "The switching frequency is chosen well above what the motor can follow, typically 10 to 30 kHz, which also keeps it above hearing."
-   ],
-   "reported": {
-    "kind": "topic",
-    "note": "Candidates report basic electrical and circuit questions in Tesla mechanical interviews and timed tests. This exact question was not reported.",
-    "sources": [
-     "ohms",
-     "recontest",
-     "linckt"
-    ]
-   },
-   "given": [
-    {
-     "t": "Supply voltage against time",
-     "pts": [
-      [
-       0,
-       0
-      ],
-      [
-       0,
-       1
-      ],
-      [
-       0.0625,
-       1
-      ],
-      [
-       0.0625,
-       0
-      ],
-      [
-       0.25,
-       0
-      ],
-      [
-       0.25,
-       1
-      ],
-      [
-       0.3125,
-       1
-      ],
-      [
-       0.3125,
-       0
-      ],
-      [
-       0.5,
-       0
-      ],
-      [
-       0.5,
-       1
-      ],
-      [
-       0.5625,
-       1
-      ],
-      [
-       0.5625,
-       0
-      ],
-      [
-       0.75,
-       0
-      ],
-      [
-       0.75,
-       1
-      ],
-      [
-       0.8125,
-       1
-      ],
-      [
-       0.8125,
-       0
-      ],
-      [
-       1,
-       0
-      ]
-     ],
-     "notes": [
-      {
-       "x": 0.03,
-       "text": "12 V"
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "level": "Fundamental",
-   "q": "What does an H-bridge let a controller do with a brushed DC motor?",
-   "options": [
-    "Run it in either direction from a single supply",
-    "Double its maximum speed",
-    "Turn it into a stepper motor",
-    "Measure its position"
-   ],
-   "answer": 0,
-   "why": "Four switches arranged in an H connect each motor terminal to either the supply or ground. Closing one diagonal pair pushes current one way, the other pair reverses it.",
-   "proof": [
-    "Switches S1 and S4 on: current flows left to right through the motor, so it turns forward.",
-    "Switches S2 and S3 on: current reverses, so the motor turns backward.",
-    "Both low-side switches on: the motor terminals are shorted together, which brakes it.",
-    "Never turn on both switches on the same side: that shorts the supply to ground (shoot-through). Drivers add a short dead time to prevent it.",
-    "Combined with PWM on the switches, the H-bridge gives both speed and direction control."
-   ],
-   "reported": {
-    "kind": "topic",
-    "note": "Candidates report basic electrical and circuit questions in Tesla mechanical interviews and timed tests. This exact question was not reported.",
-    "sources": [
-     "ohms",
-     "recontest",
-     "linckt"
-    ]
-   },
-   "sketch": {
-    "h": 190,
-    "alt": "H-bridge with four switches around a motor",
-    "items": [
-     [
-      "l",
-      80,
-      20,
-      380,
-      20,
-      {}
-     ],
-     [
-      "l",
-      80,
-      170,
-      380,
-      170,
-      {}
-     ],
-     [
-      "t",
-      230,
-      14,
-      "+V",
-      {
-       "s": 12,
-       "m": 1
-      }
-     ],
-     [
-      "t",
-      230,
-      186,
-      "ground",
-      {
-       "s": 12,
-       "m": 1
-      }
-     ],
-     [
-      "l",
-      120,
-      20,
-      120,
-      170,
-      {}
-     ],
-     [
-      "l",
-      340,
-      20,
-      340,
-      170,
-      {}
-     ],
-     [
-      "r",
-      105,
-      42,
-      30,
-      30,
-      {
-       "f": "s"
-      }
-     ],
-     [
-      "t",
-      120,
-      62,
-      "S1",
-      {
-       "s": 12
-      }
-     ],
-     [
-      "r",
-      325,
-      42,
-      30,
-      30,
-      {
-       "f": "s"
-      }
-     ],
-     [
-      "t",
-      340,
-      62,
-      "S2",
-      {
-       "s": 12
-      }
-     ],
-     [
-      "r",
-      105,
-      118,
-      30,
-      30,
-      {
-       "f": "s"
-      }
-     ],
-     [
-      "t",
-      120,
-      138,
-      "S3",
-      {
-       "s": 12
-      }
-     ],
-     [
-      "r",
-      325,
-      118,
-      30,
-      30,
-      {
-       "f": "s"
-      }
-     ],
-     [
-      "t",
-      340,
-      138,
-      "S4",
-      {
-       "s": 12
-      }
-     ],
-     [
-      "l",
-      120,
-      95,
-      205,
-      95,
-      {}
-     ],
-     [
-      "l",
-      255,
-      95,
-      340,
-      95,
-      {}
-     ],
-     [
-      "c",
-      230,
-      95,
-      25,
-      {
-       "f": 2
-      }
-     ],
-     [
-      "t",
-      230,
-      100,
-      "M",
-      {
-       "s": 13
-      }
-     ],
-     [
-      "a",
-      150,
-      85,
-      200,
-      85,
-      {
-       "a": 1
-      }
-     ]
-    ]
-   }
-  },
-  {
    "level": "Applied",
    "q": "A motor has a 1,024-line incremental encoder read in quadrature. What is the smallest angle it can resolve?",
    "options": [
@@ -1910,190 +1570,6 @@ window.QUESTION_SETS.push({
   },
   {
    "level": "Applied",
-   "q": "A battery pack uses cells of 3.6 V and 5 Ah, arranged 96 in series and 4 in parallel (96s4p). What are the pack's nominal voltage and energy?",
-   "options": [
-    "14.4 V and 6.9 kWh",
-    "345.6 V and 6.9 kWh",
-    "345.6 V and 1.7 kWh",
-    "1,382 V and 27.6 kWh"
-   ],
-   "answer": 1,
-   "why": "Series adds voltage: 96 × 3.6 = 345.6 V. Parallel adds capacity: 4 × 5 = 20 Ah. Energy is voltage times capacity: 345.6 × 20 = 6.9 kWh, which is just 384 cells × 18 Wh each.",
-   "proofTitle": "Series and parallel",
-   "proof": [
-    "Series adds voltage:  96 × 3.6 = 345.6 V.",
-    "Parallel adds capacity:  4 × 5 Ah = 20 Ah.",
-    "Energy:  345.6 V × 20 Ah = 6,912 Wh = 6.9 kWh.",
-    "Current is shared by the 4 parallel cells, so a 100 A pack current means 25 A per cell.",
-    "Total cells: 96 × 4 = 384."
-   ],
-   "methods": [
-    {
-     "title": "Count the cells",
-     "steps": [
-      "Energy does not depend on the arrangement, only on how many cells there are.",
-      "One cell:  3.6 V × 5 Ah = 18 Wh.",
-      "384 cells × 18 Wh = 6.9 kWh.",
-      "The arrangement only sets the voltage and current: more series for higher voltage, more parallel for more current."
-     ]
-    }
-   ],
-   "reported": {
-    "kind": "topic",
-    "note": "Candidates on battery and pack teams reported questions on pack design and cell packing. This exact question was not reported.",
-    "sources": [
-     "pack"
-    ]
-   }
-  },
-  {
-   "level": "Design judgment",
-   "q": "On a high-voltage busbar assembly, what is the difference between clearance and creepage?",
-   "options": [
-    "Clearance is the shortest distance through air; creepage is the shortest distance along an insulating surface",
-    "Clearance is between parts that move; creepage is between fixed parts",
-    "They are two names for the same distance",
-    "Clearance is along the surface; creepage is through air"
-   ],
-   "answer": 0,
-   "why": "Clearance guards against an arc jumping straight through the air. Creepage guards against current tracking slowly across a surface, helped by dust and moisture. Creepage is always at least as long as clearance, and a rib or groove in the insulator adds creepage without moving the parts apart.",
-   "proof": [
-    "Clearance: the straight-line air gap between two conductors. Set mainly by the peak voltage and altitude (thinner air arcs more easily).",
-    "Creepage: the path along the surface of the insulation between them. Set by working voltage, pollution degree and the material's tracking resistance (its CTI).",
-    "Adding a rib or slot to the insulator lengthens the surface path, so it raises creepage while keeping the parts compact.",
-    "Both come from standards such as IEC 60664, and an HV design review checks both.",
-    "In packs, condensation and debris shrink the effective creepage over time, so designs keep margin."
-   ],
-   "reported": {
-    "kind": "topic",
-    "note": "A Blind answer on Tesla mechanical design interviews advised reviewing creepage and clearance guidelines for high-voltage teams. This exact question was not reported.",
-    "sources": [
-     "creepage"
-    ]
-   },
-   "sketch": {
-    "h": 160,
-    "alt": "Two busbars on an insulator with a rib: clearance is through the air, creepage is along the surface",
-    "items": [
-     [
-      "r",
-      60,
-      90,
-      340,
-      26,
-      {
-       "f": 1
-      }
-     ],
-     [
-      "t",
-      230,
-      108,
-      "insulator",
-      {
-       "s": 12,
-       "m": 1
-      }
-     ],
-     [
-      "r",
-      90,
-      60,
-      70,
-      30,
-      {
-       "f": 2
-      }
-     ],
-     [
-      "r",
-      300,
-      60,
-      70,
-      30,
-      {
-       "f": 2
-      }
-     ],
-     [
-      "r",
-      222,
-      60,
-      16,
-      30,
-      {
-       "f": 1
-      }
-     ],
-     [
-      "l",
-      160,
-      52,
-      300,
-      52,
-      {
-       "a": 1,
-       "d": 1
-      }
-     ],
-     [
-      "t",
-      230,
-      40,
-      "clearance (through air)",
-      {
-       "s": 12,
-       "a": 1
-      }
-     ],
-     [
-      "p",
-      [
-       [
-        160,
-        88
-       ],
-       [
-        220,
-        88
-       ],
-       [
-        220,
-        58
-       ],
-       [
-        240,
-        58
-       ],
-       [
-        240,
-        88
-       ],
-       [
-        300,
-        88
-       ]
-      ],
-      {
-       "a": 1,
-       "w": 2.5
-      }
-     ],
-     [
-      "t",
-      230,
-      142,
-      "creepage (along the surface, over the rib)",
-      {
-       "s": 12,
-       "a": 1
-      }
-     ]
-    ]
-   }
-  },
-  {
-   "level": "Applied",
    "q": "A robot arm joint must hold a 2 kg payload at 0.5 m out, horizontally. It is driven through a 100:1 gearbox that is 90% efficient. Ignoring the arm's own weight, what torque must the motor supply to hold it?",
    "options": [
     "About 0.11 N·m",
@@ -2378,6 +1854,490 @@ window.QUESTION_SETS.push({
      "robeng"
     ]
    }
+  },
+  {
+   "level": "Applied",
+   "q": "A force-sensing resistor (FSR) sits in a voltage divider with a fixed 10 kΩ resistor across 3.3 V. The output is read across the fixed resistor. When pressed, the FSR drops from 100 kΩ to 10 kΩ. What is the output when pressed?",
+   "options": [
+    "0.30 V",
+    "1.65 V",
+    "3.0 V",
+    "3.3 V"
+   ],
+   "answer": 1,
+   "why": "A divider's output is V·R_fixed/(R_fixed + R_sensor). Pressed, the two resistors are equal, so the output is half the supply: 1.65 V. Unpressed it is 3.3 × 10/110 = 0.30 V.",
+   "proof": [
+    "Same current through both resistors:  I = V/(R_FSR + R_fixed).",
+    "Output across the fixed resistor:  V_out = V·R_fixed/(R_FSR + R_fixed).",
+    "Pressed:  3.3 × 10/(10 + 10) = 1.65 V.",
+    "Unpressed:  3.3 × 10/(100 + 10) = 0.30 V. The reading rises with force, which is what you want.",
+    "Choose R_fixed near the sensor's resistance in the force range you care about: that is where the output changes fastest with force."
+   ],
+   "sketch": {
+    "h": 200,
+    "alt": "Voltage divider with a force-sensing resistor on top and a fixed resistor below",
+    "items": [
+     [
+      "t",
+      230,
+      18,
+      "3.3 V",
+      {
+       "s": 12,
+       "m": 1
+      }
+     ],
+     [
+      "l",
+      230,
+      24,
+      230,
+      34,
+      {}
+     ],
+     [
+      "p",
+      [
+       [
+        230,
+        34
+       ],
+       [
+        230,
+        42
+       ],
+       [
+        223,
+        45.666666666666664
+       ],
+       [
+        237,
+        53
+       ],
+       [
+        223,
+        60.33333333333333
+       ],
+       [
+        237,
+        67.66666666666666
+       ],
+       [
+        223,
+        75
+       ],
+       [
+        237,
+        82.33333333333333
+       ],
+       [
+        230,
+        86
+       ],
+       [
+        230,
+        94
+       ]
+      ]
+     ],
+     [
+      "t",
+      250,
+      68,
+      "FSR",
+      {
+       "s": 13,
+       "an": "start",
+       "a": 1
+      }
+     ],
+     [
+      "l",
+      230,
+      94,
+      230,
+      106,
+      {}
+     ],
+     [
+      "p",
+      [
+       [
+        230,
+        106
+       ],
+       [
+        230,
+        114
+       ],
+       [
+        223,
+        117.66666666666667
+       ],
+       [
+        237,
+        125
+       ],
+       [
+        223,
+        132.33333333333334
+       ],
+       [
+        237,
+        139.66666666666666
+       ],
+       [
+        223,
+        147
+       ],
+       [
+        237,
+        154.33333333333331
+       ],
+       [
+        230,
+        158
+       ],
+       [
+        230,
+        166
+       ]
+      ]
+     ],
+     [
+      "t",
+      250,
+      140,
+      "10 kΩ",
+      {
+       "s": 13,
+       "an": "start"
+      }
+     ],
+     [
+      "l",
+      230,
+      166,
+      230,
+      180,
+      {}
+     ],
+     [
+      "l",
+      210,
+      180,
+      250,
+      180,
+      {
+       "w": 2.5
+      }
+     ],
+     [
+      "t",
+      230,
+      196,
+      "0 V",
+      {
+       "s": 12,
+       "m": 1
+      }
+     ],
+     [
+      "l",
+      230,
+      100,
+      320,
+      100,
+      {}
+     ],
+     [
+      "c",
+      320,
+      100,
+      4,
+      {
+       "f": 2
+      }
+     ],
+     [
+      "t",
+      332,
+      104,
+      "V_out",
+      {
+       "s": 13,
+       "an": "start"
+      }
+     ]
+    ]
+   }
+  },
+  {
+   "level": "Applied",
+   "q": "A fingertip force sensor maps 0 to 10 N onto 0 to 3.3 V, read by a 12-bit ADC. What is the smallest force change one ADC count represents?",
+   "options": [
+    "About 24 mN",
+    "About 0.8 mN",
+    "About 2.4 mN",
+    "About 0.24 mN"
+   ],
+   "answer": 2,
+   "why": "A 12-bit ADC splits its range into 2¹² = 4,096 steps. 10 N/4,096 = 2.4 mN per count.",
+   "proof": [
+    "Counts:  2¹² = 4,096.",
+    "Force per count:  10 N/4,096 = 0.00244 N = 2.4 mN.",
+    "So it can resolve a 0.01 N target, with about four counts to spare.",
+    "Real resolution is usually worse than one count because of noise. Several counts of noise is common, so check the noise floor, not just the bit depth.",
+    "If the signal only uses part of the ADC range, resolution drops in proportion. Amplify the signal to fill the range."
+   ]
+  },
+  {
+   "level": "Applied",
+   "q": "Incipient slip shows up as small vibrations of up to about 400 Hz in a tactile sensor's signal. What sampling rate do you need to capture them?",
+   "options": [
+    "At least 800 Hz, and in practice 2 kHz or more",
+    "400 Hz",
+    "100 Hz is enough because slip is slow",
+    "At least 40 kHz"
+   ],
+   "answer": 0,
+   "why": "The Nyquist rate is twice the highest frequency, 800 Hz. That is the bare minimum; to see the waveform clearly and leave room for an anti-aliasing filter, sample 2.5 to 10 times the highest frequency.",
+   "proof": [
+    "Nyquist: you must sample at more than twice the highest frequency present, so 2 × 400 = 800 Hz.",
+    "Below that, the vibration aliases: it shows up as a false lower frequency, and you cannot tell it apart from real low-frequency changes.",
+    "A real anti-aliasing filter does not cut off sharply, so leave margin: 2 to 4 kHz is typical for slip detection.",
+    "Higher sampling costs bandwidth and processing, which matters on a large array. Some designs run vibration channels fast and pressure channels slowly."
+   ]
+  },
+  {
+   "level": "Applied",
+   "q": "A 16 × 16 tactile array is scanned one taxel at a time, and each reading takes 10 µs including settling. What is the maximum frame rate for the whole array?",
+   "options": [
+    "About 3,900 Hz",
+    "About 39 Hz",
+    "About 100 Hz",
+    "About 390 Hz"
+   ],
+   "answer": 3,
+   "why": "There are 256 taxels, so one frame takes 256 × 10 µs = 2.56 ms. That is 1/0.00256 = 390 frames per second.",
+   "proof": [
+    "Taxels per frame:  16 × 16 = 256.",
+    "Frame time:  256 × 10 µs = 2,560 µs = 2.56 ms.",
+    "Frame rate:  1/2.56 ms = 390 Hz.",
+    "Compare with the previous question: 390 Hz is too slow to catch 400 Hz slip vibration on every taxel.",
+    "Fixes: read a whole row at once with parallel ADCs (16 times faster), or add a separate fast sensor for vibration."
+   ]
+  },
+  {
+   "level": "Fundamental",
+   "q": "A sensor output passes through a simple RC low-pass filter with R = 1 kΩ and C = 100 nF. What is its cutoff frequency?",
+   "options": [
+    "About 16 Hz",
+    "About 1.6 kHz",
+    "About 10 kHz",
+    "About 160 kHz"
+   ],
+   "answer": 1,
+   "why": "For a first-order RC filter, f_c = 1/(2πRC) = 1/(2π × 1,000 × 100 × 10⁻⁹) = 1,590 Hz.",
+   "proof": [
+    "RC = 1,000 × 100 × 10⁻⁹ = 1 × 10⁻⁴ s.",
+    "f_c = 1/(2π × 10⁻⁴) = 1,592 Hz.",
+    "At f_c the signal is down 3 dB (about 71% amplitude). Above it, it falls 20 dB per decade.",
+    "Use it as an anti-aliasing filter: set f_c below half the sample rate. For 4 kHz sampling, this 1.6 kHz filter fits.",
+    "Same RC as the time constant earlier: τ = RC = 0.1 ms."
+   ]
+  },
+  {
+   "level": "Applied",
+   "q": "Why is a piezoelectric tactile sensor normally read through a charge amplifier instead of being connected straight to a voltage input?",
+   "options": [
+    "The charge amplifier makes the sensor measure static force",
+    "It converts the sensor's charge to a voltage that does not depend on cable and input capacitance",
+    "It powers the piezo element",
+    "It removes the need for any filtering"
+   ],
+   "answer": 1,
+   "why": "A piezo element produces charge. Read as a voltage, V = Q/C, so the result depends on the cable's and the input's capacitance, which vary. A charge amplifier forces the charge onto a fixed feedback capacitor, so V_out = −Q/C_f regardless of the cable.",
+   "proof": [
+    "Piezo output: a charge Q proportional to the change in force.",
+    "Voltage across a capacitive load:  V = Q/(C_sensor + C_cable + C_input). Move the cable or swap the ADC and the gain changes.",
+    "A charge amplifier is an op-amp with a capacitor C_f in feedback. Its input is held at virtual ground, so all the charge flows onto C_f.",
+    "Output:  V_out = −Q/C_f, set by one stable capacitor you choose.",
+    "A resistor across C_f bleeds the charge away slowly. It sets the lowest frequency the sensor can pass, which is why a piezo still cannot measure a steady force."
+   ]
+  },
+  {
+   "level": "Design judgment",
+   "q": "A flex circuit runs through a robot finger's knuckle and bends every time the finger closes. The copper traces crack after a few thousand cycles. Which change helps most?",
+   "options": [
+    "Use thicker copper so the traces are stronger",
+    "Add a stiffener over the bend",
+    "Put the copper on the neutral axis of the flex stack and increase the bend radius",
+    "Bend it more tightly so the movement is smaller"
+   ],
+   "answer": 2,
+   "why": "Bending strain at a layer is its distance from the neutral axis divided by the bend radius. Copper sitting on the neutral axis sees almost no strain, and a larger radius lowers strain everywhere. Both raise fatigue life sharply.",
+   "proof": [
+    "Strain in a bent layer:  ε = y/R, where y is the distance from the neutral axis and R the bend radius.",
+    "A 0.1 mm flex with copper at its outer surface, bent to R = 2 mm:  ε = 0.05/2 = 2.5%. That is far beyond copper's fatigue limit, so it cracks quickly.",
+    "Make the stack symmetric (equal coverlay above and below the copper) so the copper sits on the neutral axis: y ≈ 0, so ε ≈ 0.",
+    "Larger bend radius, single copper layer at the bend, rolled-annealed copper rather than electrodeposited, and no vias or stiffeners in the bending zone.",
+    "Thicker copper moves material away from the neutral axis, which raises strain. A stiffener moves the bend to its edge and concentrates it."
+   ],
+   "sketch": {
+    "h": 170,
+    "alt": "Flex circuit bent around a knuckle with the copper on the neutral axis",
+    "items": [
+     [
+      "p",
+      [
+       [
+        60,
+        120
+       ],
+       [
+        190,
+        120
+       ]
+      ],
+      {
+       "w": 7,
+       "m": 1
+      }
+     ],
+     [
+      "p",
+      [
+       [
+        190,
+        120
+       ],
+       [
+        230,
+        108
+       ],
+       [
+        255,
+        80
+       ],
+       [
+        262,
+        40
+       ]
+      ],
+      {
+       "w": 7,
+       "m": 1
+      }
+     ],
+     [
+      "p",
+      [
+       [
+        60,
+        120
+       ],
+       [
+        190,
+        120
+       ],
+       [
+        230,
+        108
+       ],
+       [
+        255,
+        80
+       ],
+       [
+        262,
+        40
+       ]
+      ],
+      {
+       "a": 1,
+       "w": 2
+      }
+     ],
+     [
+      "c",
+      225,
+      70,
+      26,
+      {
+       "d": 1
+      }
+     ],
+     [
+      "t",
+      225,
+      75,
+      "R",
+      {
+       "s": 13
+      }
+     ],
+     [
+      "t",
+      110,
+      150,
+      "copper in the middle of the stack (neutral axis)",
+      {
+       "s": 12,
+       "a": 1
+      }
+     ],
+     [
+      "t",
+      320,
+      60,
+      "coverlay above and below",
+      {
+       "s": 12,
+       "an": "start",
+       "m": 1
+      }
+     ]
+    ]
+   }
+  },
+  {
+   "level": "Applied",
+   "q": "A capacitive taxel's reading changes when a finger hovers a few millimetres above it without touching. What causes this, and what is the usual fix?",
+   "options": [
+    "The dielectric is creeping; replace it",
+    "The ADC is too slow; sample faster",
+    "Moisture in the air; seal the sensor",
+    "Fringing electric field reaching outside the sensor; add a grounded or driven shield layer above the electrodes"
+   ],
+   "answer": 3,
+   "why": "The electric field between a capacitive sensor's plates also bulges out past their edges. A nearby hand or object changes that fringing field and so the measured capacitance. A conductive shield layer on the outside contains the field, so only compression of the sensor changes the reading.",
+   "proof": [
+    "Capacitance depends on the whole electric field, not just the part between the plates.",
+    "The fringing field extends roughly as far as the electrode spacing, sometimes further. A conductive or high-permittivity object in it adds stray capacitance.",
+    "Fix 1: a grounded shield layer on the outer surface, so the outside world sees only the shield.",
+    "Fix 2: a driven shield held at the same voltage as the electrode, so no field forms between them and the shield adds no capacitance of its own.",
+    "The same effect causes crosstalk between neighbouring taxels, so guard traces between them help too."
+   ]
+  },
+  {
+   "level": "Applied",
+   "q": "A piezoresistive fingertip sensor's zero reading drifts as the hand warms up during use. Which wiring change best cancels the drift?",
+   "options": [
+    "Add an identical unloaded element in the other arm of a half bridge",
+    "Raise the excitation voltage",
+    "Use a larger fixed resistor in the divider",
+    "Sample more often and average"
+   ],
+   "answer": 0,
+   "why": "Temperature changes the resistance of the loaded and unloaded elements by the same amount. In a half bridge they sit in opposite arms, so their common change cancels and only the change from force appears at the output.",
+   "proof": [
+    "The sensor's resistance changes with temperature as well as with force: ΔR = ΔR_force + ΔR_temp.",
+    "Add a matching dummy element at the same temperature but carrying no load.",
+    "In a half bridge, V_out depends on the difference between the two elements, so ΔR_temp cancels.",
+    "Keep the dummy element as close and as thermally coupled as possible, or the two will not stay at the same temperature.",
+    "Averaging does not help: drift is slow, so it survives any amount of averaging. A raised excitation voltage raises the drift with the signal and self-heats the sensor."
+   ]
   }
  ]
 });
