@@ -203,5 +203,65 @@ window.SOURCES = {
   "srpanel": {
     "title": "Glassdoor: Tesla Sr. Mechanical Engineer interviews",
     "url": "https://www.glassdoor.com/Interview/Tesla-Interview-Questions-E43129.htm?filter.jobTitleExact=Sr.+Mechanical+Engineer"
+  },
+  "hill": {
+    "title": "Glassdoor: Tesla Mechanical Engineer interview question (two vehicles on a hill)",
+    "url": "https://www.glassdoor.com/Interview/If-two-vehicles-are-identical-except-for-one-weighing-twice-as-much-as-the-other-vehicle-and-they-roll-down-a-hill-which-QTN_201221.htm"
+  },
+  "anchor": {
+    "title": "Glassdoor: Tesla Mechanical Engineer interview question (anchor thrown from a row boat)",
+    "url": "https://www.glassdoor.com/Interview/You-re-in-a-row-boat-which-is-in-a-large-tank-filled-with-water-You-have-an-anchor-on-board-which-you-throw-overboard-D-QTN_226227.htm"
+  },
+  "fridge": {
+    "title": "Glassdoor: Tesla mechanical engineer interview questions, Palo Alto listing",
+    "url": "https://www.glassdoor.com/Interview/palo-alto-mechanical-engineer-tesla-inc-interview-questions-SRCH_IL.0,9_KO10,29_KE30,39.htm"
+  },
+  "pianos": {
+    "title": "Glassdoor candidate report: Mechanical Engineering",
+    "url": "https://www.glassdoor.com/Interview/Tesla-Interview-E43129-RVW8940459.htm"
+  },
+  "pingpong": {
+    "title": "Glassdoor candidate report: Mechanical Engineering Intern",
+    "url": "https://www.glassdoor.com/Interview/Tesla-Interview-E43129-RVW92950067.htm"
+  },
+  "selfweight": {
+    "title": "Blind: Tesla Mechanical Test Engineering interview",
+    "url": "https://www.teamblind.com/post/tesla-mechanical-test-engineering-imterview-qqz8zvoc"
+  },
+  "permass": {
+    "title": "Glassdoor candidate report: Mechanical Design Engineer",
+    "url": "https://www.glassdoor.ca/Interview/Tesla-Interview-E43129-RVW69611511.htm"
+  },
+  "natfreq1": {
+    "title": "Glassdoor candidate report: Vehicle Dynamics Engineer",
+    "url": "https://www.glassdoor.ie/Interview/Tesla-Interview-E43129-RVW89160112.htm"
+  },
+  "natfreq2": {
+    "title": "Taro: Tesla Mechanical Engineer Intern interview",
+    "url": "https://www.jointaro.com/interviews/companies/tesla/experiences/mechanical-engineer-intern-united-states-november-1-2023-no-offer-positive-28b22624"
+  },
+  "plasticspring": {
+    "title": "Glassdoor: Tesla Mechanical Design Engineer interview question (plastic spring)",
+    "url": "https://www.glassdoor.com/Interview/Why-consider-Tesla-please-be-brief-Have-you-previously-interviewed-with-Tesla-for-any-other-roles-if-so-when-and-for-QTN_4924381.htm"
+  },
+  "wood": {
+    "title": "Glassdoor candidate report: Mechanical Engineer Intern",
+    "url": "https://www.glassdoor.com/Interview/Tesla-Interview-E43129-RVW81107009.htm"
+  },
+  "shoulder": {
+    "title": "Glassdoor: Tesla Intern interview question (shoulder degrees of freedom)",
+    "url": "https://www.glassdoor.com/Interview/How-many-degrees-of-freedom-does-your-shoulder-have-What-is-work-what-is-energy-what-is-power-QTN_1780300.htm"
+  },
+  "holes": {
+    "title": "Glassdoor: Tesla Mechanical Design Engineer interviews",
+    "url": "https://www.glassdoor.com.au/Interview/Tesla-Mechanical-Design-Engineer-Interview-Questions-EI_IE43129.0,5_KO6,32.htm"
+  },
+  "natfreq3": {
+    "title": "Glassdoor: Tesla Mechanical Design Internship interviews",
+    "url": "https://www.glassdoor.ca/Interview/Tesla-Mechanical-Design-Internship-Interview-Questions-EI_IE43129.0,5_KO6,34.htm"
+  },
+  "sw": {
+    "title": "Glassdoor: Tesla Mechanical Engineer Intern interview question (strength-to-weight)",
+    "url": "https://www.glassdoor.com/Interview/Asked-how-the-strength-to-weight-ratio-of-aluminum-and-steel-compared-QTN_1134254.htm"
   }
 };

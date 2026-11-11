@@ -1641,6 +1641,134 @@ window.QUESTION_SETS.push({
           ]
         ]
       }
+    },
+    {
+      "level": "Brain teaser",
+      "q": "Estimate: about how many pianos are there in a town of 100,000 people?",
+      "options": [
+        "About 20",
+        "About 200",
+        "About 2,000",
+        "About 200,000"
+      ],
+      "answer": 2,
+      "why": "About 40,000 households, a few percent of which own a piano, plus schools, churches and venues. That lands near 2,000. The interviewer is grading the chain of assumptions, not the number.",
+      "proofTitle": "Count the owners",
+      "proof": [
+        "People per household: about 2.5, so 100,000/2.5 = 40,000 households.",
+        "Share of households with a piano: roughly 1 in 25. That gives 1,600.",
+        "Institutions: about 50 schools, 50 churches and a few dozen venues and studios with one to several each. Add 300 to 400.",
+        "Total about 2,000. State each assumption aloud and say which one you trust least (the ownership share).",
+        "Sanity bounds: one per person is absurd (100,000), one per thousand people is too few (100). The answer sits between."
+      ],
+      "methods": [
+        {
+          "title": "Cross-check with piano tuners",
+          "steps": [
+            "A tuner does about 4 pianos a day, 250 days a year: 1,000 tunings a year.",
+            "If pianos are tuned about once every two years on average, one tuner supports 2,000 pianos.",
+            "A town of 100,000 having one or two full-time tuners feels right, which matches 2,000 to 4,000 pianos."
+          ]
+        }
+      ],
+      "reported": {
+        "kind": "question",
+        "note": "A Mechanical Engineering candidate reported being asked how to determine how many pianos are in a given town.",
+        "sources": [
+          "pianos"
+        ]
+      }
+    },
+    {
+      "level": "Brain teaser",
+      "q": "Estimate: about how many ping-pong balls (40 mm diameter) fit inside an empty-seated school bus?",
+      "options": [
+        "About 5,000",
+        "About 50,000",
+        "About 5 million",
+        "About 500,000"
+      ],
+      "answer": 3,
+      "why": "A bus holds roughly 40 to 45 m³ of air after the seats. Randomly packed 40 mm balls take about 52 cm³ each, which gives several hundred thousand.",
+      "proofTitle": "Volume and packing",
+      "proof": [
+        "Bus interior: about 10 m × 2.4 m × 1.9 m = 46 m³. Take off 10 to 15% for seats and the driver's area: about 40 m³.",
+        "One ball:  (4/3)·π·(2 cm)³ = 33.5 cm³.",
+        "Spheres poured in at random fill about 64% of the space, so each ball uses 33.5/0.64 = 52 cm³.",
+        "40 m³ = 40,000,000 cm³.   40,000,000/52 = 770,000.",
+        "Round honestly: 500,000 to 1,000,000. Perfect stacking (74%) would add 15%, but nobody stacks half a million balls."
+      ],
+      "methods": [
+        {
+          "title": "The reported twist: you have $15",
+          "steps": [
+            "The reported version adds a budget. The point is to measure instead of guessing the packing fraction.",
+            "Buy a pack of balls and find a box, about $15. Pour the balls in, count them and measure the box. That gives balls per litre directly, with the real random packing.",
+            "Measure the bus with a tape or look up its interior dimensions, subtract the seats, and scale up.",
+            "Say what the error is: the box's walls disturb the packing, so a small box slightly under-counts."
+          ]
+        }
+      ],
+      "reported": {
+        "kind": "question",
+        "note": "A Mechanical Engineering Intern candidate reported: you have $15 to determine how many ping-pong balls fit into a school bus. How would you go about it?",
+        "sources": [
+          "pingpong"
+        ]
+      }
+    },
+    {
+      "level": "Brain teaser",
+      "q": "Treating it as a single ball-and-socket joint, how many degrees of freedom does your shoulder have?",
+      "options": [
+        "2",
+        "3",
+        "4",
+        "6"
+      ],
+      "answer": 1,
+      "why": "A ball-and-socket joint blocks all three translations and leaves all three rotations free: raise the arm forward, raise it sideways, and twist it about its own axis.",
+      "proof": [
+        "A free rigid body has 6 degrees of freedom: 3 translations and 3 rotations.",
+        "A ball in a socket cannot translate, so 3 are removed.",
+        "The 3 left are rotations: flexion and extension, abduction and adduction, and internal and external rotation.",
+        "A good answer adds the caveat: the real shoulder also lets the socket move, because the shoulder blade slides and tilts on the ribcage. Counting the whole shoulder complex gives more than 3.",
+        "Compare: the elbow is a hinge with 1 (plus forearm twist), and a computer mouse sliding on a desk has 3 (x, y and yaw)."
+      ],
+      "reported": {
+        "kind": "question",
+        "note": "A Tesla intern candidate reported being asked how many degrees of freedom the shoulder has. A computer mouse version was also reported.",
+        "sources": [
+          "shoulder",
+          "dof"
+        ]
+      }
+    },
+    {
+      "level": "Brain teaser",
+      "q": "An interviewer asks you to name ten ways to make a hole in a part. Which of these would NOT belong on your list?",
+      "options": [
+        "Knurling",
+        "Sinker EDM",
+        "Piercing in a stamping die",
+        "A core pin in an injection mould"
+      ],
+      "answer": 0,
+      "why": "Knurling rolls a grip pattern onto a surface and removes no material. The other three all produce holes.",
+      "proof": [
+        "Cutting: drilling, reaming, boring, milling with helical interpolation, broaching.",
+        "Shearing: punching or piercing in a die.",
+        "Thermal and erosive: laser cutting, plasma, waterjet, sinker and wire EDM, chemical etching.",
+        "Formed in: a core pin in a casting or injection mould, a hole printed in an additive part, flow drilling that displaces material into a bushing.",
+        "That is well over ten. A strong answer groups them like this and says when each is used: drilling for general holes, reaming for tight tolerance, punching for sheet at volume, EDM for hard materials or odd shapes, moulded-in for plastics."
+      ],
+      "reported": {
+        "kind": "question",
+        "note": "A Mechanical Design Engineer candidate reported the rapid-fire prompts: mention 10 manufacturing processes, and mention 10 ways to make a hole.",
+        "sources": [
+          "holes"
+        ]
+      }
     }
   ]
 });

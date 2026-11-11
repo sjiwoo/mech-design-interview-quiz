@@ -1141,9 +1141,12 @@ window.QUESTION_SETS.push({
         "To move the mode, change geometry: thicker, shorter, add a rib or a support. The aluminium part is lighter, so you could afford to make it thicker, and that would raise the frequency."
       ],
       "reported": {
-        "kind": "topic",
-        "note": "A candidate reported questions on vibration testing. This exact question was not reported.",
+        "kind": "question",
+        "note": "Three candidates reported being asked how the natural frequency of a steel piece compares with an identical aluminium one. This is that question in a design setting.",
         "sources": [
+          "natfreq1",
+          "natfreq2",
+          "natfreq3",
           "vibtest"
         ]
       }
