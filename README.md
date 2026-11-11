@@ -24,6 +24,12 @@ cross-sections, or `sketch` for the general drawing primitives documented in `js
 
 Pick a section from the menu at the top. Each section has its own link, e.g. `#moment-of-inertia`.
 
+## Calculator
+
+A floating calculator (`js/calc.js`) sits on every page. Drag it by its header, collapse it to the round button,
+and it keeps its expression, last results, angle mode and position between visits. It supports trig in degrees or
+radians, logs, roots, powers, π, e, `ans` and ×10ˣ entry, and evaluates with its own parser rather than `eval`.
+
 ## Brand
 
 The name comes from the line through a bent beam that carries no stress. The logo is an I-beam section with a

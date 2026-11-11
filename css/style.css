@@ -488,3 +488,58 @@ body.pad-active, body.pad-active * {
 .fc-error { margin: 0; color: var(--bad); font-weight: 600; font-size: 0.95rem; }
 .fc-error:empty { display: none; }
 @media (max-width: 420px) { .fc-form-row { grid-template-columns: 1fr; } }
+
+/* Floating calculator */
+.calc-bubble {
+  position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); z-index: 60;
+  width: 56px; height: 56px; border-radius: 50%; border: 0; cursor: pointer;
+  background: var(--accent); color: var(--accent-ink); box-shadow: var(--shadow);
+  display: grid; place-items: center;
+}
+.calc-bubble svg { width: 28px; height: 28px; }
+.calc-bubble:focus-visible, .calc-key:focus-visible, .calc-hide:focus-visible, .calc-mode:focus-visible, .calc-hrow:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.calc-bubble[hidden], .calc[hidden] { display: none; }
+.calc {
+  position: fixed; z-index: 60; width: 300px; max-width: calc(100vw - 16px);
+  background: var(--surface); border: 1px solid var(--line); border-radius: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08), 0 16px 40px rgba(0, 0, 0, 0.16);
+  padding: 8px 10px 10px; touch-action: none; user-select: none; -webkit-user-select: none;
+}
+.calc:focus { outline: none; }
+.calc-dragging { opacity: 0.92; }
+.calc-head { display: flex; align-items: center; gap: 8px; padding: 2px 2px 8px; cursor: grab; }
+.calc-dragging .calc-head { cursor: grabbing; }
+.calc-title { flex: 1; font-family: var(--display); font-weight: 700; font-size: 1rem; color: var(--muted); }
+.calc-title::before { content: ""; display: inline-block; width: 22px; height: 4px; border-radius: 2px; background: var(--line); vertical-align: middle; margin-right: 8px; }
+.calc-mode, .calc-hide {
+  appearance: none; border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+  font: inherit; font-family: var(--display); font-weight: 600; font-size: 0.85rem; border-radius: 999px; cursor: pointer;
+  min-width: 36px; height: 32px; padding: 0 10px; display: inline-grid; place-items: center;
+}
+.calc-hide { padding: 0; width: 36px; }
+.calc-hide svg { width: 18px; height: 18px; }
+.calc-screen { background: var(--bg); border-radius: 14px; padding: 10px 12px; text-align: right; margin-bottom: 6px; }
+.calc-expr { font-size: 1.35rem; font-variant-numeric: tabular-nums; white-space: nowrap; overflow-x: auto; scrollbar-width: none; min-height: 1.6em; }
+.calc-expr.calc-empty { color: var(--muted); }
+.calc-res { font-size: 0.95rem; color: var(--muted); min-height: 1.4em; font-variant-numeric: tabular-nums; }
+.calc-res.calc-err { color: var(--bad); font-weight: 600; }
+.calc-hist { display: grid; gap: 2px; margin-bottom: 6px; }
+.calc-hist:empty { display: none; }
+.calc-hrow { appearance: none; border: 0; background: transparent; color: var(--muted); font: inherit; font-size: 0.82rem; cursor: pointer;
+  display: flex; justify-content: space-between; gap: 10px; padding: 3px 8px; border-radius: 8px; text-align: left; }
+.calc-hrow:hover { background: var(--accent-soft); }
+.calc-he { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.calc-hr { color: var(--ink); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.calc-keys { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; }
+.calc-key {
+  appearance: none; border: 0; border-radius: 12px; height: 40px; cursor: pointer;
+  font: inherit; font-size: 0.88rem; font-weight: 500; color: var(--ink); background: var(--bg);
+}
+.calc-key:active { filter: brightness(0.92); }
+.calc-num { background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); font-size: 1.05rem; }
+.calc-op { background: var(--accent-soft); color: var(--accent); font-size: 1.15rem; font-weight: 600; }
+.calc-fn { color: var(--accent); font-weight: 600; }
+.calc-eq { background: var(--accent); color: var(--accent-ink); font-size: 1.2rem; font-weight: 600; }
+@media (prefers-reduced-motion: no-preference) { .calc-key { transition: filter 0.1s; } }
+@media print { .calc, .calc-bubble { display: none !important; } }
+main { padding-bottom: 96px; }
