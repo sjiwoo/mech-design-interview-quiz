@@ -8,7 +8,7 @@
   var st = load();
 
   function load() {
-    var d = { open: false, expr: "", ans: 0, hist: [], deg: true, x: null, y: null };
+    var d = { open: false, expr: "", ans: 0, hist: [], deg: true, x: null, y: null, bx: null, by: null };
     try {
       var s = JSON.parse(localStorage.getItem(KEY));
       if (s && typeof s === "object") Object.keys(d).forEach(function (k) { if (s[k] !== undefined) d[k] = s[k]; });
@@ -266,7 +266,33 @@
 
   mode.addEventListener("click", function () { st.deg = !st.deg; draw(); save(); });
   hide.addEventListener("click", function () { setOpen(false); });
-  bubble.addEventListener("click", function () { setOpen(true); });
+  // the round button can be dragged out of the way; a tap (little movement) opens the calculator
+  var bdrag = null, moved = false;
+  function placeBubble() {
+    if (st.bx === null) { bubble.style.left = ""; bubble.style.top = ""; return; }
+    var m = 8, sz = bubble.offsetWidth || 56;
+    st.bx = Math.min(Math.max(m, st.bx), window.innerWidth - sz - m);
+    st.by = Math.min(Math.max(m, st.by), window.innerHeight - sz - m);
+    bubble.style.left = st.bx + "px"; bubble.style.top = st.by + "px";
+    bubble.style.right = "auto"; bubble.style.bottom = "auto";
+  }
+  bubble.addEventListener("pointerdown", function (ev) {
+    var r = bubble.getBoundingClientRect();
+    bdrag = { id: ev.pointerId, dx: ev.clientX - r.left, dy: ev.clientY - r.top, x0: ev.clientX, y0: ev.clientY };
+    moved = false;
+    bubble.setPointerCapture(ev.pointerId);
+  });
+  bubble.addEventListener("pointermove", function (ev) {
+    if (!bdrag || ev.pointerId !== bdrag.id) return;
+    if (!moved && Math.hypot(ev.clientX - bdrag.x0, ev.clientY - bdrag.y0) < 8) return;
+    moved = true;
+    st.bx = ev.clientX - bdrag.dx; st.by = ev.clientY - bdrag.dy; placeBubble();
+  });
+  function endBubble(ev) { if (bdrag && ev.pointerId === bdrag.id) { bdrag = null; if (moved) save(); } }
+  bubble.addEventListener("pointerup", endBubble);
+  bubble.addEventListener("pointercancel", endBubble);
+  bubble.addEventListener("click", function (ev) { if (moved) { ev.preventDefault(); moved = false; return; } setOpen(true); });
+  bubble.addEventListener("touchmove", function (ev) { if (bdrag) ev.preventDefault(); }, { passive: false });
 
   // typing works while the calculator has focus
   panel.addEventListener("keydown", function (ev) {
@@ -280,13 +306,14 @@
     }
   });
 
-  window.addEventListener("resize", function () { if (st.open) { var p = place(); st.x = p.x; st.y = p.y; } });
+  window.addEventListener("resize", function () { if (st.open) { var p = place(); st.x = p.x; st.y = p.y; } placeBubble(); });
 
   document.body.appendChild(panel);
   document.body.appendChild(bubble);
   draw();
   panel.hidden = !st.open;
   bubble.hidden = st.open;
+  placeBubble();
   if (st.open) place();
 
   window.CALC_DEBUG = { evaluate: evaluate, fmt: fmt, state: function () { return st; } };

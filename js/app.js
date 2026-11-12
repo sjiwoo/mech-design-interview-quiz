@@ -38,6 +38,7 @@
       var prev = loadBest(id);
       if (!prev || score > prev.score) {
         localStorage.setItem("best:" + id, JSON.stringify({ score: score, total: total }));
+        synced("best:" + id);
       }
     } catch (e) { /* storage unavailable: skip */ }
   }
@@ -51,11 +52,12 @@
   function readJSON(key) {
     try { var v = localStorage.getItem(key); return v ? JSON.parse(v) : null; } catch (e) { return null; }
   }
+  function synced(key) { if (window.NA_SYNC) window.NA_SYNC.touch(key); }
   function writeJSON(key, value) {
-    try { localStorage.setItem(key, JSON.stringify(value)); return true; } catch (e) { return false; }
+    try { localStorage.setItem(key, JSON.stringify(value)); synced(key); return true; } catch (e) { return false; }
   }
   function removeKey(key) {
-    try { localStorage.removeItem(key); } catch (e) { /* ignore */ }
+    try { localStorage.removeItem(key); synced(key); } catch (e) { /* ignore */ }
   }
   function progressKey(set) { return "progress:" + set.id; }
   function padKey(set, qi) { return "pad:" + set.id + ":" + qi; }
@@ -1104,6 +1106,10 @@
 
   var CARDS = (window.FLASHCARDS || []).map(function (c, i) { return { id: i, section: c[0], kind: c[1], front: c[2], back: c[3] }; });
   var fcState = { section: "", kind: "", onlyUnknown: false, index: 0, flipped: false, order: null, edit: false };
+  (function () { // restore the last filters used on this device
+    var v = readJSON("ui:flashcards");
+    if (v && typeof v === "object") ["section", "kind", "onlyUnknown"].forEach(function (k) { if (v[k] !== undefined) fcState[k] = v[k]; });
+  })();
   function removedSet() { return readJSON("flashcards:removed") || {}; }
   function starredSet() { return readJSON("flashcards:starred") || {}; }
   var STARRED = "__starred";
@@ -1154,7 +1160,11 @@
     });
     if (fcState.index >= deck.length) fcState.index = Math.max(0, deck.length - 1);
     var card = deck[fcState.index];
-    function go(patch) { Object.keys(patch).forEach(function (k) { fcState[k] = patch[k]; }); showFlashcards(); }
+    function go(patch) {
+      Object.keys(patch).forEach(function (k) { fcState[k] = patch[k]; });
+      writeJSON("ui:flashcards", { section: fcState.section, kind: fcState.kind, onlyUnknown: fcState.onlyUnknown });
+      showFlashcards();
+    }
     function titleOf(id) { var st = sets.filter(function (x) { return x.id === id; })[0]; return st ? st.title : id; }
 
     var starCount = ALL.filter(function (c) { return starred[cardKey(c)]; }).length;
@@ -1298,9 +1308,93 @@
   function setHash(id) {
     try { history.replaceState(null, "", id ? "#" + id : location.pathname + location.search); } catch (e) { location.hash = id; }
   }
+  /* ---------- sync page ---------- */
+
+  function ago(ms) {
+    if (!ms) return "never";
+    var s = Math.round((Date.now() - ms) / 1000);
+    if (s < 60) return "just now";
+    if (s < 3600) return Math.round(s / 60) + " min ago";
+    if (s < 86400) return Math.round(s / 3600) + " h ago";
+    return new Date(ms).toLocaleDateString();
+  }
+
+  function showSync(note) {
+    state = null;
+    syncSelector(null);
+    var S = window.NA_SYNC;
+    var nodes = [el("h1", { text: "Sync across devices" })];
+    if (!S) { render(nodes.concat([el("p", { text: "Sync is not available in this browser." })])); return; }
+    var st = S.status();
+    if (S.connected()) {
+      var line = st.state === "error" ? st.msg : st.state === "syncing" ? "Syncing…" : st.state === "pending" ? "Changes waiting to sync…" : "Up to date. Last synced " + ago(S.lastSync()) + ".";
+      nodes.push(el("section", { class: "card" }, [
+        el("p", { class: st.state === "error" ? "sync-line sync-bad" : "sync-line", text: line }),
+        el("p", { class: "muted", text: "Connected" + (S.user() ? " as " + S.user() : "") + ". Your stars, known, hidden and added flashcards, quiz progress and best scores are saved to a private file on your GitHub account, and every connected device picks up changes automatically. Scratchpads stay on each device." }),
+        note ? el("p", { class: "sync-line", text: note }) : null,
+        el("div", { class: "btn-row" }, [
+          el("button", { class: "btn btn-primary", type: "button", text: "Sync now", onclick: function () { S.syncNow().then(function () { showSync(); }); showSync(); } }),
+          el("a", { class: "btn", href: S.gistUrl(), target: "_blank", rel: "noopener", text: "Open the file on GitHub" }),
+          (function () {
+            var armed = false, b = el("button", { class: "btn", type: "button", text: "Disconnect this device" });
+            b.addEventListener("click", function () {
+              if (!armed) { armed = true; b.textContent = "Tap again to disconnect"; return; }
+              S.disconnect(); showSync("This device is disconnected. Its progress stays here, and the file on GitHub is unchanged.");
+            });
+            return b;
+          })()
+        ])
+      ]));
+    } else {
+      var input = el("input", { id: "sync-token", type: "password", autocomplete: "off", spellcheck: "false", placeholder: "github_pat_…" });
+      var err = el("p", { class: "fc-error", role: "alert", text: st.state === "error" ? st.msg : "" });
+      input.addEventListener("input", function () { err.textContent = ""; });
+      var go = el("button", { class: "btn btn-primary", type: "submit", text: "Connect" });
+      var form = el("form", { class: "fc-form", onsubmit: function (ev) {
+        ev.preventDefault();
+        if (!input.value.trim()) { err.textContent = "Paste your GitHub token first."; input.focus(); return; }
+        go.disabled = true; go.textContent = "Connecting…";
+        S.connect(input.value).then(function () { showSync("Connected. This device is now syncing."); }, function (e) {
+          go.disabled = false; go.textContent = "Connect"; err.textContent = e.message;
+        });
+      } }, [
+        el("label", {}, [el("span", { text: "GitHub token" }), input]),
+        err,
+        go
+      ]);
+      var steps = el("ol", { class: "sync-steps" }, [
+        el("li", {}, [el("span", { text: "On GitHub, open " }), el("a", { href: "https://github.com/settings/personal-access-tokens/new", target: "_blank", rel: "noopener", text: "Settings → Developer settings → Fine-grained tokens → Generate new token" }), el("span", { text: "." })]),
+        el("li", { text: "Name it \"Neutral Axis sync\" and pick an expiry. Under Repository access choose Public repositories." }),
+        el("li", { text: "Under Permissions → Account permissions, set Gists to Read and write. Leave everything else as no access." }),
+        el("li", { text: "Generate the token, copy it, and paste it below. Use the same token on each device you want to sync." })
+      ]);
+      nodes.push(el("section", { class: "card" }, [
+        el("p", { text: "Save your stars, flashcards and quiz progress to a private file on your GitHub account, so every device you connect stays in step." }),
+        steps,
+        form,
+        el("p", { class: "muted sync-small", text: "The token only allows access to your gists, and it is stored on this device only. The first device you connect creates the private file; the others join it. Scratchpads are not synced." })
+      ]));
+    }
+    render(nodes);
+  }
+
+  if (window.NA_SYNC) {
+    window.NA_SYNC.onStatus(function (st) {
+      var dot = document.getElementById("sync-dot");
+      if (dot) dot.className = "sync-dot sync-" + (window.NA_SYNC.connected() ? st.state : "off");
+      if ((location.hash || "") === "#sync" && !document.getElementById("sync-token")) showSync();
+    });
+    window.addEventListener("na-sync-applied", function () {
+      // newer progress arrived from another device; redraw unless a quiz is open
+      fcState.index = 0;
+      if (!state) route();
+    });
+  }
+
   function route() {
     var id = (location.hash || "").slice(1);
     if (id === "flashcards") { showFlashcards(); return; }
+    if (id === "sync") { showSync(); return; }
     showHome(sets.some(function (x) { return x.id === id; }) ? id : null);
   }
 
@@ -1315,6 +1409,11 @@
   });
 
   window.addEventListener("hashchange", route);
+  (function () {
+    var link = document.getElementById("sync-link"), dot = document.getElementById("sync-dot");
+    if (dot && window.NA_SYNC) dot.className = "sync-dot sync-" + (window.NA_SYNC.connected() ? window.NA_SYNC.status().state : "off");
+    if (link) link.addEventListener("click", function (e) { e.preventDefault(); setHash("sync"); showSync(); });
+  })();
 
   window.QUIZ_DEBUG = { drawSketch: drawSketch };
 

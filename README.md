@@ -26,6 +26,15 @@ put the labelled answer in `sketchAfter`, which appears with the explanation onc
 
 Pick a section from the menu at the top. Each section has its own link, e.g. `#moment-of-inertia`.
 
+## Sync across devices
+
+Progress is saved in each browser's localStorage. The Sync page (`#sync`, `js/sync.js`) can also mirror it to a private
+GitHub Gist (`neutral-axis-progress.json`) on the user's account. Each device is connected once with a fine-grained
+token that has only Gists read and write permission; the token stays on that device. Every synced key carries a
+timestamp and the newer copy wins, so changes made on any connected device reach the others on their next sync
+(on load, when the tab comes back into view, and a few seconds after each change). Synced: quiz progress, best scores,
+and flashcard stars, known, hidden and added cards. Not synced: scratchpads and the calculator.
+
 ## Calculator
 
 A floating calculator (`js/calc.js`) sits on every page. Drag it by its header, collapse it to the round button,
