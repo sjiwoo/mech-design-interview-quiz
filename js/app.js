@@ -97,6 +97,64 @@
     window.scrollTo(0, 0);
   }
 
+  /* ---------- swipe and slide ----------
+   * swipe(node, { canNext, canPrev, next, prev }): drag sideways to move between
+   * items. The node follows the finger, flies off past a threshold, and the new
+   * item slides in from the other side (enterSlide). Vertical scrolling is kept. */
+  var slideDir = null;
+  var REDUCED = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function enterSlide(node) {
+    if (!node || !slideDir || REDUCED) { slideDir = null; return; }
+    node.classList.add(slideDir === "next" ? "slide-in-next" : "slide-in-prev");
+    slideDir = null;
+  }
+  function swipe(node, o) {
+    var s = null;
+    node.classList.add("swipeable");
+    // dragging selected text or an image would cancel the swipe, so block native drag here
+    node.addEventListener("dragstart", function (ev) { ev.preventDefault(); });
+    node.addEventListener("pointerdown", function (ev) {
+      if (ev.button > 0 || (ev.target.closest && ev.target.closest("input, textarea, select, a, .method-tabs, .report-details"))) return;
+      s = { id: ev.pointerId, x0: ev.clientX, y0: ev.clientY, dx: 0, horiz: null, t: Date.now() };
+    });
+    node.addEventListener("pointermove", function (ev) {
+      if (!s || ev.pointerId !== s.id) return;
+      var dx = ev.clientX - s.x0, dy = ev.clientY - s.y0;
+      if (s.horiz === null) {
+        if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return;
+        s.horiz = Math.abs(dx) > Math.abs(dy) * 1.2;
+        if (!s.horiz) { s = null; return; }
+        try { node.setPointerCapture(ev.pointerId); } catch (e) { /* ignore */ }
+        node.classList.add("swiping");
+      }
+      if ((dx < 0 && !o.canNext()) || (dx > 0 && !o.canPrev())) dx /= 4; // resist at the ends
+      s.dx = dx;
+      node.style.transform = "translateX(" + dx + "px) rotate(" + (dx / 45) + "deg)";
+      ev.preventDefault();
+    });
+    function end(ev) {
+      if (!s || ev.pointerId !== s.id) return;
+      var dx = s.dx, v = dx / Math.max(1, Date.now() - s.t), horiz = s.horiz;
+      s = null;
+      if (!horiz) return;
+      node.classList.remove("swiping");
+      // a swipe must not also press the button it started on
+      var block = function (e) { e.stopPropagation(); e.preventDefault(); };
+      node.addEventListener("click", block, true);
+      setTimeout(function () { node.removeEventListener("click", block, true); }, 0);
+      var w = node.offsetWidth || 300;
+      var go = (dx < -w * 0.22 || v < -0.6) && o.canNext() ? "next" : (dx > w * 0.22 || v > 0.6) && o.canPrev() ? "prev" : null;
+      if (!go) { node.style.transform = ""; return; }
+      if (REDUCED) { node.style.transform = ""; slideDir = go; o[go](); return; }
+      node.classList.add("swipe-out");
+      node.style.transform = "translateX(" + (go === "next" ? -1.15 : 1.15) * w + "px) rotate(" + (go === "next" ? -8 : 8) + "deg)";
+      node.style.opacity = "0";
+      setTimeout(function () { slideDir = go; o[go](); }, 190);
+    }
+    node.addEventListener("pointerup", end);
+    node.addEventListener("pointercancel", function (ev) { if (s && ev.pointerId === s.id) { s = null; node.classList.remove("swiping"); node.style.transform = ""; } });
+  }
+
   /* ---------- beam diagram ---------- */
 
   var NS = "http://www.w3.org/2000/svg";
@@ -921,7 +979,8 @@
     showQuestion();
   }
 
-  function goTo(i) {
+  function goTo(i, dir) {
+    if (dir !== false) slideDir = dir || (i > state.index ? "next" : "prev");
     state.index = i;
     saveProgress();
     showQuestion();
@@ -972,19 +1031,17 @@
     if (state.index > 0) {
       nav.push(el("button", {
         class: "btn", type: "button", text: "Previous",
-        onclick: function () { goTo(state.index - 1); }
+        onclick: function () { goTo(state.index - 1, "prev"); }
       }));
     }
-    if (answered) {
-      nav.push(el("button", {
-        class: "btn btn-primary", type: "button",
-        text: last ? "See results" : "Next question",
-        onclick: function () {
-          if (last) showResults();
-          else goTo(state.index + 1);
-        }
-      }));
-    }
+    nav.push(el("button", {
+      class: answered ? "btn btn-primary" : "btn btn-skip", type: "button",
+      text: answered ? (last ? "See results" : "Next question") : (last ? "Skip to results" : "Skip"),
+      onclick: function () {
+        if (last) showResults();
+        else goTo(state.index + 1, "next");
+      }
+    }));
     next = nav.length ? el("div", { class: "btn-row" }, nav) : null;
 
     render([
@@ -1009,6 +1066,15 @@
         return writeJSON(padKey(state.set, item.qi), data);
       }))
     ]);
+
+    var qcard = app.querySelector("section.card");
+    enterSlide(qcard);
+    swipe(qcard, {
+      canNext: function () { return true; },
+      canPrev: function () { return state.index > 0; },
+      next: function () { if (state.index === total - 1) showResults(); else goTo(state.index + 1, "next"); },
+      prev: function () { goTo(state.index - 1, "prev"); }
+    });
 
     if (answered) {
       var go = app.querySelector(".btn-primary");
@@ -1069,7 +1135,7 @@
     ];
     if (missed.length) {
       buttons.push(el("button", {
-        class: "btn", text: "Retry missed (" + missed.length + ")",
+        class: "btn", text: (missed.some(function (it) { return it.picked === null || it.picked === undefined; }) ? "Retry missed and skipped (" : "Retry missed (") + missed.length + ")",
         onclick: function () {
           clearPads(set, missed.map(function (it) { return it.qi; }));
           startQuiz(set, missed.map(function (it) { return it.q; }));
@@ -1084,7 +1150,9 @@
         el("div", { class: "q", text: it.q.q }),
         right
           ? el("div", { class: "a" }, [el("span", { class: "tag-good", text: "Correct: " }), el("span", { text: it.q.options[it.q.answer] })])
-          : el("div", { class: "a" }, [el("span", { class: "tag-bad", text: "You chose: " }), el("span", { text: it.q.options[it.picked] })]),
+          : it.picked === null || it.picked === undefined
+            ? el("div", { class: "a" }, [el("span", { class: "tag-bad", text: "Skipped" })])
+            : el("div", { class: "a" }, [el("span", { class: "tag-bad", text: "You chose: " }), el("span", { text: it.q.options[it.picked] })]),
         right ? null : el("div", { class: "a" }, [el("span", { class: "tag-good", text: "Answer: " }), el("span", { text: it.q.options[it.q.answer] })]),
         el("div", { class: "a muted", text: it.q.why })
       ]);
@@ -1185,7 +1253,7 @@
     var KIND = { eq: "Equation", concept: "Concept", term: "Key term" };
     var nodes = [
       el("h1", { text: "Flashcards" }),
-      el("p", { class: "muted", text: "Key equations, concepts and terms from the sections. Tap a card to flip it. " + knownCount + " of " + ALL.length + " marked as known." }),
+      el("p", { class: "muted", text: "Key equations, concepts and terms from the sections. Tap a card to flip it, swipe left or right to move. " + knownCount + " of " + ALL.length + " marked as known." }),
       el("div", { class: "fc-filters section-picker" }, [secSel, kindSel, unk,
         el("button", { class: "btn btn-small", type: "button", "aria-pressed": String(!!fcState.order), text: fcState.order ? "Shuffle: on" : "Shuffle: off",
           onclick: function () {
@@ -1287,16 +1355,17 @@
         el("div", { class: "bar" }, [el("span", { style: "width:" + ((fcState.index + 1) / deck.length) * 100 + "%" })]),
         el("div", { class: "fc-wrap" }, [face, starButton(card, starred, function () { go({}); })]),
         el("div", { class: "btn-row" }, [
-          el("button", { class: "btn", type: "button", text: "Previous", onclick: function () { go({ index: (fcState.index - 1 + deck.length) % deck.length, flipped: false }); } }),
+          el("button", { class: "btn", type: "button", text: "Previous", onclick: function () { slideDir = "prev"; go({ index: (fcState.index - 1 + deck.length) % deck.length, flipped: false }); } }),
           el("button", { class: "btn" + (isKnown ? "" : " btn-good"), type: "button", text: isKnown ? "Mark as not known" : "I know this",
             onclick: function () {
               var k = knownSet();
               if (isKnown) delete k[cardKey(card)]; else k[cardKey(card)] = 1;
               writeJSON("flashcards:known", k);
+              if (!isKnown) slideDir = "next";
               // when hiding known cards, the deck shrinks, so the same index is already the next card
               go({ index: !isKnown && !fcState.onlyUnknown ? (fcState.index + 1) % deck.length : fcState.index, flipped: false });
             } }),
-          el("button", { class: "btn btn-primary", type: "button", text: "Next", onclick: function () { go({ index: (fcState.index + 1) % deck.length, flipped: false }); } })
+          el("button", { class: "btn btn-primary", type: "button", text: fcState.flipped ? "Next" : "Skip", onclick: function () { slideDir = "next"; go({ index: (fcState.index + 1) % deck.length, flipped: false }); } })
         ])
       );
     }
@@ -1304,6 +1373,16 @@
     var y = window.scrollY;
     app.replaceChildren.apply(app, nodes);
     window.scrollTo(0, y);
+    var wrap = app.querySelector(".fc-wrap");
+    if (wrap && deck.length) {
+      enterSlide(wrap);
+      swipe(wrap, {
+        canNext: function () { return deck.length > 1; },
+        canPrev: function () { return deck.length > 1; },
+        next: function () { go({ index: (fcState.index + 1) % deck.length, flipped: false }); },
+        prev: function () { go({ index: (fcState.index - 1 + deck.length) % deck.length, flipped: false }); }
+      });
+    } else slideDir = null;
   }
   function setHash(id) {
     try { history.replaceState(null, "", id ? "#" + id : location.pathname + location.search); } catch (e) { location.hash = id; }

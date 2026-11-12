@@ -573,3 +573,18 @@ main { padding-bottom: 96px; }
 .sync-steps a { color: var(--accent); }
 .sync-small { font-size: 0.9rem; margin-top: 14px; }
 a.btn { display: inline-flex; align-items: center; text-decoration: none; }
+
+/* Swipe between questions and cards */
+.swipeable { touch-action: pan-y; }
+.swiping { transition: none !important; user-select: none; -webkit-user-select: none; cursor: grabbing; }
+.swipeable:not(.swiping) { transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.3, 1.2); }
+.swipe-out { transition: transform 0.19s ease-in, opacity 0.19s ease-in !important; }
+@media (prefers-reduced-motion: no-preference) {
+  .slide-in-next { animation: slide-in-next 0.28s cubic-bezier(0.2, 0.8, 0.3, 1); }
+  .slide-in-prev { animation: slide-in-prev 0.28s cubic-bezier(0.2, 0.8, 0.3, 1); }
+}
+@keyframes slide-in-next { from { transform: translateX(40%) rotate(2deg); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes slide-in-prev { from { transform: translateX(-40%) rotate(-2deg); opacity: 0; } to { transform: none; opacity: 1; } }
+.btn-skip { color: var(--muted); }
+.swipe-hint { text-align: center; font-size: 0.82rem; color: var(--muted); margin: 10px 0 0; }
+main { overflow-x: clip; }
