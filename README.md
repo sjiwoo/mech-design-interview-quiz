@@ -10,6 +10,8 @@ Unofficial practice material. Not affiliated with or endorsed by Tesla, and not 
 - **More beam problems** (21 questions): off-centre loads, overhangs, partial loads, superposition and sizing, each solvable in three minutes or less.
 - **Shear and moment diagrams** (20 questions): pick the diagram that matches a loading, or read the loading and peak moment off a diagram. Answer options are drawn as small diagrams (`optionCurves`).
 - **Moment of inertia** (20 questions): standard sections, parallel axis, centroids, hollow and built-up sections, orientation, buckling, composite beams.
+- **Bending stiffness** (13 questions): EI against point stiffness, supports, section depth, flanges and sandwich panels, open against closed sections, joints in series, material indices.
+- **Springs and resonance** (14 questions): series and parallel springs, coil spring rate, preload, frequency from static sag, torsional and pendulum modes, phase, damping, isolation, tuned absorbers, critical speed.
 - **Stress–strain and materials**, **GD&T**, **Tolerance stack-up**, **Bolted joints**, **Manufacturing and DFM**, **Statics and free-body diagrams**, **Fatigue and failure**, **Heat transfer**, **Vibrations and dynamics**, **Torsion, combined loading and buckling** (10 questions each).
 - **Trick questions, part 2** (15 questions): rolling, free fall, friction, gears, bolt preload, critical insulation radius and displacement-controlled loads.
 - **GD&T and tolerance trick questions** (14 questions): invalid or misread callouts, and stack-up assumptions that fail in practice.
