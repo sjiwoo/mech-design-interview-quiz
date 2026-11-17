@@ -32,6 +32,58 @@ window.QUESTION_SETS.push({
    }
   },
   {
+   "level": "Fundamental",
+   "q": "A force is increased slowly from zero to F, stretching a spring by Δ. How much work does it do, and how does that change if the full force F is applied throughout the motion?",
+   "options": [
+    "FΔ in both cases",
+    "FΔ/2 when increased gradually; FΔ if F is constant the whole way",
+    "FΔ/2 in both cases",
+    "2FΔ when increased gradually"
+   ],
+   "answer": 1,
+   "why": "When the force grows with deflection, the work is the area under a triangle: ½FΔ. That is the strain energy stored. A constant force F does work FΔ, twice as much, and the extra goes into motion, which is why a suddenly applied load overshoots to twice the static deflection.",
+   "proof": [
+    "Gradual: F rises linearly with Δ, so work = ∫F dx = ½FΔ = ½kΔ².",
+    "Constant force: work = F·Δ.",
+    "For a suddenly applied weight, the energy balance W·δ = ½kδ² gives δ = 2W/k.",
+    "A couple moment does work in the same way through a rotation: ½Mθ when applied gradually."
+   ],
+   "reported": {
+    "kind": "topic",
+    "note": "Candidates reported solid mechanics questions in Tesla mechanical design interviews, alongside circuits. This exact question was not reported.",
+    "sources": [
+     "linckt",
+     "mde"
+    ]
+   }
+  },
+  {
+   "level": "Fundamental",
+   "q": "When you calculate the strain energy (or deflection) of a long beam, why is the energy from shear usually ignored?",
+   "options": [
+    "Shear energy is negative",
+    "Beams carry no shear",
+    "For long, slender beams the bending energy is far larger than the shear energy",
+    "Shear energy only exists in torsion"
+   ],
+   "answer": 2,
+   "why": "Bending energy grows with length cubed relative to shear energy's growth with length alone. For a steel beam ten times longer than it is deep, shear adds under 1% to the deflection.",
+   "proof": [
+    "Bending:  U_b = ∫M²/(2EI) dx.  Shear:  U_s = ∫f_s·V²/(2GA) dx.",
+    "Rectangular cantilever, tip load (f_s = 1.2):  U_s/U_b = 0.3·(E/G)·(h/L)², about 0.8·(h/L)² for steel.",
+    "With L = 10h, shear adds under 1%.",
+    "Short, deep beams, sandwich panels with soft cores and composite beams with low G are exceptions: shear deflection can dominate."
+   ],
+   "reported": {
+    "kind": "topic",
+    "note": "Candidates reported solid mechanics questions in Tesla mechanical design interviews, alongside circuits. This exact question was not reported.",
+    "sources": [
+     "linckt",
+     "mde"
+    ]
+   }
+  },
+  {
    "level": "Design judgment",
    "q": "Why do bolts meant to absorb shock often have a shank turned down to the thread's root diameter along most of their length?",
    "options": [
@@ -340,21 +392,21 @@ window.QUESTION_SETS.push({
    }
   },
   {
-   "level": "Applied",
-   "q": "A pinned column carries a slightly off-centre load equal to half its Euler load. By the secant formula, how much larger is its peak bending moment than the load times its offset?",
+   "level": "Fundamental",
+   "q": "A real column always has a slightly crooked shape or an off-centre load. How does it behave as the load rises towards the Euler load?",
    "options": [
-    "About 1.0 times",
-    "About 1.5 times",
-    "About 4 times",
-    "About 2.25 times"
+    "It stays straight, then suddenly buckles at the Euler load",
+    "It bends from the start, and the bending grows faster and faster as the load approaches the Euler load",
+    "It shortens but never bends",
+    "It is stronger than the Euler load predicts"
    ],
-   "answer": 3,
-   "why": "The secant formula gives M_max = P·e·sec((π/2)√(P/P_cr)). At P/P_cr = 0.5 the argument is 1.11 rad and sec(1.11) = 2.25. The column bends more as the load rises, so its moment grows faster than the load.",
+   "answer": 1,
+   "why": "An imperfect column never buckles suddenly. It starts bending at once, and the axial load acting on that bend adds moment, so the deflection grows nonlinearly. Peak stress can reach yield below the Euler load, which is what the secant formula predicts.",
    "proof": [
-    "Secant formula:  σ_max = (P/A)[1 + (ec/r²)·sec((L/2r)√(P/(EA)))].",
-    "For a pinned column, (L/2)√(P/EI) = (π/2)√(P/P_cr).",
-    "(π/2)√0.5 = 1.11 rad. cos 1.11 = 0.444, so sec = 2.25.",
-    "The simpler amplification 1/(1 − P/P_cr) gives 2.0, close. Real columns fail by yielding at the bent section, below the Euler load."
+    "Ideal straight column: no bending until P_cr, then it buckles (neutral equilibrium).",
+    "Real column: deflection ≈ e/(1 − P/P_cr) roughly, growing rapidly near P_cr.",
+    "Load and deflection are not proportional, so superposition does not apply.",
+    "The secant formula gives the peak stress for a given eccentricity; at half the Euler load the bending moment is already about 2.25 times P·e."
    ],
    "reported": {
     "kind": "topic",
@@ -392,21 +444,21 @@ window.QUESTION_SETS.push({
    }
   },
   {
-   "level": "Applied",
-   "q": "Euler's formula predicts a critical stress of 400 MPa for a steel column whose yield stress is 250 MPa (E = 200 GPa). What critical stress should you design to?",
+   "level": "Fundamental",
+   "q": "Euler's formula gives a critical stress of 400 MPa for a short steel column whose yield stress is 250 MPa. What does that tell you?",
    "options": [
-    "400 MPa",
-    "250 MPa",
-    "About 211 MPa, from the Johnson formula",
-    "About 125 MPa"
+    "The column can take 400 MPa",
+    "The column will yield before it buckles elastically, so Euler's formula does not apply; use a yield check or an inelastic formula such as Johnson's",
+    "The column is unsafe at any load",
+    "Use the average, 325 MPa"
    ],
-   "answer": 2,
-   "why": "Euler assumes the column stays elastic, which is wrong above about half the yield stress. Here L/r = 70, so use Johnson: σ_cr = 250 − (250²/(4π² × 200,000)) × 70² = 211 MPa.",
+   "answer": 1,
+   "why": "Euler assumes the column stays elastic up to buckling. If the predicted stress is above yield, the column is too short and stocky for that to happen: it will yield or buckle inelastically first, at a lower stress.",
    "proof": [
-    "From Euler:  (L/r)² = π²E/σ = π² × 200,000/400 = 4,935, so L/r = 70.",
-    "Johnson:  σ_cr = σ_y − (σ_y²/(4π²E))·(L/r)².",
-    "= 250 − (62,500/7.9 × 10⁶) × 4,935 = 250 − 39 = 211 MPa.",
-    "Euler overestimates strength in this range. Below the transition slenderness, inelastic buckling governs, and the tangent modulus is less than E."
+    "Euler stress:  σ_cr = π²E/(L/r)².",
+    "If σ_cr > σ_y (or even above about σ_y/2 in practice), elastic buckling is not the failure mode.",
+    "Intermediate columns: use the Johnson parabola,  σ_cr = σ_y − (σ_y²/(4π²E))(L/r)².",
+    "Very short columns: they simply yield at σ = P/A = σ_y."
    ],
    "reported": {
     "kind": "topic",

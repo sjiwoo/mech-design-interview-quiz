@@ -285,5 +285,12 @@ window.FLASHCARDS = [
   ["energy-methods","eq","Impact factor","δ_max = δ_st(1 + √(1 + 2h/δ_st)). Sudden load (h = 0): 2×."],
   ["energy-methods","eq","Castigliano","δ = ∂U/∂P. Add a dummy load where there is none, then set it to zero."],
   ["energy-methods","eq","Strain energy","Axial U = P²L/(2AE). Bending U = ∫M²/(2EI) dx."],
-  ["energy-methods","eq","Johnson transition","(L/r)_t = π√(2E/σ_y), about 126 for 250 MPa steel."]
+  ["energy-methods","eq","Johnson transition","(L/r)_t = π√(2E/σ_y), about 126 for 250 MPa steel."],
+  ["axial-shear","concept","Complementary shear","Shear on one face needs equal shear on the adjacent faces, or the element would spin."],
+  ["axial-shear","concept","Ductility measures","Percent elongation at fracture and percent reduction in area."],
+  ["axial-shear","concept","Superposition limits","Needs linear-elastic material and small deformations. Fails for yielding and columns."],
+  ["torsion-shafts","concept","Thin tube, uneven wall","Shear flow q = τt is constant, so stress peaks where the wall is thinnest."],
+  ["stress-transformation","concept","Brittle failure theories","Equal strengths: maximum normal stress. Unequal: Coulomb–Mohr, σ₁/S_t − σ₃/S_c = 1."],
+  ["stress-transformation","concept","Poisson's ratio limit","ν ≤ 0.5. At 0.5 the volume never changes (incompressible)."],
+  ["energy-methods","eq","Work of a gradual load","U = ½FΔ. A constant force does FΔ."]
 ];

@@ -33,20 +33,20 @@ window.QUESTION_SETS.push({
   },
   {
    "level": "Applied",
-   "q": "A beam is made by screwing two 100 × 20 mm planks on top of each other (100 wide, 40 deep total). It carries a shear force of 1 kN. Each screw can carry 750 N. What spacing do the screws need?",
+   "q": "Two planks are screwed together to act as one deep beam. It is simply supported and carries a uniform load. Where should the screws be closest together?",
    "options": [
-    "About 40 mm",
-    "About 10 mm",
-    "About 80 mm",
-    "About 20 mm"
+    "At midspan, where the bending moment is largest",
+    "Evenly spaced, the shear between layers is constant",
+    "Near the supports, where the shear force is largest",
+    "Only at the very ends"
    ],
-   "answer": 3,
-   "why": "The screws carry the shear flow along the joint, q = VQ/I. Q for the top plank about the neutral axis is 100 × 20 × 10 = 20,000 mm³, and I = 100 × 40³/12 = 533,000 mm⁴. So q = 37.5 N/mm, and each 750 N screw covers 20 mm.",
+   "answer": 2,
+   "why": "The screws carry the horizontal shear between the planks, the shear flow q = VQ/I. That follows the shear force V, not the bending moment. Under a uniform load V is largest at the supports and zero at midspan.",
    "proof": [
-    "I = 100 × 40³/12 = 533,333 mm⁴.",
-    "Q (top plank) = area × distance to its centroid = 2,000 × 10 = 20,000 mm³.",
-    "q = VQ/I = 1,000 × 20,000/533,333 = 37.5 N/mm.",
-    "Spacing:  s = F_screw/q = 750/37.5 = 20 mm. Shear is highest near the supports, so screws can be further apart where the shear force is low."
+    "Shear flow along the joint:  q = VQ/I, in N/mm.",
+    "Screw spacing:  s = (screw capacity)/q.",
+    "Uniform load:  V = wL/2 at the supports, falling linearly to 0 at midspan.",
+    "So screws go closest near the ends and can spread out towards the middle. Example: V = 1 kN, Q = 20,000 mm³, I = 533,000 mm⁴ gives q = 37.5 N/mm, so 750 N screws at 20 mm."
    ],
    "reported": {
     "kind": "topic",
@@ -136,21 +136,47 @@ window.QUESTION_SETS.push({
    }
   },
   {
-   "level": "Applied",
-   "q": "A rectangular cantilever 20 mm wide and 60 mm tall is meant to be loaded vertically, but the load is tilted 10° sideways. By about how much does the peak bending stress rise?",
+   "level": "Fundamental",
+   "q": "A cross-section has one axis of symmetry. Where is its shear centre, and what does its position depend on?",
    "options": [
-    "About 2%",
-    "About 10%",
-    "About 50%",
-    "It does not change"
+    "At the centroid, and it depends on the load",
+    "On the axis of symmetry, and it depends only on the shape of the section",
+    "Always outside the section",
+    "At the heaviest point, and it depends on the material"
+   ],
+   "answer": 1,
+   "why": "The shear centre is the point a transverse load must pass through for the beam to bend without twisting. It always lies on an axis of symmetry, and it is a property of the section's geometry alone, like the centroid.",
+   "proof": [
+    "Doubly symmetric sections (I-beam, rectangle, tube): shear centre = centroid.",
+    "Singly symmetric (channel, T): on the axis of symmetry, not necessarily at the centroid.",
+    "Angle or T made of thin plates: where the plates' centrelines meet.",
+    "It does not move with the size of the load or the material."
+   ],
+   "reported": {
+    "kind": "topic",
+    "note": "Candidates reported solid mechanics questions in Tesla mechanical design interviews, alongside circuits. This exact question was not reported.",
+    "sources": [
+     "linckt",
+     "mde"
+    ]
+   }
+  },
+  {
+   "level": "Fundamental",
+   "q": "A rectangular bar is 20 mm wide and 60 mm tall. How many times stiffer is it in bending about its strong axis (load vertical) than about its weak axis (load sideways)?",
+   "options": [
+    "3 times",
+    "6 times",
+    "9 times",
+    "27 times"
    ],
    "answer": 2,
-   "why": "The section is 9 times stiffer about its strong axis than its weak axis. Even a small sideways component bends it about the weak axis, where it is much weaker. The peak stress at the corner rises by about 50%.",
+   "why": "I = bh³/12 about each axis. Strong: 20 × 60³/12. Weak: 60 × 20³/12. The ratio is (60/20)² = 9. A tall, thin section is much weaker sideways, so even a slightly tilted load can raise its peak stress a lot.",
    "proof": [
-    "Strong axis:  I = 20 × 60³/12 = 360,000 mm⁴, c = 30.  Weak axis:  I = 60 × 20³/12 = 40,000 mm⁴, c = 10.",
-    "Vertical component:  M cos 10° × 30/360,000 = 8.2 × 10⁻⁵ M.",
-    "Sideways component:  M sin 10° × 10/40,000 = 4.3 × 10⁻⁵ M.",
-    "At the corner they add: 12.5 × 10⁻⁵ M against 8.3 × 10⁻⁵ M for a pure vertical load. About 1.5 times. Tall, thin sections are sensitive to misaligned loads."
+    "Strong axis:  I = 20 × 60³/12 = 360,000 mm⁴.",
+    "Weak axis:  I = 60 × 20³/12 = 40,000 mm⁴.",
+    "Ratio = (h/b)² = 9.",
+    "A load tilted just 10° sideways raises the peak corner stress by about 50% for this section. Resolve the load into components along the principal axes and add the stresses."
    ],
    "reported": {
     "kind": "topic",
@@ -280,7 +306,7 @@ window.QUESTION_SETS.push({
     "Strain at radius r:  ε ∝ (r − r_n)/r, which is larger where r is small.",
     "The neutral axis sits at r_n = A/∫(dA/r), inside the centroid.",
     "For a rectangular section with centroid radius 2 times its depth, the inner stress is about 20% above the straight-beam value.",
-    "This is why hooks are deep and pear-shaped, with extra material on the inside."
+    "Rule of thumb: use the curved-beam formula when the radius of curvature is less than about 5 times the depth; above that the straight-beam formula is close enough. Hooks are deep and pear-shaped, with extra material on the inside, for this reason."
    ],
    "reported": {
     "kind": "topic",
@@ -307,6 +333,32 @@ window.QUESTION_SETS.push({
     "Solid circle:  16/(3π) = 1.70.",
     "Thin tube:  4/π ≈ 1.27.",
     "I-beam:  about 1.12 to 1.15. It is efficient elastically precisely because it has little material near the centre, so it has little reserve."
+   ],
+   "reported": {
+    "kind": "topic",
+    "note": "Candidates reported solid mechanics questions in Tesla mechanical design interviews, alongside circuits. This exact question was not reported.",
+    "sources": [
+     "linckt",
+     "mde"
+    ]
+   }
+  },
+  {
+   "level": "Fundamental",
+   "q": "A beam is bent so far that its outer fibres yield. How does the strain vary across its depth now?",
+   "options": [
+    "It still varies linearly from the neutral axis, because sections stay plane; only the stress distribution flattens",
+    "It becomes uniform",
+    "It is zero in the yielded zone",
+    "It varies with the square of the distance"
+   ],
+   "answer": 0,
+   "why": "Plane sections remain plane: strain depends only on the geometry of bending, so it stays linear whether or not the material yields. The stress follows the stress–strain curve, so in an elastic-perfectly-plastic material it caps at yield in the outer zone.",
+   "proof": [
+    "Strain:  ε = −y/ρ, linear in y at any load.",
+    "Elastic core: σ = Eε, linear.",
+    "Yielded zone: σ = σ_y, constant.",
+    "The neutral axis is where the net axial force is zero. For a symmetric section it stays at the centroid; for an unsymmetric one it moves once yielding starts."
    ],
    "reported": {
     "kind": "topic",

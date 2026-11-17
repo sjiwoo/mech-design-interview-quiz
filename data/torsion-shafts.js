@@ -7,20 +7,20 @@ window.QUESTION_SETS.push({
  "questions": [
   {
    "level": "Fundamental",
-   "q": "A solid steel shaft of 20 mm diameter carries 100 N·m of torque. What is the maximum shear stress?",
+   "q": "A round wooden dowel is twisted until it fails. Why does it split along its length instead of breaking straight across?",
    "options": [
-    "31.8 MPa",
-    "63.7 MPa",
-    "127 MPa",
-    "15.9 MPa"
+    "Wood is weak in compression",
+    "The shear stress acts along the length of the shaft as well as across it, and wood is weakest in shear along its grain",
+    "The ends were clamped too tightly",
+    "Twisting creates tension along the axis"
    ],
    "answer": 1,
-   "why": "τ = Tc/J. For a solid round shaft that simplifies to 16T/(πd³) = 16 × 100,000/(π × 8,000) = 63.7 MPa, at the outer surface.",
+   "why": "By the complementary property of shear, a twisted shaft carries the same shear stress on planes along its axis as on its cross-sections. Wood is much weaker in shear along the grain, so it splits lengthwise.",
    "proof": [
-    "J = πd⁴/32 = π × 20⁴/32 = 15,708 mm⁴.",
-    "τ = T·c/J = 100,000 × 10/15,708 = 63.7 MPa.",
-    "Shortcut:  τ = 16T/(πd³).",
-    "Shear stress is zero at the centre and rises linearly to the surface, which is why hollow shafts waste little material."
+    "Torsion gives τ on the cross-section, rising linearly from zero at the centre to a maximum at the surface.",
+    "Equilibrium of a small element gives equal τ on longitudinal planes.",
+    "Wood's shear strength along the grain is a fraction of its strength across the grain.",
+    "Steel, equally strong in all directions, fails on the cross-section instead; brittle chalk fails on a 45° helix in tension."
    ],
    "reported": {
     "kind": "topic",
@@ -32,46 +32,46 @@ window.QUESTION_SETS.push({
    }
   },
   {
-   "level": "Applied",
-   "q": "You double the diameter of a solid shaft. How do its torsional strength and stiffness change?",
+   "level": "Fundamental",
+   "q": "The torsion formula τ = Tc/J assumes the cross-section stays flat and its radial lines stay straight as it twists. Which shafts does it apply to?",
    "options": [
-    "Strength ×8, stiffness ×16",
-    "Strength ×4, stiffness ×8",
-    "Strength ×2, stiffness ×4",
-    "Strength ×16, stiffness ×16"
-   ],
-   "answer": 0,
-   "why": "Strength follows J/c ∝ d³, so 8 times. Stiffness follows J ∝ d⁴, so 16 times. Diameter is the strongest lever for a shaft.",
-   "proof": [
-    "τ = 16T/(πd³): the torque for a given stress ∝ d³, so ×8.",
-    "Angle of twist φ = TL/(GJ), with J ∝ d⁴: stiffness ×16.",
-    "Mass only goes up 4 times.",
-    "A small increase in diameter goes a long way: 26% more diameter doubles torque capacity."
-   ],
-   "reported": {
-    "kind": "topic",
-    "note": "Candidates reported solid mechanics questions in Tesla mechanical design interviews, alongside circuits. This exact question was not reported.",
-    "sources": [
-     "linckt",
-     "mde"
-    ]
-   }
-  },
-  {
-   "level": "Applied",
-   "q": "A hollow shaft (40 mm outside, 30 mm inside) is compared with a solid shaft of the same weight. How do they compare in torsion?",
-   "options": [
-    "The same, it has the same area",
-    "The solid shaft is about twice as strong",
-    "The hollow one is about 3.6 times stiffer and 2.4 times stronger",
-    "The hollow one is about 1.2 times stiffer"
+    "Any shape of cross-section",
+    "Only square shafts",
+    "Circular shafts, solid or hollow, of a linear-elastic, homogeneous material",
+    "Only thin-walled tubes"
    ],
    "answer": 2,
-   "why": "Same area means a solid diameter of √(40² − 30²) = 26.5 mm. The hollow shaft puts its material far from the centre, where it works hardest, so its J is 3.6 times larger and its J/c is 2.4 times larger.",
+   "why": "Only a circle is symmetric enough for every section to stay flat when twisted. Non-circular sections warp out of plane, so they need their own formulas, and stress beyond yield breaks the linear-elastic assumption.",
    "proof": [
-    "Solid with the same area:  d = √(1,600 − 900) = 26.5 mm.",
-    "Hollow:  J = π(40⁴ − 30⁴)/32 = 171,800 mm⁴.  Solid:  J = π × 26.5⁴/32 = 48,100 mm⁴. Ratio 3.6.",
-    "Strength ∝ J/c:  171,800/20 = 8,590 against 48,100/13.2 = 3,640. Ratio 2.4.",
+    "Circular section: by symmetry, cross-sections stay plane and radii stay straight, so shear strain rises linearly with radius.",
+    "With σ = Eε (here τ = Gγ), shear stress also rises linearly, giving τ = Tρ/J.",
+    "Square, rectangular and open sections warp; use tabulated constants instead.",
+    "Past yield, the stress distribution flattens and the plastic torque is higher than the elastic formula predicts."
+   ],
+   "reported": {
+    "kind": "topic",
+    "note": "Candidates reported solid mechanics questions in Tesla mechanical design interviews, alongside circuits. This exact question was not reported.",
+    "sources": [
+     "linckt",
+     "mde"
+    ]
+   }
+  },
+  {
+   "level": "Fundamental",
+   "q": "For the same weight of material, why is a hollow shaft stiffer and stronger in torsion than a solid one?",
+   "options": [
+    "Hollow shafts are made of stronger steel",
+    "Material near the centre carries almost no shear stress, so moving it outward, where stress and leverage are highest, makes it work much harder",
+    "A hollow shaft has a larger cross-sectional area",
+    "Hollow shafts do not twist"
+   ],
+   "answer": 1,
+   "why": "Shear stress in a twisted shaft is zero at the centre and highest at the surface. Material near the centre carries little load and adds little stiffness. Putting the same material at a larger radius raises J far more than its weight.",
+   "proof": [
+    "τ ∝ radius, and each bit of material resists torque in proportion to radius × stress, so its contribution goes as radius².",
+    "J = ∫ρ² dA: the outer material dominates.",
+    "Example: a 40/30 mm tube has about 3.6 times the stiffness of a solid bar of the same area.",
     "Limit: very thin walls buckle locally under torsion."
    ],
    "reported": {
@@ -266,6 +266,32 @@ window.QUESTION_SETS.push({
    }
   },
   {
+   "level": "Fundamental",
+   "q": "A closed thin-walled tube under torsion has a wall that varies in thickness around its perimeter. Where is the shear stress highest?",
+   "options": [
+    "Where the wall is thickest",
+    "Where the wall is thinnest",
+    "At the corners only",
+    "It is the same everywhere"
+   ],
+   "answer": 1,
+   "why": "In a closed tube, the shear flow q = τ·t is the same all the way round the wall. So the stress τ = q/t is highest where the wall is thinnest.",
+   "proof": [
+    "q = T/(2A_m), constant around a closed section.",
+    "τ = q/t, so it is inversely proportional to the local thickness.",
+    "A tube with a 1 mm wall on one side and 2 mm on the other has twice the stress on the thin side.",
+    "Watch for thin spots from casting, extrusion or welding: they set the torque limit."
+   ],
+   "reported": {
+    "kind": "topic",
+    "note": "Candidates reported solid mechanics questions in Tesla mechanical design interviews, alongside circuits. This exact question was not reported.",
+    "sources": [
+     "linckt",
+     "mde"
+    ]
+   }
+  },
+  {
    "level": "Applied",
    "q": "A stepped shaft has a shoulder fillet with a torsional stress concentration factor of 1.6. Nominal shear stress is 50 MPa. When does the 80 MPa peak matter most?",
    "options": [
@@ -345,21 +371,20 @@ window.QUESTION_SETS.push({
   },
   {
    "level": "Applied",
-   "q": "A solid shaft carries a bending moment of 300 N·m and a torque of 400 N·m. Using the maximum shear stress theory with an allowable shear stress of 60 MPa, what diameter does it need?",
+   "q": "At the surface of a shaft, bending gives a normal stress of 80 MPa and torque gives a shear stress of 30 MPa. What is the maximum shear stress at that point?",
    "options": [
-    "About 30 mm",
-    "About 40 mm",
-    "About 28 mm",
-    "About 35 mm"
+    "30 MPa",
+    "110 MPa",
+    "70 MPa",
+    "50 MPa"
    ],
    "answer": 3,
-   "why": "Combine bending and torsion into an equivalent torque, √(M² + T²) = 500 N·m. Then τ_max = 16 × 500,000/(πd³) = 60 MPa gives d = 34.9 mm, so 35 mm.",
+   "why": "Mohr's circle is centred at 40 with radius √(40² + 30²) = 50 MPa. That radius is the maximum shear stress, the value compared with an allowable shear stress in the maximum-shear-stress (Tresca) method.",
    "proof": [
-    "Bending:  σ = 32M/(πd³). Torsion:  τ = 16T/(πd³).",
-    "Maximum shear:  τ_max = √((σ/2)² + τ²) = 16√(M² + T²)/(πd³).",
-    "√(300² + 400²) = 500 N·m.",
-    "d³ = 16 × 500,000/(π × 60) = 42,400 mm³, so d = 34.9 mm.",
-    "With von Mises:  σ' = 32√(M² + 0.75T²)/(πd³). With σ_allow = 120 MPa, d = 33.9 mm, slightly smaller."
+    "Centre: σ/2 = 40 MPa.",
+    "Radius: √((σ/2)² + τ²) = √(1,600 + 900) = 50 MPa.",
+    "τ_max = 50 MPa. Principal stresses: 40 ± 50 = 90 and −10 MPa.",
+    "Written for a solid shaft this becomes the familiar design formula τ_max = 16√(M² + T²)/(πd³)."
    ],
    "reported": {
     "kind": "topic",

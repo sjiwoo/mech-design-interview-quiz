@@ -3,7 +3,7 @@ window.QUESTION_SETS = window.QUESTION_SETS || [];
 window.QUESTION_SETS.push({
  "id": "axial-shear",
  "title": "Axial loading, shear and fits",
- "blurb": "Normal and shear strain, single and double shear, bearing stress, pin sizing, factor of safety, stepped and indeterminate bars, misfits, press and shrink fits, Poisson, G and bulk modulus, residual stress.",
+ "blurb": "Normal and shear strain, single and double shear, bearing stress, pin sizing, factor of safety, stepped and indeterminate bars, misfits, press fits, complementary shear, internal loads, superposition, ductility, G and bulk modulus, residual stress.",
  "questions": [
   {
    "level": "Fundamental",
@@ -229,6 +229,59 @@ window.QUESTION_SETS.push({
     "At about one width away it is within a few percent of uniform.",
     "This is why test specimens have long, narrow gauge lengths away from the grips.",
     "It also lets FEA apply a load as a simple pressure, as long as you do not trust stresses right at that face."
+   ],
+   "reported": {
+    "kind": "topic",
+    "note": "Candidates reported solid mechanics questions in Tesla mechanical design interviews, alongside circuits. This exact question was not reported.",
+    "sources": [
+     "linckt",
+     "mde"
+    ]
+   }
+  },
+  {
+   "level": "Fundamental",
+   "q": "You cut a loaded member with an imaginary section to find the loads inside it (the method of sections). In general, which internal loads can act on that cut?",
+   "options": [
+    "Only an axial force",
+    "An axial force and a bending moment only",
+    "An axial (normal) force, a shear force, a twisting torque and a bending moment",
+    "Only stresses, never forces"
+   ],
+   "answer": 2,
+   "why": "The cut face holds the piece in equilibrium, so it can carry whatever force and moment are needed. Splitting them along and across the member gives a normal force, shear force, torque and bending moment. Each of these produces its own stress.",
+   "proof": [
+    "Draw a free-body diagram of one piece, including the internal loads on the cut.",
+    "Normal force N, along the axis: gives σ = N/A.",
+    "Shear force V, across the axis: gives shear stress.",
+    "Torque T, about the axis: gives torsional shear.  Bending moment M: gives σ = My/I.",
+    "In 3-D there are six components: one normal force, two shears, one torque and two bending moments."
+   ],
+   "reported": {
+    "kind": "topic",
+    "note": "Candidates reported solid mechanics questions in Tesla mechanical design interviews, alongside circuits. This exact question was not reported.",
+    "sources": [
+     "linckt",
+     "mde"
+    ]
+   }
+  },
+  {
+   "level": "Applied",
+   "q": "When can you NOT find a total stress or deflection by adding up the results of each load acting alone (superposition)?",
+   "options": [
+    "When there are more than two loads",
+    "When the loads are in different directions",
+    "When the loads are applied at different times",
+    "When the material yields, or the deflection is large enough to change how the loads act, as in a column near buckling"
+   ],
+   "answer": 3,
+   "why": "Superposition needs a linear relation between load and response. That breaks if the material goes past its elastic limit, or if the part deforms enough to change the geometry, such as a column whose bending adds moment from the axial load.",
+   "proof": [
+    "Requirement 1: linear elastic material (σ = Eε, no yielding).",
+    "Requirement 2: small deformations, so the loads act on essentially the original shape.",
+    "Columns and beam-columns fail requirement 2: the axial load times the deflection adds moment, so the response is nonlinear.",
+    "Within those limits, superposition is how beam tables are combined for multiple loads."
    ],
    "reported": {
     "kind": "topic",
@@ -526,21 +579,20 @@ window.QUESTION_SETS.push({
   },
   {
    "level": "Applied",
-   "q": "A solid steel shaft of 20 mm diameter is pressed into a steel hub with 60 mm outer diameter. The diametral interference is 0.02 mm and E is 200 GPa. What is the interface pressure, roughly?",
+   "q": "A press fit holds a shaft in a hub. The interference is doubled, staying in the elastic range. What happens to the contact pressure and the torque the fit can carry?",
    "options": [
-    "About 90 MPa",
-    "About 200 MPa",
-    "About 45 MPa",
-    "About 10 MPa"
+    "Both double",
+    "Pressure doubles, torque stays the same",
+    "Both rise four times",
+    "Neither changes, friction sets the torque"
    ],
    "answer": 0,
-   "why": "For a solid shaft in a hub of the same material, p = (Eδ/2d)(1 − d²/D²) = (200,000 × 0.02/40)(1 − 1/9) = 89 MPa.",
+   "why": "While everything stays elastic, contact pressure is proportional to the interference. The torque the fit can carry is friction × pressure × contact area × radius, so it doubles too. So do the stresses in the hub.",
    "proof": [
-    "Same material, solid shaft:  p = (E·δ/(2d))·(1 − (d/D)²).",
-    "E·δ/(2d) = 200,000 × 0.02/40 = 100 MPa.",
-    "(1 − (20/60)²) = 0.889.",
-    "p ≈ 89 MPa. The hoop stress at the hub's bore is higher: p(D² + d²)/(D² − d²) = 89 × 4,000/3,200 = 111 MPa.",
-    "Torque the fit can carry ≈ μ·p·πd·L·d/2. With μ = 0.15 and L = 20 mm: about 170 N·m."
+    "Elastic: pressure ∝ interference, p = (constant set by E and the diameters) × δ.",
+    "Torque capacity:  T = μ·p·(πdL)·(d/2), proportional to p.",
+    "So doubling δ doubles p and T.",
+    "The hub's hoop stress also doubles, and it is highest at the bore. Check it stays below yield, especially for a thin hub."
    ],
    "reported": {
     "kind": "topic",
@@ -552,21 +604,21 @@ window.QUESTION_SETS.push({
    }
   },
   {
-   "level": "Applied",
-   "q": "To assemble a press fit with 0.02 mm interference on a 20 mm steel shaft, you heat the hub so it slides on with 0.02 mm of clearance. How much hotter than the shaft must the hub be? (α = 12 × 10⁻⁶ /°C.)",
+   "level": "Fundamental",
+   "q": "A tiny square element inside a loaded part has a shear stress τ acting along its top face. What must act on its two side faces?",
    "options": [
-    "About 83 °C",
-    "About 170 °C",
-    "About 330 °C",
-    "About 17 °C"
+    "Nothing, shear only acts on one face",
+    "A normal stress equal to τ",
+    "A shear stress of the same size τ, directed so the element does not spin",
+    "Half of τ on each side"
    ],
-   "answer": 1,
-   "why": "The bore must grow by the interference plus the clearance, 0.04 mm. Δd = α·d·ΔT, so ΔT = 0.04/(12 × 10⁻⁶ × 20) = 167 °C.",
+   "answer": 2,
+   "why": "Shear stresses come in matched pairs. If the top and bottom faces carry τ, they form a couple that would spin the element. Equilibrium needs an equal and opposite couple, so the side faces carry the same τ. This is called the complementary property of shear.",
    "proof": [
-    "Required growth:  0.02 + 0.02 = 0.04 mm on diameter.",
-    "Δd = α·d·ΔT  →  ΔT = 0.04/(12e-6 × 20) = 167 °C.",
-    "Alternatively cool the shaft (dry ice gives about −78 °C, liquid nitrogen −196 °C) or do both.",
-    "Keep the hub below its tempering temperature, often about 200 °C for hardened steel, or you lose hardness."
+    "Top and bottom faces: τ acting in opposite directions forms a couple τ·(dx·dz)·dy.",
+    "Moment equilibrium needs an opposite couple from the side faces: τ'·(dy·dz)·dx.",
+    "So τ' = τ. All four faces carry the same shear stress, pointing either towards or away from the same corners.",
+    "Consequences: a twisted shaft has shear along its length as well as across it, and a beam has horizontal shear between its layers as well as vertical shear."
    ],
    "reported": {
     "kind": "topic",
@@ -604,21 +656,21 @@ window.QUESTION_SETS.push({
    }
   },
   {
-   "level": "Applied",
-   "q": "A 10 mm steel rod (ν = 0.3) is stretched to an axial strain of 0.001. How does its diameter change?",
+   "level": "Fundamental",
+   "q": "How is a metal's ductility usually reported from a tensile test?",
    "options": [
-    "It grows by 0.003 mm",
-    "It shrinks by 0.01 mm",
-    "It does not change",
-    "It shrinks by 0.003 mm"
+    "By its yield strength",
+    "By its modulus of elasticity",
+    "By its hardness",
+    "By its percent elongation at fracture and its percent reduction in area"
    ],
    "answer": 3,
-   "why": "Lateral strain is −ν times axial strain: −0.0003. On 10 mm that is a 0.003 mm reduction in diameter.",
+   "why": "Ductility is how much a material can deform plastically before it breaks. A tensile test gives two numbers for it: how much the gauge length grew by fracture, and how much the cross-section shrank at the neck.",
    "proof": [
-    "ε_lateral = −ν·ε_axial = −0.3 × 0.001 = −0.0003.",
-    "Δd = −0.0003 × 10 = −0.003 mm.",
-    "Volume change:  ε_vol = ε(1 − 2ν) = 0.0004, so volume rises slightly in tension.",
-    "For ν = 0.5 (rubber) the volume stays constant."
+    "Percent elongation = (L_fracture − L₀)/L₀ × 100. Mild steel is typically 20 to 35%.",
+    "Percent reduction in area = (A₀ − A_fracture)/A₀ × 100. Mild steel often reaches about 60%.",
+    "Brittle materials such as grey cast iron show well under 1%.",
+    "Strength and stiffness say nothing about ductility: a strong steel can be brittle and a weak aluminium can be very ductile."
    ],
    "reported": {
     "kind": "topic",

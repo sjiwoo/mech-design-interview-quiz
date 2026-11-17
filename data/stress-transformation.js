@@ -266,21 +266,21 @@ window.QUESTION_SETS.push({
    }
   },
   {
-   "level": "Applied",
-   "q": "At a point the strains are εx = 400 µε, εy = −200 µε and γxy = 800 µε. What are the principal strains?",
+   "level": "Fundamental",
+   "q": "When you draw Mohr's circle for strain, what goes on the vertical axis?",
    "options": [
-    "400 and −200 µε",
-    "600 and −400 µε",
-    "800 and 0 µε",
-    "500 and −300 µε"
+    "The shear strain γxy",
+    "Half the shear strain, γxy/2",
+    "The shear stress τxy",
+    "The normal strain εz"
    ],
    "answer": 1,
-   "why": "Mohr's circle for strain uses γ/2 on the vertical axis. Centre (400 − 200)/2 = 100, radius √(300² + 400²) = 500. Principal strains are 100 ± 500: 600 and −400 µε.",
+   "why": "Strain transforms exactly like stress if you use γ/2 in place of τ. So the circle is plotted with ε on the horizontal axis and γ/2 on the vertical axis. Using the full γ makes the circle the wrong size.",
    "proof": [
-    "Centre:  (εx + εy)/2 = 100 µε.",
-    "Radius:  √(((εx − εy)/2)² + (γxy/2)²) = √(300² + 400²) = 500 µε.",
-    "ε₁ = 600 µε,  ε₂ = −400 µε.",
-    "Common mistake: using γxy, not γxy/2, as the circle's vertical coordinate."
+    "Engineering shear strain γ is twice the tensor shear strain, which is the quantity that transforms like τ.",
+    "Circle: centre (εx + εy)/2, radius √(((εx − εy)/2)² + (γxy/2)²).",
+    "Maximum in-plane shear strain = 2 × radius.",
+    "Example: εx = 400, εy = −200, γxy = 800 µε gives radius 500 and principal strains 600 and −400 µε."
    ],
    "reported": {
     "kind": "topic",
@@ -423,6 +423,58 @@ window.QUESTION_SETS.push({
   },
   {
    "level": "Applied",
+   "q": "Grey cast iron is about three to four times stronger in compression than in tension. Which failure theory suits it best?",
+   "options": [
+    "Von Mises (distortion energy)",
+    "Maximum shear stress (Tresca)",
+    "Mohr's failure criterion (Coulomb–Mohr), which uses separate tensile and compressive strengths",
+    "Maximum strain energy"
+   ],
+   "answer": 2,
+   "why": "Tresca and von Mises predict yielding of ductile metals with equal strength in tension and compression. Brittle materials fracture instead, and a material with different tension and compression strengths needs a criterion that uses both, such as Coulomb–Mohr.",
+   "proof": [
+    "Ductile metals: failure is yielding, caused by shear. Use Tresca or von Mises.",
+    "Brittle, equal strengths: maximum normal stress theory, fracture when σ₁ reaches the tensile strength.",
+    "Brittle, unequal strengths: Coulomb–Mohr. For σ₁ > 0 > σ₃:  σ₁/S_t − σ₃/S_c = 1.",
+    "Brittle fracture scatters widely because of flaws, so use these theories with generous margins."
+   ],
+   "reported": {
+    "kind": "topic",
+    "note": "Candidates reported solid mechanics questions in Tesla mechanical design interviews, alongside circuits. This exact question was not reported.",
+    "sources": [
+     "linckt",
+     "mde"
+    ]
+   }
+  },
+  {
+   "level": "Fundamental",
+   "q": "Why can Poisson's ratio not exceed 0.5 for an isotropic material?",
+   "options": [
+    "Because E would become negative",
+    "Above 0.5, stretching the material would shrink its volume, meaning a uniform pressure would make it expand: its bulk modulus would be negative",
+    "It can, rubber is 0.7",
+    "Because G would equal E"
+   ],
+   "answer": 1,
+   "why": "The volume change in uniaxial tension is ε(1 − 2ν). At ν = 0.5 the volume stays constant, which is the incompressible limit. Above it, K = E/(3(1 − 2ν)) would be negative, which is physically impossible for a stable material.",
+   "proof": [
+    "Volume strain (dilatation) in uniaxial stress:  ε_vol = ε(1 − 2ν).",
+    "Bulk modulus:  K = E/(3(1 − 2ν)), positive only for ν < 0.5.",
+    "Rubber is close to 0.5, cork close to 0, most metals 0.25 to 0.35.",
+    "Shear stress alone changes shape, not volume: it causes shear strain only, with no dilatation."
+   ],
+   "reported": {
+    "kind": "topic",
+    "note": "Candidates reported solid mechanics questions in Tesla mechanical design interviews, alongside circuits. This exact question was not reported.",
+    "sources": [
+     "linckt",
+     "mde"
+    ]
+   }
+  },
+  {
+   "level": "Applied",
    "q": "A steel plate (E = 200 GPa, ν = 0.3) has σx = σy = 100 MPa (equal biaxial tension). What strain does a gauge along x read?",
    "options": [
     "500 µε",
@@ -448,21 +500,21 @@ window.QUESTION_SETS.push({
    }
   },
   {
-   "level": "Applied",
-   "q": "Gauges on a steel part (E = 200 GPa, ν = 0.3) read εx = 500 µε and εy = −150 µε, with no shear. What are the stresses?",
+   "level": "Trick question",
+   "q": "Two strain gauges on a steel part (ν = 0.3) read εx = 500 µε and εy = −150 µε. Is there a compressive stress in the y direction?",
    "options": [
-    "σx = 100 MPa, σy = −30 MPa",
-    "σx = 100 MPa, σy = 0",
-    "σx = 110 MPa, σy = 0",
-    "σx = 130 MPa, σy = −30 MPa"
+    "Yes, about 30 MPa of compression",
+    "No: −150 is exactly −0.3 × 500, the sideways shrinkage from a stress in x alone",
+    "Yes, because the strain is negative",
+    "It cannot be known without a third gauge"
    ],
    "answer": 1,
-   "why": "Invert plane-stress Hooke's law: σx = E(εx + νεy)/(1 − ν²) = 100 MPa and σy = E(εy + νεx)/(1 − ν²) = 0. The −150 µε in y is just the Poisson contraction from a uniaxial 100 MPa stress, not a compressive stress.",
+   "why": "A uniaxial stress in x also shrinks the part in y by ν·εx = 0.3 × 500 = 150 µε. The reading matches that exactly, so σy = 0. A negative strain does not mean a compressive stress.",
    "proof": [
-    "E/(1 − ν²) = 200,000/0.91 = 219,800 MPa.",
-    "σx = 219,800 × (500 − 45) × 10⁻⁶ = 100 MPa.",
-    "σy = 219,800 × (−150 + 150) × 10⁻⁶ = 0.",
-    "Multiplying each strain by E alone would give a false −30 MPa in y."
+    "Plane-stress Hooke's law:  σy = E(εy + ν·εx)/(1 − ν²).",
+    "εy + ν·εx = −150 + 150 = 0, so σy = 0.",
+    "And σx = E(εx + ν·εy)/(1 − ν²) = 100 MPa for E = 200 GPa.",
+    "Multiplying each strain by E alone would wrongly give σy = −30 MPa."
    ],
    "reported": {
     "kind": "topic",
