@@ -11,6 +11,11 @@ Unofficial practice material. Not affiliated with or endorsed by Tesla, and not 
 - **Shear and moment diagrams** (20 questions): pick the diagram that matches a loading, or read the loading and peak moment off a diagram. Answer options are drawn as small diagrams (`optionCurves`).
 - **Moment of inertia** (20 questions): standard sections, parallel axis, centroids, hollow and built-up sections, orientation, buckling, composite beams.
 - **Bending stiffness** (13 questions): EI against point stiffness, supports, section depth, flanges and sandwich panels, open against closed sections, joints in series, material indices.
+- **Axial loading, shear and fits** (22 questions): strain, double shear and bearing, pin sizing, factor of safety, stepped and indeterminate bars, misfits, press and shrink fits, elastic constants, residual stress.
+- **Torsion and shaft design** (16 questions): torsion formula, twist, hollow and non-circular shafts, Bredt, power and speed, plastic torsion, combined bending and torque, shaft deflection and fatigue.
+- **Beam shear and advanced bending** (20 questions): web shear, shear flow, shear centre, unsymmetric and composite beams, thermal bowing, curved beams, plastic moment, beam-columns, Macaulay and moment-area.
+- **Stress and strain transformation** (18 questions): principal stresses, Mohr's circle, 3-D maximum shear, plane strain, rosettes, gauge factor, bridges and torque gauges.
+- **Energy methods, impact and columns** (13 questions): strain energy, impact factors, unit-load method, Castigliano, secant and Johnson formulas.
 - **Springs and resonance** (14 questions): series and parallel springs, coil spring rate, preload, frequency from static sag, torsional and pendulum modes, phase, damping, isolation, tuned absorbers, critical speed.
 - **Stress–strain and materials**, **GD&T**, **Tolerance stack-up**, **Bolted joints**, **Manufacturing and DFM**, **Statics and free-body diagrams**, **Fatigue and failure**, **Heat transfer**, **Vibrations and dynamics**, **Torsion, combined loading and buckling** (10 questions each).
 - **Trick questions, part 2** (15 questions): rolling, free fall, friction, gears, bolt preload, critical insulation radius and displacement-controlled loads.
