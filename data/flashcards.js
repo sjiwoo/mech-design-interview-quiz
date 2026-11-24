@@ -292,5 +292,9 @@ window.FLASHCARDS = [
   ["torsion-shafts","concept","Thin tube, uneven wall","Shear flow q = τt is constant, so stress peaks where the wall is thinnest."],
   ["stress-transformation","concept","Brittle failure theories","Equal strengths: maximum normal stress. Unequal: Coulomb–Mohr, σ₁/S_t − σ₃/S_c = 1."],
   ["stress-transformation","concept","Poisson's ratio limit","ν ≤ 0.5. At 0.5 the volume never changes (incompressible)."],
-  ["energy-methods","eq","Work of a gradual load","U = ½FΔ. A constant force does FΔ."]
+  ["energy-methods","eq","Work of a gradual load","U = ½FΔ. A constant force does FΔ."],
+  ["materials-tricks","concept","Does hardening change E?","No. Heat treatment and cold work raise strength, not modulus."],
+  ["materials-tricks","concept","Stiffness ranking","Steel 200 > copper 117 > titanium 110 > aluminium 69 > magnesium 45 GPa."],
+  ["materials-tricks","concept","Galvanic area rule","Small anode + large cathode = fast corrosion. Make fasteners the more noble metal."],
+  ["materials-tricks","concept","Endurance limit","Steel has one (about 0.5 UTS). Aluminium does not: design for finite life."]
 ];

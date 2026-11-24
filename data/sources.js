@@ -319,5 +319,65 @@ window.SOURCES = {
   "hoopder": {
     "title": "Glassdoor candidate report: Mechanical Design Engineer (derive the hoop stress equation)",
     "url": "https://www.glassdoor.sg/Interview/Tesla-Interview-E43129-RVW82263407.htm"
+  },
+  "mtmod": {
+    "title": "Glassdoor: Apple interview question (modulus of full-hard against fully annealed stainless)",
+    "url": "https://www.glassdoor.co.uk/Interview/How-does-the-modulus-of-full-hard-stainless-compare-to-fully-annealed-stainless-QTN_1944616.htm"
+  },
+  "mthard": {
+    "title": "Glassdoor: mechanical engineering interview questions (stress–strain curve of steel against hardened steel)",
+    "url": "https://static.glassdoor.de/Interview/engineering-mechanical-interview-questions-SRCH_KO0,22_IP222.htm"
+  },
+  "mtstiff": {
+    "title": "Glassdoor candidate report: Apple Mechanical Engineer (stiffest of steel, magnesium, titanium, copper, aluminium)",
+    "url": "https://www.glassdoor.co.uk/Interview/Apple-Interview-E1138-RVW9911677.htm"
+  },
+  "mt6061": {
+    "title": "Glassdoor: mechanical engineer interview questions (Young's modulus of 6061 against 5052 aluminium)",
+    "url": "https://static.glassdoor.de/Interview/mechanical-engineer-technology-interview-questions-SRCH_KO0,30_IP363.htm"
+  },
+  "mtdens": {
+    "title": "Glassdoor candidate report: Apple Product Design Engineer (density and modulus of aluminium against steel)",
+    "url": "https://www.glassdoor.co.uk/Interview/Apple-Interview-E1138-RVW16629063.htm"
+  },
+  "mtmag": {
+    "title": "Glassdoor: product design engineer interview questions (telling steel, stainless and aluminium apart)",
+    "url": "https://static-pc.glassdoor.fr/Interview/product-design-engineer-interview-questions-SRCH_KO0,23_IP4.htm"
+  },
+  "mtgalv": {
+    "title": "Glassdoor candidate report: Tesla Mechanical Engineer Intern (galvanic corrosion)",
+    "url": "https://www.glassdoor.ca/Interview/Tesla-Interview-E43129-RVW48133454.htm"
+  },
+  "mtcual": {
+    "title": "Glassdoor candidate report: Tesla, Berlin (copper–aluminium joints, why alloys conduct poorly)",
+    "url": "https://www.glassdoor.com.hk/Interview/Tesla-Interview-E43129-RVW67044672.htm"
+  },
+  "mtweld": {
+    "title": "Glassdoor candidate report: Tesla Mechanical Design Engineer (faulty weld in an electrical conduit)",
+    "url": "https://www.glassdoor.co.in/Interview/Tesla-Interview-E43129-RVW26141406.htm"
+  },
+  "mtendur": {
+    "title": "Glassdoor: mechanical engineering interview questions (why steel has an endurance limit and aluminium does not)",
+    "url": "https://static.glassdoor.at/Interview/mechanical-engineering-interview-questions-SRCH_KO0,22_IP209.htm"
+  },
+  "mtalfail": {
+    "title": "Glassdoor: materials engineer interview questions (a failure that occurs in aluminium and not in steel)",
+    "url": "https://static.glassdoor.it/Interview/materials-engineer-interview-questions-SRCH_KO0,18_IP41.htm"
+  },
+  "mthardtough": {
+    "title": "Glassdoor: mechanical engineering interview questions (high hardness, low toughness)",
+    "url": "https://static.glassdoor.de/Interview/mechanical-engineering-interview-questions-SRCH_KO0,22_IP13.htm"
+  },
+  "mttough": {
+    "title": "Glassdoor: mechanical engineering interview questions (is a ductile material always tougher, Applied Materials)",
+    "url": "https://static.glassdoor.es/Interview/mechanical-engineering-interview-questions-SRCH_KO0,22_IP212.htm"
+  },
+  "mtbimetal": {
+    "title": "Glassdoor: mechanical engineering interview questions (bonded steel and aluminium plates heated)",
+    "url": "https://static.glassdoor.com.br/Interview/mechanical-engineering-interview-questions-SRCH_KO0,22_IP56.htm"
+  },
+  "mtstrain": {
+    "title": "Glassdoor: mechanical engineering interview questions (strain hardening at the most fundamental level)",
+    "url": "https://static-pc.glassdoor.fr/Interview/engineering-mechanical-interview-questions-SRCH_KO0,22_IP268.htm"
   }
 };
